@@ -25,6 +25,18 @@ class Post
         $this->body = $body;
     }
 
+    public static function findOrFail($slug)
+    {
+        $post = self::findOrFail($slug);
+
+        if (!$post) {
+            throw new ModelNotFoundException();
+        }
+
+        return $post;
+
+    }
+
     public static function find($slug)
     {
         return static::all()->firstWhere('slug', $slug);
@@ -32,7 +44,7 @@ class Post
 
     public static function all()
     {
-        return cache()->rememberForever('posts.all', function () {
+        return cache()->remember('posts.all', 5, function () {
             return collect(File::files(resource_path("posts/")))
                 ->map(function ($file) {
                     return YamlFrontMatter::parseFile($file);
