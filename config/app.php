@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        jeremykenedy\laravelusers\LaravelUsersServiceProvider::class,
 
         /*
          * Application Service Providers...
