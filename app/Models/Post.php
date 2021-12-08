@@ -18,12 +18,14 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-//    public function tags() {
-//        return $this->belongsToMany(Tag::class);
-//    }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 
 }

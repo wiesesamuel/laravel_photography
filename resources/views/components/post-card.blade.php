@@ -15,6 +15,15 @@
                 <x-category-button :category="$post->category"/>
             </div>
 
+
+
+            <div class="space-x-2">
+                <x-tag-buttons :tags="$post->tags"/>
+            </div>
+
+
+
+
             <div class="mt-4">
                 <h1 class="text-3xl">
                     <a href="/posts/{{$post->id}}">{{$post->title}}</a>
