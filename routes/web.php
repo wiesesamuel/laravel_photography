@@ -1,7 +1,9 @@
 <?php
 
+use App\Enum\TaskState;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/tasks', function () {
+    return view('tasks', [
+        'tasks' => Task::all(),
+        'taskStates' => TaskState::asArray()
+    ]);
+});
+
 
 Route::get('/', function () {
     return view('posts', [
