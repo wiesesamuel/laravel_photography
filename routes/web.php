@@ -29,10 +29,10 @@ Route::get('/tasks', function () {
 Route::get('/', function () {
     return view('posts', [
 //        'posts' => Post::latest('published_at')->get(),
-        'posts' => Post::all(),
+        'posts' => Post::all()->sortBy('created_at'),
         'categories' => Category::all()
     ]);
-});
+})->name("posts");
 
 
 Route::get('/posts/{post}', function (Post $post) {
