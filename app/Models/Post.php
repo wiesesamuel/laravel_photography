@@ -28,4 +28,13 @@ class Post extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query
+                ->where('title', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('body', 'like', '%' . $filters['search'] . '%');
+        }
+    }
+
 }
