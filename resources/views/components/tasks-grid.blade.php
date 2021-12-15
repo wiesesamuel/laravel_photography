@@ -1,4 +1,3 @@
-
 @if ($tasks->count())
     <div class="lg:grid lg:grid-cols-6">
         @foreach($tasks as $task)

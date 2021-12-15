@@ -10,11 +10,14 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function taskState() {
+    public function taskState()
+    {
         return "Value";
         return TaskState::fromKey($this->getAttribute('taskStateKey'));
     }
-    public function taskStateValue() {
+
+    public function taskStateValue()
+    {
         return "Value";
         return $this->taskState()->value;
     }
