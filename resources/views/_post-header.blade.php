@@ -24,7 +24,7 @@
                     <x-dropdown-item
                         :active="isset($currentCategory) && $currentCategory->is($category)"
                         {{--                        :active="request()->is('categories/{{$category->slug}}')"--}}
-                        href="/categories/{{$category->slug}}"
+                        href="/?category={{$category->slug}}"
                     >
                         {{ ucwords($category->name)}}
                     </x-dropdown-item>
