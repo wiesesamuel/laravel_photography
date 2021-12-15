@@ -18,7 +18,7 @@ class TagFactory extends Factory
     {
         return [
             'slug' => $this->faker->unique()->slug,
-            'name' => $this->faker->unique()->sentence,
+            'name' => mb_substr($this->faker->unique()->sentence, 0, 5),
         ];
     }
 

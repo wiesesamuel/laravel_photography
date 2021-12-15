@@ -14,8 +14,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'slug' => $this->faker->slug,
-            'name' => $this->faker->sentence,
+            'slug' => $this->faker->unique()->slug,
+            'name' => mb_substr($this->faker->sentence, 0 , 10),
             'description' => $this->faker->sentence,
         ];
     }
