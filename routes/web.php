@@ -30,11 +30,3 @@ Route::get('/tasks', function () {
 
 Route::get('/', [PostController::class, 'index'])->name("posts");
 Route::get('/posts/{post}', [PostController::class, 'show']);
-
-
-Route::get('/authors/{author:username}', function (User $author) {
-    return view('posts', [
-        'posts' => $author->posts,
-        'categories' => Category::all()
-    ]);
-});
