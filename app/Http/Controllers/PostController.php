@@ -23,7 +23,7 @@ class PostController extends Controller
 
     protected function getPost()
     {
-        return Post::latest()->filter(request(['search', 'category', 'author']))->get();
+        return Post::latest()->filter(request(['search', 'category', 'author']))->paginate(9)->withQueryString();
     }
 
 

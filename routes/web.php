@@ -29,4 +29,4 @@ Route::get('/tasks', function () {
 
 
 Route::get('/', [PostController::class, 'index'])->name("posts");
-Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
