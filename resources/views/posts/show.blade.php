@@ -30,7 +30,7 @@
                         </a>
 
                         <div class="space-x-2">
-                            <x-category-button :category="$post->category"/>
+                            <x-posts.category-button :category="$post->category"/>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
 
 
             <div class="space-x-2">
-                <x-tag-buttons :tags="$post->tags"/>
+                <x-posts.tag-buttons :tags="$post->tags"/>
             </div>
         </main>
 

@@ -6,7 +6,7 @@
             @if (request('page') > 1)
                 {{$posts->links()}}
             @endif
-            <x-posts-grid :posts="$posts"></x-posts-grid>
+            <x-posts.posts-grid :posts="$posts"></x-posts.posts-grid>
             {{$posts->links()}}
         @else
             <p class="text-center">No posts yet. Please come back later.</p>
