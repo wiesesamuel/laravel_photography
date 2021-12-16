@@ -12,7 +12,6 @@ class PostController extends Controller
         return view('posts', [
             'posts' => $this->getPost(),
             'categories' => Category::all(),
-            'currentCategory' => Category::firstWhere('slug', request('category')),
         ]);
     }
 
