@@ -11,7 +11,6 @@ class PostController extends Controller
     {
         return view('posts.index', [
             'posts' => $this->getPost(),
-            'categories' => Category::all(),
         ]);
     }
 
