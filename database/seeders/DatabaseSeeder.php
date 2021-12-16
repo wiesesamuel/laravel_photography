@@ -19,24 +19,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // drop tables
-        User::truncate();
-        Post::truncate();
-        Category::truncate();
-        Tag::truncate();
-
-        // generate tables
         $users = User::factory()->create([
             'name' => 'Samuel Wiese'
         ]);
-        $posts = Post::factory(20)->create([
-            'user_id' => $users->id
-        ]);
-        $tags = Tag::factory(5)->create();
-        $categorys = Category::factory(4)->create();
+
+        Category::factory(3)->create();
+
+        for ($i = 1; $i <= 10; $i++) {
+            $category_id = rand(1, 3);
+            Post::factory()->create([
+                'category_id' => $category_id,
+                'user_id' => $users->id
+            ]);
+        }
+
+        Tag::factory(5)->create();
 
         // generate taggable with existing tag and post ids
-        foreach ($posts as $post) {
+        foreach (Post::all() as $post) {
             foreach (Tag::all()->random(rand(1, 3))->pluck('id')->toArray() as $tag) {
                 Taggable::factory()->create(
                     [
@@ -48,10 +48,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-
-        // todos
-        Task::truncate();
-        Task::factory(8)->create();
-
+        Task::factory(3)->create();
     }
 }

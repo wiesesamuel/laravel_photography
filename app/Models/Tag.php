@@ -9,7 +9,6 @@ class Tag extends Model
 {
     use HasFactory;
 
-
     public function posts()
     {
         return $this->morphedByMany(Post::class, 'taggable');
