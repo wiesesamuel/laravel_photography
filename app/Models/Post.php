@@ -39,12 +39,27 @@ class Post extends Model
         if ($filters['category'] ?? false) {
             $category = $filters['category'];
             $query
-                ->whereExists(function($query) use ($category) {
+                ->whereExists(function ($query) use ($category) {
                     $query->from('categories')
                         ->whereColumn('categories.id', 'posts.category_id')
                         ->where('categories.slug', $category);
                 });
         }
+
+        if ($filters['author'] ?? false) {
+            $author = $filters['author'];
+            $query
+                ->whereExists(function ($query) use ($author) {
+                    $query->from('users')
+                        ->whereColumn('users.id', 'posts.user_id')
+                        ->where(function ($query) use ($author) {
+                            $query
+                                ->where('users.username', 'like', '%' . $author . '%')
+                                ->orWhere('users.name', 'like', '%' . $author . '%');
+                        });
+                });
+        }
+
 
     }
 }
