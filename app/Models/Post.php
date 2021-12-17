@@ -58,8 +58,7 @@ class Post extends Model
                         ->whereColumn('users.id', 'posts.user_id')
                         ->where(function ($query) use ($author) {
                             $query
-                                ->where('users.username', 'like', '%' . $author . '%')
-                                ->orWhere('users.name', 'like', '%' . $author . '%');
+                                ->Where('users.name', 'like', '%' . $author . '%');
                         });
                 });
         }

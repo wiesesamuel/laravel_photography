@@ -30,3 +30,10 @@ Route::get('/tasks', function () {
 
 Route::get('/', [PostController::class, 'index'])->name("posts");
 Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
