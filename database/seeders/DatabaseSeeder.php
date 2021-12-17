@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Album;
 use App\Models\Category;
+use App\Models\Image;
+use App\Models\Imageable;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Taggable;
@@ -19,6 +22,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->seed_posts();
+        $this->seed_albums();
+    }
+
+    private function seed_albums() {
+        // drop tables
+        Image::truncate();
+        Album::truncate();
+        Imageable::truncate();
+
+        Image::factory(50)->create();
+        Album::factory(3)->create();
+
+
+        foreach (Album::all() as $album) {
+            foreach (Image::all()->random(rand(1, 3))->pluck('id')->toArray() as $image) {
+                Imageable::factory()->create(
+                    [
+                        'image_id' => $image,
+                        'imageable_id' => $album->id,
+                        'imageable_type' => Album::class
+                    ]
+                );
+            }
+        }
+    }
+
+    private function seed_posts() {
+
         // drop tables
         User::truncate();
         Post::truncate();
@@ -49,9 +81,9 @@ class DatabaseSeeder extends Seeder
             foreach (Tag::all()->random(rand(1, 3))->pluck('id')->toArray() as $tag) {
                 Taggable::factory()->create(
                     [
-                        "tag_id" => $tag,
-                        "taggable_id" => $post->id,
-                        "taggable_type" => Post::class
+                        'tag_id' => $tag,
+                        'taggable_id' => $post->id,
+                        'taggable_type' => Post::class
                     ]
                 );
             }
@@ -62,9 +94,9 @@ class DatabaseSeeder extends Seeder
         $post = Post::factory()->create();
         Taggable::factory()->create(
             [
-                "tag_id" => $tag->id,
-                "taggable_id" => $post->id,
-                "taggable_type" => Post::class
+                'tag_id' => $tag->id,
+                'taggable_id' => $post->id,
+                'taggable_type' => Post::class
             ]
         );
 

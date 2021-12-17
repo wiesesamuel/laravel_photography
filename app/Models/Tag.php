@@ -13,4 +13,9 @@ class Tag extends Model
     {
         return $this->morphedByMany(Post::class, 'taggable');
     }
+
+    public function albums()
+    {
+        return $this->morphedByMany(Album::class, 'taggable');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\TaskState;
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\PostController;
 use App\Models\Category;
 use App\Models\Post;
@@ -26,6 +27,10 @@ Route::get('/tasks', function () {
         'taskStates' => TaskState::asArray()
     ]);
 });
+
+Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
+Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
+
 
 
 Route::get('/', [PostController::class, 'index'])->name("posts");
