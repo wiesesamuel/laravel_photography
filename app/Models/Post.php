@@ -64,13 +64,12 @@ class Post extends Model
                 });
         }
 
-        // TODO wrong query
         if ($filters['tag'] ?? false) {
             $tag = $filters['tag'];
-            $query
-                ->join('taggables', 'taggables.taggable_id', '=', 'posts.id')
-                ->join('tags', 'taggables.tag_id', 'tags.id')
-                ->where('tags.slug', '=', $tag);
+            $query->whereHas('tags', function ($query) use ($tag) {
+                $query
+                    ->where('tags.slug', $tag);
+            });
         }
 
     }

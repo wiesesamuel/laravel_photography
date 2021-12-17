@@ -19,6 +19,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // drop tables
+        User::truncate();
+        Post::truncate();
+        Category::truncate();
+        Tag::truncate();
+        Taggable::truncate();
+        Task::truncate();
+
+        // generate tables
         $users = User::factory()->create([
             'name' => 'Samuel Wiese'
         ]);
@@ -47,6 +56,17 @@ class DatabaseSeeder extends Seeder
                 );
             }
         }
+
+        // specific post with only one tag
+        $tag = Tag::factory()->create();
+        $post = Post::factory()->create();
+        Taggable::factory()->create(
+            [
+                "tag_id" => $tag->id,
+                "taggable_id" => $post->id,
+                "taggable_type" => Post::class
+            ]
+        );
 
         Task::factory(3)->create();
     }
