@@ -16,7 +16,7 @@ class ImageableFactory extends Factory
         return [
             'image_id' => 1,
             'imageable_id' => 1,
-            'imageable_type' => ' ',
+            'imageable_type' => 'App\\\\Models\\\\Album',
             'numeration' => 1,
         ];
     }
