@@ -1,10 +1,10 @@
 <x-layout>
     <main>
-    <x-albums.image-slider
-        :images="$album->images"
-    />
-
-
+        <x-albums.image-slider
+            :images="$album->images"
+        />
+        <x-albums.image-grid-with-featured
+            :images="$album->images"
+        />
     </main>
-
 </x-layout>

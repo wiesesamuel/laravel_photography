@@ -11,7 +11,7 @@ class AlbumController extends Controller
 {
     public function index()
     {
-        $this->discoverAlbums();
+//        $this->discoverAlbums();
         return view('albums.index', [
             'albums' => $this->getPost(),
         ]);
