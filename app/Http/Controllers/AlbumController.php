@@ -37,7 +37,6 @@ class AlbumController extends Controller
     private function createAlbums($albumsArray)
     {
         foreach ($albumsArray as $albumName => $imagesArray) {
-
             $imageModels = $this->createImages(($imagesArray));
             $albumModel = Album::firstOrCreate([
                 'image_id' => $imageModels[0]->id,
@@ -91,6 +90,7 @@ class AlbumController extends Controller
                 $files[$fileinfo->getFilename()] = $fileinfo->getPathname();
             }
         }
+        sort($files);
         return $files;
     }
 
@@ -103,6 +103,7 @@ class AlbumController extends Controller
                 $directories[$fileinfo->getFilename()] = $fileinfo->getPathname();
             }
         }
+        sort($directories);
         return $directories;
     }
 
