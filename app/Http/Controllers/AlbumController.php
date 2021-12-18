@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Image;
 use DirectoryIterator;
-use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
     public function index()
     {
-//        $this->discoverAlbums();
+        $this->discoverAlbums();
         return view('albums.index', [
             'albums' => $this->getPost(),
         ]);
@@ -37,7 +36,7 @@ class AlbumController extends Controller
     private function createAlbums($albumsArray)
     {
         foreach ($albumsArray as $albumName => $imagesArray) {
-            $imageModels = $this->createImages(($imagesArray));
+            $imageModels = (new ImageController)->createImages($imagesArray);
             $albumModel = Album::firstOrCreate([
                 'image_id' => $imageModels[0]->id,
                 'name' => $albumName
@@ -53,20 +52,6 @@ class AlbumController extends Controller
                 return $image->id;
             }, $imageModelArray)
         );
-    }
-
-    private function createImages($imageArray)
-    {
-        $imageModels = array();
-        foreach ($imageArray as $imageName => $imagePath) {
-            $imageModels[] = Image::firstOrCreate(
-                [
-                    'title' => $imageName,
-                    'url' => str_replace(public_path(), '', $imagePath),
-                ]
-            );
-        }
-        return $imageModels;
     }
 
     private function getAlbumsFiles()

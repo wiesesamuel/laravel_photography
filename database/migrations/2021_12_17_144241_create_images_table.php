@@ -18,6 +18,20 @@ class CreateImagesTable extends Migration
             $table->string("title")->nullable();
             $table->string("url");
             $table->text("description")->nullable();
+
+            $table->string("Artist")->nullable();
+            $table->string("DateTime")->nullable();
+            $table->integer("Width")->nullable();
+            $table->integer("Height")->nullable();
+            $table->string("Camera")->nullable();
+            $table->string("CameraLens")->nullable();
+            $table->string("CCDWidth")->nullable();
+            $table->string("ExposureTime")->nullable();
+            $table->string("ApertureNumber")->nullable();
+
+            $table->float("aspectRatio")->nullable();
+            $table->boolean("vertical")->nullable();
+
             $table->timestamps();
         });
     }

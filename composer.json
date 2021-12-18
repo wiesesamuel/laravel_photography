@@ -16,7 +16,7 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "spatie/yaml-front-matter": "^2.0"
+        "miljar/php-exif": "^0.6.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
