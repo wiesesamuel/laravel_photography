@@ -15,7 +15,7 @@ class ImageFactory extends Factory
     {
         return [
             'title' => $this->faker->firstName,
-            'url' => 'images/wiese.png',
+            'url' => '/images/wiese.png',
             'description' => $this->faker->sentence,
             //
         ];
