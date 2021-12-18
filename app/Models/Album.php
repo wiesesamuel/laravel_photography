@@ -11,6 +11,9 @@ class Album extends Model
 
     protected $with = ['images', 'coverImage', 'tags'];
 
+    protected $guarded = ['id'];
+
+
     public function images()
     {
         return $this->morphToMany(Image::class, 'imageable');

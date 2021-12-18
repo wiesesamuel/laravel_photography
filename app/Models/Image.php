@@ -9,6 +9,8 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function albums() {
         return $this->morphedByMany(Album::class, 'imageable');
     }
