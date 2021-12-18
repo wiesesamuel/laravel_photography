@@ -26,14 +26,28 @@ class DatabaseSeeder extends Seeder
         $this->seed_albums();
     }
 
-    private function seed_albums() {
+    private function seed_albums()
+    {
         // drop tables
         Image::truncate();
         Album::truncate();
         Imageable::truncate();
 
-        Image::factory(50)->create();
-        Album::factory(3)->create();
+        $coverImage = Image::factory()->create(
+            [
+                'title' => 'title image',
+                'url' => '/images/wiese.png',
+                'description' => 'description image'
+            ]
+        );
+
+        Image::factory(5)->create();
+
+        Album::factory(30)->create(
+            [
+                'image_id' => $coverImage->id
+            ]
+        );
 
 
         foreach (Album::all() as $album) {
@@ -49,7 +63,8 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seed_posts() {
+    private function seed_posts()
+    {
 
         // drop tables
         User::truncate();

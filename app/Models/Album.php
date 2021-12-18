@@ -18,7 +18,7 @@ class Album extends Model
 
     public function coverImage()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Image::class, 'image_id');
     }
 
     public function tags()

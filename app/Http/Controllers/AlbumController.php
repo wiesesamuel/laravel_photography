@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 class AlbumController extends Controller
 {
     public function index() {
-        return Album::all();
         return view('albums.index', [
             'albums' => $this->getPost(),
         ]);

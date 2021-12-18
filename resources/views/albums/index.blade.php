@@ -6,11 +6,10 @@
             @if (request('page') > 1)
                 {{$albums->links()}}
             @endif
-            {{$albums}}
-{{--                <x-posts.posts-grid :posts="$posts"></x-posts.posts-grid>--}}
+            <x-albums.albums-grid :albums="$albums"></x-albums.albums-grid>
             {{$albums->links()}}
         @else
-            <p class="text-center">No posts yet. Please come back later.</p>
+            <p class="text-center">No albums yet. Please come back later.</p>
         @endif
     </main>
 </x-layout>
