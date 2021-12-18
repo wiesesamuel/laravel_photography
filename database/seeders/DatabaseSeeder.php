@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->seed_posts();
-        $this->seed_albums();
+//        $this->seed_albums();
     }
 
     private function seed_albums()

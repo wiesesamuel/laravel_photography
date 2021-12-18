@@ -30,7 +30,7 @@ class CreateImagesTable extends Migration
             $table->string("ApertureNumber")->nullable();
 
             $table->float("aspectRatio")->nullable();
-            $table->boolean("vertical")->nullable();
+            $table->boolean("horizontal")->nullable();
 
             $table->timestamps();
         });
