@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/prices', function () {
+    return view('meeting.pricing');
+});
 Route::get('/tasks', function () {
 
     return view('tasks', [
