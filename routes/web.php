@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() {
+    return redirect()->route('albums');
+})->name('home');
+
 Route::get('/prices', function () {
     return view('contact.pricing');
 });
@@ -36,8 +40,8 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 
 
 
-Route::get('/', [PostController::class, 'index'])->name("posts");
-Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
+Route::get('/posts', [PostController::class, 'index'])->name("posts");
+Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
 
 
 Route::get('/dashboard', function () {

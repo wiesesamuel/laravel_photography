@@ -21,7 +21,7 @@
 
                 <div class="mt-4">
                     <h1 class="text-3xl">
-                        <a href="/posts/{{$post->id}}">{{$post->title}}</a>
+                        <a href="{{route("post", ['post' => $post->id])}}">{{$post->title}}</a>
                     </h1>
 
                     <span class="mt-2 block text-gray-400 text-xs">
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="hidden lg:block">
-                    <a href="/posts/{{$post->id}}"
+                    <a href="{{route("post", ['post' => $post->id])}}"
                        class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
                     >Read More</a>
                 </div>

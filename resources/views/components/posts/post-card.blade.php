@@ -23,7 +23,7 @@
 
                 <div class="mt-4">
                     <h1 class="text-3xl">
-                        <a href="/posts/{{$post->id}}">{{$post->title}}</a>
+                        <a href="{{route("post", ['post' => $post->id])}}">{{$post->title}}</a>
                     </h1>
 
                     <span class="mt-2 block text-gray-400 text-xs">
@@ -42,13 +42,13 @@
                 <div class="flex items-center text-sm">
                     <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3">
-                        <h5 class="font-bold"><a href="/?author={{$post->author->name}}">{{$post->author->name}}</a>
+                        <h5 class="font-bold"><a href="{{route("posts")}}?author={{$post->author->name}}">{{$post->author->name}}</a>
                         </h5>
                     </div>
                 </div>
 
                 <div class="hidden lg:block">
-                    <a href="/posts/{{$post->id}}"
+                    <a href="{{route("post", ['post' => $post->id])}}"
                        class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
                     >Read More</a>
                 </div>
