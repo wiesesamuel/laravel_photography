@@ -1,2 +1,3 @@
-<header class="max-w-xl mx-auto mt-10 text-center">
+<header class=" text-center">
+    {{$slot ?? ''}}
 </header>

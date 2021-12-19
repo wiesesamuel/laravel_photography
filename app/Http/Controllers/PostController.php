@@ -10,7 +10,7 @@ class PostController extends Controller
     public function index()
     {
         return view('posts.index', [
-            'posts' => $this->getPost(),
+            'posts' => Post::latest('posts.created_at')->filter(request(['search', 'category', 'author', 'tag']))->paginate(9)->withQueryString(),
         ]);
     }
 
@@ -20,11 +20,5 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
-
-    protected function getPost()
-    {
-        return Post::latest('posts.created_at')->filter(request(['search', 'category', 'author', 'tag']))->paginate(9)->withQueryString();
-    }
-
 
 }

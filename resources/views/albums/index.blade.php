@@ -1,8 +1,9 @@
 <x-layout>
     @include('albums._header')
 
-    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+    <main class="max-w-6xl mx-auto mt-6 space-y-6">
         @if ($albums->count())
+            <x-parts.header-h1>Alben</x-parts.header-h1>
             @if (request('page') > 1)
                 {{$albums->links()}}
             @endif
