@@ -237,57 +237,9 @@
 
     <!-- Footer Bottom -->
     <div class="border-t border-gray-800 flex flex-col md:flex-row justify-center items-center p-6 mt-4 text-gray-600">
-        <div>© 2020 Wishful Thinking Agency LLC.</div>
+        <div>© 2021 Samuel Wiese.</div>
         <div>&nbsp;All rights reserved.<div>
             </div>
     </div>
     </div>
 </footer>
-{{--<footer class="max-w flex text-white" style="background: #1C252F">--}}
-{{--    <div class="container mx-auto text-center">--}}
-{{--        <div class="py-16">--}}
-{{--            <h1 class="text-5xl">Don't be shy. Say hi 👋</h1>--}}
-{{--            <p class="text-2xl text-hairline py-6">Do you have a project or an idea that could use some help? <br />Let's work together</p>--}}
-{{--        </div>--}}
-{{--        <div class="flex flex-wrap -mx-2 overflow-hidden sm:-mx-2 md:-mx-2 lg:-mx-2 xl:-mx-2">--}}
-{{--        <div class="flex justify-start items-start">--}}
-{{--            <div class="my-2 px-2 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-2 md:px-2 md:w-1/2 lg:my-2 lg:px-2 lg:w-1/2 xl:my-2 xl:px-2 xl:w-1/2">--}}
-
-{{--            <ul class="list-reset flex pt-16 pb-16">--}}
-{{--                <li class="mr-8">--}}
-{{--                    <a href="#" class="no-underline hover:underline text-white">--}}
-{{--                        <h2 class="text-3xl text-bold">Nussi</h2>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="mr-8 mt-2">--}}
-{{--                    <a class="text-grey-darker no-underline hover:text-white" href="#">Terms of Use</a>--}}
-{{--                </li>--}}
-{{--                <li class="mr-8 mt-2">--}}
-{{--                    <a class="text-grey-darker no-underline hover:text-white" href="#">Privacy</a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--            </div>--}}
-{{--            <div class="my-2 px-2 w-full overflow-hidden sm:my-2 sm:px-2 sm:w-1/2 md:my-2 md:px-2 md:w-1/2 lg:my-2 lg:px-2 lg:w-1/2 xl:my-2 xl:px-2 xl:w-1/2">--}}
-
-{{--            <ul class="list-reset flex pt-16 pb-16 ml-auto">--}}
-{{--                <li class="mr-8">--}}
-{{--                    <a class="text-grey-darker no-underline hover:text-white" href="#">--}}
-{{--                        <x-parts.icons name='instagram'/>--}}
-{{--                        Instagram</a>--}}
-{{--                </li>--}}
-{{--                <li class="mr-8">--}}
-{{--                    <a class="text-grey-darker no-underline hover:text-white" href="#">--}}
-{{--                        <x-parts.icons name="facebook"/>--}}
-{{--                        Facebook</a>--}}
-{{--                </li>--}}
-{{--                <li class="mr-8">--}}
-{{--                    <a class="text-grey-darker no-underline hover:text-white" href="#">--}}
-{{--                        <x-parts.icons name="twitter"/>--}}
-{{--                        Twitter</a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--                <div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</footer>--}}
-

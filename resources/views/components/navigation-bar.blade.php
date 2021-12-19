@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-100 border-b border-gray-500 px-3 py-3">
+<nav x-data="{ open: false }" class="border-b border-gray-500 px-3 py-3" style="background: #404a57;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -12,16 +12,16 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-auth.nav-link :href="route('albums')" :active="request()->routeIs('albums', 'album')">
+                    <x-parts.nav-link :href="route('albums')" :active="request()->routeIs('albums', 'album')">
                         {{ __('Portfolio') }}
-                    </x-auth.nav-link>
-                    <x-auth.nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')">
+                    </x-parts.nav-link>
+                    <x-parts.nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')">
                         {{ __('Blog') }}
-                    </x-auth.nav-link>
+                    </x-parts.nav-link>
                     @auth
-                        <x-auth.nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-parts.nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
-                        </x-auth.nav-link>
+                        </x-parts.nav-link>
                     @endauth
                 </div>
             </div>
