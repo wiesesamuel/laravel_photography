@@ -21,11 +21,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('albums');
+    return redirect()->route('posts');
 })->name('home');
 
 Route::get('/prices', function () {
     return view('contact.pricing');
+});
+Route::get('/form', function () {
+    return view('contact.contact-form');
+});
+Route::get('/form1', function () {
+    return view('contact.contact-form-simple');
 });
 Route::get('/tasks', function () {
 
@@ -35,6 +41,7 @@ Route::get('/tasks', function () {
     ]);
 });
 
+
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
 Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 
@@ -42,7 +49,28 @@ Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
 
 
-Route::get('/admin/post/create/', [PostController::class, 'create'])->middleware('admin')->name("admin.post.create");
+Route::get('/admin/post/create/', [PostController::class, 'create'])
+    ->middleware('admin')
+    ->name("admin.post.create");
+
+Route::get('/admin/posts/', [PostController::class, 'create'])
+    ->middleware('admin')
+    ->name("admin.post.creating");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Route::get('/dashboard', function () {
