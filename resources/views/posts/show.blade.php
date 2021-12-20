@@ -25,7 +25,7 @@
                     <div class="hidden lg:flex justify-between mb-6">
                         <a href="{{route("posts")}}"
                            class="transition-colors duration-300 relative inline-flex items-center text-lg hover:text-blue-500">
-                            <x-icons name="arrow-left"></x-icons>
+                            <x-parts.icons name="arrow-left"></x-parts.icons>
                             Back to Posts
                         </a>
 
