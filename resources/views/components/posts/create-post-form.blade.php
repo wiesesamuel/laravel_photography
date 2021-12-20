@@ -1,6 +1,6 @@
 <x-parts.form
-{{--    class = "Send Post"--}}
-{{--    :actionRoute = "route('admin.post.creating')"--}}
+    sendText='bg-blue-500'
+:actionRoute="route('admin.post.creating')"
 >
     <x-slot name="header">
             <h1 class="text-3xl text-medium mb-4">We would love to hear from you</h1>
