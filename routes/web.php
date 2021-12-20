@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() {
+Route::get('/', function () {
     return redirect()->route('albums');
 })->name('home');
 
@@ -38,15 +38,16 @@ Route::get('/tasks', function () {
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
 Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 
-
-
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
+
+
+Route::get('/admin/post/create/', [PostController::class, 'create'])->middleware('admin')->name("admin.post.create");
 
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
