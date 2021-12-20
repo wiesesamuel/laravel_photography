@@ -12,3 +12,6 @@
 
 # Langugae - dont forget Lizenz!
 * https://github.com/syncfusion/ej2-locale
+
+# Imagick::writeImage not implemented 
+* `chmod 777 -R ./public/images`

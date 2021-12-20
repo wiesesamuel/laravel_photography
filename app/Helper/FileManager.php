@@ -11,7 +11,6 @@ use DirectoryIterator;
 class FileManager
 {
 
-
     public function getImagesFromDirectory($path)
     {
         $imageExtensions = [
@@ -32,7 +31,7 @@ class FileManager
                 }
             }
         }
-        asort($files);
+        ksort($files);
         return $files;
     }
 
@@ -45,7 +44,7 @@ class FileManager
                 $directories[$fileinfo->getFilename()] = $fileinfo->getPathname();
             }
         }
-        asort($directories);
+        ksort($directories);
         return $directories;
     }
 
@@ -62,22 +61,27 @@ class FileManager
             fclose($resource);
         }
     }
-    public function destroyAllLockFilesInSubdirectories($dir) {
+
+    public function destroyAllLockFilesInSubdirectories($dir)
+    {
         $subDirs = $this->getSubdirectoriesFromDirectory($dir);
         foreach ($subDirs as $subDir) {
             $this->destroyLockFile($subDir);
         }
     }
 
-    public function destroyLockFile($dir) {
+    public function destroyLockFile($dir)
+    {
         unlink($dir . '/lock');
     }
 
-    public function readFile($path) {
+    public function readFile($path)
+    {
         return file_get_contents($path);
     }
 
-    public function writeFile($path, $content) {
+    public function writeFile($path, $content)
+    {
         return file_put_contents($path, $content);
     }
 

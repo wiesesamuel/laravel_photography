@@ -8,7 +8,7 @@ use App\Models\Image;
 use DirectoryIterator;
 
 
-class AlbumManager
+class AlbumManager extends ImageManager
 {
 
     protected $fileManager;
@@ -21,7 +21,7 @@ class AlbumManager
 
     public function discoverAlbums()
     {
-//        $this->fileManager->destroyAllLockFilesInSubdirectories(public_path('/images/albums'));
+        $this->fileManager->destroyAllLockFilesInSubdirectories(public_path('/images/albums'));
         $this->createAlbums($this->getUnlockedAlbumsFilesAndLockThem());
         (new LanguageManager())->simplifyLocationJsons();
     }
@@ -61,44 +61,4 @@ class AlbumManager
     }
 
 
-    public function createImages($imageArray)
-    {
-        $imageModels = array();
-        foreach ($imageArray as $imageName => $imagePath) {
-            $imageModels[] = $this->createImage($imagePath);
-        }
-        return $imageModels;
-    }
-
-    public function createImage($imagePath)
-    {
-        $metadata = exif_read_data($imagePath);
-
-        $height = $metadata['COMPUTED']['Height'] ?? null;
-        $width = $metadata['COMPUTED']['Width'] ?? null;
-
-        return Image::firstOrCreate(
-            [
-                'Artist' => 'Samuel Wiese',
-//              'Artist' => $metadata['Artist'] ?? null,
-
-                'title' => $metadata['FileName'] ?? null,
-                'url' => str_replace(public_path(), '', $imagePath),
-
-                'DateTime' => $metadata['DateTimeOriginal'] ?? null,
-                'CCDWidth' => $metadata['CCDWidth'] ?? null, // mm
-                'ExposureTime' => $metadata['ExposureTime'] ?? null, // beleuchtung
-                'ApertureNumber' => $metadata['ApertureFNumber'] ?? null, // Blende
-                'Camera' => $metadata['Model'] ?? null,
-                'CameraLens' => $metadata['UndefinedTag:0x0095'] ?? null,
-//              'CameraLens' => $metadata['UndefinedTag:0xA434'],
-
-                'Height' => $height,
-                'Width' => $width,
-
-                'horizontal' => $metadata["Orientation"] <= 1 ?? null,
-
-            ]
-        );
-    }
 }

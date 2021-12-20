@@ -20,8 +20,8 @@ class LanguageManager
         foreach ($files as $lang => $sourceDir) {
             $content = json_decode($this->fileManager->readFile($sourceDir), true);
             $simplified = $this->simplify($content);
-            asort($simplified);
-            $this->fileManager->writeFile($destinationDir . $lang, json_encode($simplified, JSON_PRETTY_PRINT));
+            uksort($simplified, 'strcasecmp');
+            $this->fileManager->writeFile($destinationDir . $lang, json_encode($simplified, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         }
     }
 

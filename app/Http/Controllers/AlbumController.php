@@ -11,9 +11,7 @@ class AlbumController extends Controller
 {
 
     protected $albumManager;
-    /**
-     * AlbumController constructor.
-     */
+
     public function __construct()
     {
         $this->albumManager = new AlbumManager();
