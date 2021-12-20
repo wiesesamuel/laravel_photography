@@ -9,3 +9,6 @@
 * `cd ~ && curl -sS https://getcomposer.org/installer -o composer-setup.php`
 * `sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer`
 * `alias composer='/usr/local/bin/composer'`
+
+# Langugae - dont forget Lizenz!
+* https://github.com/syncfusion/ej2-locale

@@ -61,5 +61,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('language/{locale}', function ($locale) {
+    if (! in_array($locale, ['de', 'en'])) {
+        return abort(404);
+    }
+    App::setLocale($locale);
+//    session()->put('locale', $locale);
+    return redirect()->back();
+});
+
+
+
 require __DIR__ . '/auth.php';
 
