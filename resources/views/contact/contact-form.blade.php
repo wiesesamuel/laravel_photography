@@ -1,7 +1,7 @@
 <x-layout>
     <div class="contact-1 py-4 md:py-12">
-        <div class="container mx-auto px-4">
-            <div class="xl:flex -mx-4">
+        <div class="container mx-auto px-4 ">
+            <div class="xl:flex -mx-4 bg-gray-800">
                 <div class="xl:w-10/12 xl:mx-auto px-4">
 
                     <div class="xl:w-3/4 mb-4">

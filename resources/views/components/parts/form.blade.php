@@ -1,7 +1,7 @@
 <form methode="POST" action="{{$attributes['actionRoute'] ?? '#'}}">
     @csrf
 
-    <div class="contact-1 py-4 md:py-12">
+    <div class="contact-1 py-4 md:py-12 bg-gray-100">
         <div class="container mx-auto px-4">
             <div class="xl:flex -mx-4">
                 <div class="xl:w-10/12 xl:mx-auto px-4">

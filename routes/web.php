@@ -57,22 +57,6 @@ Route::get('/admin/posts/', [PostController::class, 'create'])
     ->middleware('admin')
     ->name("admin.post.creating");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

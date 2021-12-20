@@ -16,7 +16,7 @@
 
     <x-slot name="form">
         <div class="sm:w-1/2 px-3 mb-6">
-            <input type="text" placeholder="{{ __('title') }}" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input">
+            <input type="text" placeholder="Full Name" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input">
         </div>
         <div class="sm:w-1/2 px-3 mb-6">
             <input type="text" placeholder="Company Name" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input">
