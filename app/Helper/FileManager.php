@@ -32,7 +32,7 @@ class FileManager
                 }
             }
         }
-        sort($files);
+        asort($files);
         return $files;
     }
 
@@ -45,7 +45,7 @@ class FileManager
                 $directories[$fileinfo->getFilename()] = $fileinfo->getPathname();
             }
         }
-        sort($directories);
+        asort($directories);
         return $directories;
     }
 
@@ -73,5 +73,13 @@ class FileManager
         unlink($dir . '/lock');
     }
 
+    public function readFile($path) {
+        return file_get_contents($path);
+    }
+
+    public function writeFile($path, $content) {
+        return file_put_contents($path, $content);
+    }
 
 }
+

@@ -23,6 +23,7 @@ class AlbumManager
     {
 //        $this->fileManager->destroyAllLockFilesInSubdirectories(public_path('/images/albums'));
         $this->createAlbums($this->getUnlockedAlbumsFilesAndLockThem());
+        (new LanguageManager())->simplifyLocationJsons();
     }
 
     private function createAlbums($albumsArray)
