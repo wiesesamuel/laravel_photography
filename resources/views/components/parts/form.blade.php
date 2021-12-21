@@ -1,4 +1,4 @@
-<form methode="POST" action="{{$attributes['actionRoute'] ?? '#'}}">
+<form method="POST" action="{{$attributes['actionRoute'] ?? '#'}}">
     @csrf
 
     <div class="contact-1 py-4 md:py-12 bg-gray-100">

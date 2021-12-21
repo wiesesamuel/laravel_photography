@@ -48,18 +48,23 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
 
-
-Route::get('/admin/post/create/', [PostController::class, 'create'])
+Route::get('/admin/post', [PostController::class, 'create'])
     ->middleware('admin')
     ->name("admin.post.create");
 
-Route::get('/admin/posts/', [PostController::class, 'create'])
+Route::post('/admin/post/create', [PostController::class, 'store'])
     ->middleware('admin')
     ->name("admin.post.creating");
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+
+
+
 
 Route::get('language/{locale}', function ($locale) {
     if (! in_array($locale, ['de', 'en'])) {
