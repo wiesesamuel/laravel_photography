@@ -15,3 +15,13 @@
 
 # Imagick::writeImage not implemented 
 * `chmod 777 -R ./public/images`
+
+# SQLSTATE[HY000] [2002] Connection refused
+* in .env: DB_HOST=mysql
+
+### remove docker stuff (except images)
+    docker stop $(docker ps -aq)
+    docker rm $(docker ps -aq)
+    docker network prune -f
+    docker volume rm $(docker volume ls --filter dangling=true -q)
+    
