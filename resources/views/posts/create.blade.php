@@ -38,7 +38,7 @@
             </div>
             <div class="sm:w-1/2 px-3 mb-6">
                 <select name="category_id">
-                    @foreach(\App\Models\Category::all() as $category)
+                    @foreach($categories as $category)
                         <option value="{{$category->id}}"
                                 @if(isset($post) && $post->category_id == $category->id)
                                 class="bg-blue-500"
