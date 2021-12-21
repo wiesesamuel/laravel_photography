@@ -19,6 +19,14 @@
 # SQLSTATE[HY000] [2002] Connection refused
 * in .env: DB_HOST=mysql
 
+### add db user
+# SQLSTATE[HY000] [2002] Connection refused
+* `
+ docker exec -it laravel-webseite_mysql_1 mysql -e
+ CREATE USER 'username'@'localhost' IDENTIFIED BY '894357092837654987263548ad';
+ GRANT ALL PRIVILEGES ON asdf.* TO 'username'@'localhost';
+ FLUSH PRIVILEGES;`
+
 ### remove docker stuff (except images)
     docker stop $(docker ps -aq)
     docker rm $(docker ps -aq)
