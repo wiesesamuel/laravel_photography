@@ -1,12 +1,10 @@
 <?php
 
 use App\Enum\TaskState;
+use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\PostController;
-use App\Models\Category;
-use App\Models\Post;
 use App\Models\Task;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,11 +47,11 @@ Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
 
 Route::get('/admin/post', [PostController::class, 'create'])
-    ->middleware('admin')
+    ->middleware('role:' . UserRole::Moderator)
     ->name("admin.post.create");
 
 Route::post('/admin/post/create', [PostController::class, 'store'])
-    ->middleware('admin')
+    ->middleware('role:' . UserRole::Moderator)
     ->name("admin.post.creating");
 
 
