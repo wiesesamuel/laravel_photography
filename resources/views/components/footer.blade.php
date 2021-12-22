@@ -35,6 +35,12 @@
     ul a {
         transition: color 0.5s ease;
     }
+
+    footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
 </style>
 
 <!-- FOOTER 2 MOBILE -->
