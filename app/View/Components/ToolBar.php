@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
-class NavBarUser extends Component
+class ToolBar extends Component
 {
 
     public function render()
@@ -24,8 +24,12 @@ class NavBarUser extends Component
             return null;
         }
 
-        return $this->getActions(Route::currentRouteName());
-        return view('navBar', $this->getActions(Route::currentRouteName()));
+        $route = Route::currentRouteName();
+        $actions = $this->getActions($route);
+        return view('components.navigation-toolbar', [
+            "parent_route" => $route,
+            "actions" => $actions,
+        ]);
     }
 
     private function getActions($route)

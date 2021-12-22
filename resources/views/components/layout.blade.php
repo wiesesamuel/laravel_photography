@@ -10,7 +10,7 @@
 <body>
 @include('components.navigation-bar')
 
-{{--<x-NavBarUser/>--}}
+<x-ToolBar/>
 <section class="px-6 py-8" style="  min-height: 82vh;">
     {{$slot}}
 </section>

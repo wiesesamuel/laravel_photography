@@ -41,7 +41,10 @@ Route::get('/tasks', function () {
 
 
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
+Route::get('/albums/new', [AlbumController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("albums.new");
 Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
+Route::get('/albums/import', [AlbumController::class, 'import'])->middleware('role:' . UserRole::Moderator)->name("albums.import");
+Route::get('/albums/delete', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("albums.delete");
 
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");

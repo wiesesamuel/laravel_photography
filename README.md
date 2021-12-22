@@ -5,18 +5,32 @@
 * `./vendor/bin/sail php artisan migrate -seed`
 
 # Composer 1 to Composer 2
+
 * `sudo apt remove composer`
 * `cd ~ && curl -sS https://getcomposer.org/installer -o composer-setup.php`
 * `sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer`
 * `alias composer='/usr/local/bin/composer'`
 
+# php8
+
+* `sudo apt install php8.0-cli php8.0-common php8.0-imap php8.0-redis php8.0-snmp php8.0-xml`
+
+# docker
+
+* `https://docs.docker.com/engine/install/ubuntu/`
+* `https://docs.docker.com/compose/install/`
+  !O80e$@9tK
+
 # Langugae - dont forget Lizenz!
+
 * https://github.com/syncfusion/ej2-locale
 
-# Imagick::writeImage not implemented 
+# Imagick::writeImage not implemented
+
 * `chmod 777 -R ./public/images`
 
 # SQLSTATE[HY000] [2002] Connection refused
+
 * in .env: DB_HOST=mysql
 
 ### add db user
