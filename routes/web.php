@@ -46,6 +46,7 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
 
+
 Route::get('/admin/post', [PostController::class, 'create'])
     ->middleware('role:' . UserRole::Moderator)
     ->name("admin.post.create");

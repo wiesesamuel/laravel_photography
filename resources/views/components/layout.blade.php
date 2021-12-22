@@ -9,6 +9,7 @@
 {{--<body style="font-family: Open Sans, sans-serif">--}}
 <body>
 @include('components.navigation-bar')
+{{--<x-NavBarUser/>--}}
 <section class="px-6 py-8">
     {{$slot}}
 </section>
