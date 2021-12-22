@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->seed_posts();
 //        $this->seed_albums();
+        $this->call(UserSeeder::class);
     }
 
     private function seed_albums()
@@ -76,7 +77,7 @@ class DatabaseSeeder extends Seeder
 
         // generate tables
         $users = User::factory()->create([
-            'name' => 'Samuel Wiese'
+            'name' => 'SamuelWiese'
         ]);
 
         Category::factory(3)->create();
