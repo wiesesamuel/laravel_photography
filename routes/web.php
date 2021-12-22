@@ -47,7 +47,10 @@ Route::get('/albums/import', [AlbumController::class, 'import'])->middleware('ro
 Route::get('/albums/delete', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("albums.delete");
 
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
-Route::get('/post/{post}', [PostController::class, 'show'])->name("post");
+Route::get('/posts/new', [PostController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("posts.new");
+Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
+Route::get('/posts/import', [PostController::class, 'import'])->middleware('role:' . UserRole::Moderator)->name("posts.import");
+Route::get('/posts/delete', [PostController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("posts.delete");
 
 
 Route::get('/admin/post', [PostController::class, 'create'])
