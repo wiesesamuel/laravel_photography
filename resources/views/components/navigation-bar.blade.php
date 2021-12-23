@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="border-b border-gray-500 px-3 py-3" style="background: rgb(31, 41, 55);">
+<nav x-data="{ open: false }" class="border-b border-sky-500 px-3 py-3" style="background: rgb(31, 41, 55);">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,30 +6,36 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center logo">
                     <a href="{{ route('home') }}">
-                        <x-auth.application-logo class="block h-10 w-auto fill-current text-gray-600"/>
+                        <x-auth.application-logo class="block h-10 w-auto fill-current text-sky-600"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-parts.nav-link :href="route('albums')" :active="request()->routeIs('albums', 'album')">
+                    <x-parts.nav-link :href="route('albums')" :active="request()->routeIs('albums', 'album')"
+                                      class="text-white">
                         {{ __('Portfolio') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')">
+                    <x-parts.nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')"
+                                      class="text-white">
                         {{ __('Blog') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('profile')" :active="request()->routeIs('profile')">
+                    <x-parts.nav-link :href="route('profile')" :active="request()->routeIs('profile')"
+                                      class="text-white">
                         {{ __('Profile') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')">
+                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')"
+                                      class="text-white">
                         {{ __('Team') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')">
+                    <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')"
+                                      class="text-white">
                         {{ __('Price') }}
                     </x-parts.nav-link>
 
                     @auth
-                        <x-parts.nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-parts.nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
+                                          class="text-white">
                             {{ __('Dashboard') }}
                         </x-parts.nav-link>
                     @endauth
@@ -42,7 +48,7 @@
                     <x-auth.dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                class="flex items-center text-xl font-medium text-white hover:text-sky-700 hover:border-sky-300 focus:outline-none focus:text-sky-700 focus:border-sky-300 transition duration-150 ease-in-out">
                                 <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ml-1">
@@ -71,11 +77,11 @@
                     </x-auth.dropdown>
                 @else
                     {{--                   TODO Login Button --}}
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                    <a href="{{ route('login') }}" class="text-xl text-white underline">Log in</a>
 
-                    @if (Route::has('register'))
+                    @if (false && Route::has('register'))
                         <a href="{{ route('register') }}"
-                           class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                           class="ml-4 text-xl text-white underline">Register</a>
                     @endif
                 @endauth
             </div>
@@ -83,7 +89,7 @@
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                        class="inline-flex items-center justify-center p-2 rounded-md text-sky-400 hover:text-sky-500 hover:bg-sky-100 focus:outline-none focus:bg-sky-100 focus:text-sky-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
                               stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -125,10 +131,10 @@
 
     @auth
         <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="pt-4 pb-1 border-t border-sky-200">
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-sky-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-sky-500">{{ Auth::user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
