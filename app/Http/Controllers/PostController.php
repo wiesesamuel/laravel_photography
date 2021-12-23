@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Validation\Rule;
-use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -52,5 +51,31 @@ class PostController extends Controller
         ]);
         dd("u created an post", $attributes);
     }
+
+
+    public function new()
+    {
+        return $this->index();
+    }
+
+    public function import()
+    {
+        return $this->index();
+    }
+
+    public function edit2(Post $album)
+    {
+        return view('albums.show', [
+            'album' => $album
+        ]);
+    }
+
+    public function delete(Post $album)
+    {
+        return view('albums.show', [
+            'album' => $album
+        ]);
+    }
+
 
 }

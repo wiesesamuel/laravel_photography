@@ -42,15 +42,17 @@ Route::get('/tasks', function () {
 
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
 Route::get('/albums/new', [AlbumController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("albums.new");
-Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 Route::get('/albums/import', [AlbumController::class, 'import'])->middleware('role:' . UserRole::Moderator)->name("albums.import");
-Route::get('/albums/delete', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("albums.delete");
+Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
+Route::get('/albums/edit/{album}', [AlbumController::class, 'edit'])->middleware('role:' . UserRole::Moderator)->name("album.edit");
+Route::get('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.delete");
 
 Route::get('/posts', [PostController::class, 'index'])->name("posts");
 Route::get('/posts/new', [PostController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("posts.new");
-Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
 Route::get('/posts/import', [PostController::class, 'import'])->middleware('role:' . UserRole::Moderator)->name("posts.import");
-Route::get('/posts/delete', [PostController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("posts.delete");
+Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
+Route::get('/posts/edit/{post}', [PostController::class, 'edit'])->middleware('role:' . UserRole::Moderator)->name("post.edit");
+Route::get('/posts/delete/{post}', [PostController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("post.delete");
 
 
 Route::get('/admin/post', [PostController::class, 'create'])

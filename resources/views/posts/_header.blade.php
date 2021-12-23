@@ -38,7 +38,9 @@
                 @if (request('category'))
                     <input type="hidden" name="category" value="{{request('category')}}">
                 @endif
-
+                @if (request('tag'))
+                    <input type="hidden" name="tag" value="{{request('tag')}}">
+                @endif
                 <input type="text" name="search" placeholder="Find something"
                        class="bg-transparent placeholder-black font-semibold text-sm"
                        value="{{request("search")}}">

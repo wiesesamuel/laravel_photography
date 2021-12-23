@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helper\AlbumManager;
 use App\Models\Album;
-use App\Models\Image;
-use DirectoryIterator;
 
 class AlbumController extends Controller
 {
@@ -21,7 +19,7 @@ class AlbumController extends Controller
     {
         $this->albumManager->discoverAlbums();
         return view('albums.index', [
-            'albums' => $this->getPost(),
+            'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
     }
 
@@ -32,10 +30,29 @@ class AlbumController extends Controller
         ]);
     }
 
-    protected function getPost()
+
+    public function new()
     {
-        return Album::latest('albums.created_at')->paginate(9)->withQueryString();
+        return $this->index();
     }
 
+    public function import()
+    {
+        return $this->index();
+    }
+
+    public function edit(Album $album)
+    {
+        return view('albums.show', [
+            'album' => $album
+        ]);
+    }
+
+    public function delete(Album $album)
+    {
+        return view('albums.show', [
+            'album' => $album
+        ]);
+    }
 
 }

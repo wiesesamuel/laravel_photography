@@ -11,7 +11,7 @@
     </x-slot>
 
     <x-posts.dropdown-item
-        href="/?{{http_build_query(request()->except('category', 'page'))}}"
+        href="{{route('posts')}}?{{http_build_query(request()->except('category', 'page'))}}"
         :active="!isset($currentCategory) or $currentCategory == null">
         All
     </x-posts.dropdown-item>
@@ -19,7 +19,7 @@
     @foreach($categories as $category)
         <x-posts.dropdown-item
             :active="isset($currentCategory) && $currentCategory->is($category)"
-            href="/?category={{$category->slug}}&{{http_build_query(request()->except('category', 'page'))}}"
+            href="{{route('posts')}}?category={{$category->slug}}&{{http_build_query(request()->except('category', 'page'))}}"
         >
             {{ ucwords($category->name)}}
         </x-posts.dropdown-item>

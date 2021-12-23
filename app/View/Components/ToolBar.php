@@ -26,6 +26,11 @@ class ToolBar extends Component
 
         $route = Route::currentRouteName();
         $actions = $this->getActions($route);
+
+        if ($actions == null) {
+            return null;
+        }
+
         return view('components.navigation-toolbar', [
             "parent_route" => $route,
             "actions" => $actions,
@@ -37,10 +42,10 @@ class ToolBar extends Component
         switch ($route) {
             case ('albums'):
             case('posts'):
-                return ['new', 'import', 'delete'];
+            return ['new', 'import'];
             case('album'):
             case('post'):
-                return ['edit'];
+            return ['edit', 'delete'];
         }
         return null;
     }
