@@ -47,9 +47,12 @@ sudo certbot --nginx -d wiesesamuel.de -d www.wiesesamuel.de
 
 install docker, docker-compose, run docker-compose.yml
 
-php artisan config:cache php artisan view:cache
+php artisan config:cache   
+php artisan view:cache
 
-php artisan up php artisan key:generate php artisan migrate
+php artisan up   
+php artisan key:generate   
+php artisan migrate
 
 php artisan tinker App\Models\User::create([
 'name' => 'Admin',
@@ -61,10 +64,12 @@ php artisan tinker App\Models\User::create([
 ]);
 
 * blank page [source](https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel)
-  sudo chown -R $USER:www-data /var/www/html/wiesesamuel sudo find /var/www/html/wiesesamuel/ -type f -exec chmod 664 {}
-  \;   
-  sudo find /var/www/html/wiesesamuel/ -type d -exec chmod 775 {} \; cd /var/www/html/wiesesamuel/ sudo chgrp -R
-  www-data storage bootstrap/cache sudo chmod -R ug+rwx storage bootstrap/cache
+  sudo chown -R $USER:www-data /var/www/html/wiesesamuel   
+  sudo find /var/www/html/wiesesamuel/ -type f -exec chmod 664 {} \;   
+  sudo find /var/www/html/wiesesamuel/ -type d -exec chmod 775 {} \;   
+  cd /var/www/html/wiesesamuel/   
+  sudo chgrp -R www-data storage bootstrap/cache   
+  sudo chmod -R ug+rwx storage bootstrap/cache
 
 ----------------------------------------------
 ----------------------------------------------
@@ -115,13 +120,57 @@ php artisan tinker App\Models\User::create([
 * in .env: DB_HOST=mysql
 
 ### add db user
+
 # SQLSTATE[HY000] [2002] Connection refused
+
 * `
   docker exec -it laravel-webseite_mysql_1 mysql -e CREATE USER 'username'@'localhost' IDENTIFIED BY '894357092837654987263548ad'; GRANT ALL PRIVILEGES ON asdf.* TO 'username'@'localhost'; FLUSH PRIVILEGES;`
 
 ### remove docker stuff (except images)
+
     docker stop $(docker ps -aq)
     docker rm $(docker ps -aq)
     docker network prune -f
     docker volume rm $(docker volume ls --filter dangling=true -q)
     
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #convert 
+
+for file in */*.JPG; do convert "$file" -quality 50% "$file"
+done;
+
+for file in */*.jpg */*.JPG; do convert "$file" -quality 50% "$file"
+done;
+
+for file in *.jpg *.JPG; do convert "$file" -quality 50% "$file"
+done;

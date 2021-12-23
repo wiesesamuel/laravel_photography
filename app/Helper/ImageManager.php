@@ -27,7 +27,7 @@ class ImageManager
         $height = $metadata['COMPUTED']['Height'] ?? null;
         $width = $metadata['COMPUTED']['Width'] ?? null;
 
-        $this->generateCompromisedImage($imagePath);
+//        $this->generateCompromisedImage($imagePath);
 
         return Image::firstOrCreate(
             [
@@ -48,7 +48,7 @@ class ImageManager
                 'Height' => $height,
                 'Width' => $width,
 
-                'horizontal' => $metadata["Orientation"] <= 1 ?? null,
+                'horizontal' => $metadata["Orientation"] <= 1 ?? 1,
 
             ]
         );
