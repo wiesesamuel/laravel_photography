@@ -32,6 +32,9 @@ Route::get('/me', function () {
 Route::get('/we', function () {
     return view('contact.user-profile');
 })->name('team');
+Route::get('/contact', function () {
+    return view('contact.contact-form-simple');
+})->name('contact');
 
 Route::get('/tasks', function () {
 

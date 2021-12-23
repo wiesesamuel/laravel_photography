@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center logo">
                     <a href="{{ route('home') }}">
-                        <x-auth.application-logo class="block h-10 w-auto fill-current text-sky-600"/>
+                        <x-parts.application-logo class="block h-10 w-auto fill-current text-sky-600"/>
                     </a>
                 </div>
 
@@ -31,6 +31,10 @@
                     <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')"
                                       class="text-white">
                         {{ __('Price') }}
+                    </x-parts.nav-link>
+                    <x-parts.nav-link :href="route('contact')" :active="request()->routeIs('contact')"
+                                      class="text-white">
+                        {{ __('Contact') }}
                     </x-parts.nav-link>
 
                     @auth
@@ -77,11 +81,11 @@
                     </x-auth.dropdown>
                 @else
                     {{--                   TODO Login Button --}}
-                    <a href="{{ route('login') }}" class="text-xl text-white underline">Log in</a>
+                    <a href="{{ route('login') }}" class="text-lg text-white underline">Log in</a>
 
                     @if (false && Route::has('register'))
                         <a href="{{ route('register') }}"
-                           class="ml-4 text-xl text-white underline">Register</a>
+                           class="ml-4 text-lg text-white underline">Register</a>
                     @endif
                 @endauth
             </div>
