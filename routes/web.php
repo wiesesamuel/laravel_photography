@@ -24,13 +24,15 @@ Route::get('/', function () {
 
 Route::get('/prices', function () {
     return view('contact.pricing');
-});
-Route::get('/form', function () {
-    return view('contact.contact-form');
-});
-Route::get('/form1', function () {
-    return view('contact.contact-form-simple');
-});
+})->name('prices');
+
+Route::get('/me', function () {
+    return view('contact.user-profile2');
+})->name('profile');
+Route::get('/we', function () {
+    return view('contact.user-profile');
+})->name('team');
+
 Route::get('/tasks', function () {
 
     return view('tasks', [

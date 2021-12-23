@@ -5,6 +5,7 @@ namespace App\View\Components;
 
 
 use App\Enum\UserRole;
+use ErrorException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
@@ -46,11 +47,13 @@ class ToolBar extends Component
     {
         switch ($route) {
             case ('albums'):
+                return ['import'];
             case('posts'):
                 return ['new', 'import'];
             case('album'):
+                $item = $this->getModelWithId();
+                return [['delete', $item]];
             case('post'):
-                // get element
                 $item = $this->getModelWithId();
                 return [['edit', $item], ['delete', $item]];
         }
@@ -59,11 +62,15 @@ class ToolBar extends Component
 
     private function getModelWithId()
     {
-        $item = request()->route()->parameters();
-        reset($item);
-        $itemname = key($item);
-        $itemId = reset($item)->id;
-        return [$itemname, $itemId];
+        try {
+            $item = request()->route()->parameters();
+            reset($item);
+            $itemname = key($item);
+            $itemId = reset($item)->id;
+            return [$itemname, $itemId];
+        } catch (ErrorException $e) {
+            return null;
+        }
     }
 
     private function getNavItemSettings($parent_route, $action)
