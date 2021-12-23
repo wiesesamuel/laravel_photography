@@ -49,6 +49,7 @@ class PostController extends Controller
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'slug' => ['required', Rule::unique('posts', 'slug')]
         ]);
+
         dd("u created an post", $attributes);
     }
 
