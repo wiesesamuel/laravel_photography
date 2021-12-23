@@ -1,4 +1,4 @@
-@props(['parent_route', 'actions'])
+@props(['items'])
 
 <nav x-data="{ open: false }" class="border-b border-gray-500 px-3 py-3">
     <!-- Primary Navigation Menu -->
@@ -8,12 +8,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @foreach($actions as $action)
+                    @foreach($items as $item)
                         <x-parts.nav-link
-                            :href="route($parent_route . '.' . $action)"
-                            :active="request()->routeIs($parent_route . '.' . $action)" light_background="yes"
+                            :href="$item['href']"
+                            :active="$item['active']"
+                            light_background="yes"
                         >
-                            {{__(ucwords($action))}}
+                            {{__(ucwords($item['name']))}}
                         </x-parts.nav-link>
                     @endforeach
                 </div>
@@ -38,12 +39,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @foreach($actions as $action)
+            @foreach($items as $item)
+
                 <x-parts.responsive-nav-link
-                    :href="route($parent_route . '.' . $action)"
-                    :active="request()->routeIs($parent_route . '.' . $action)" light_background="yes"
+                    :href="$item['href']"
+                    :active="$item['active']"
+                    light_background="yes"
                 >
-                    {{__($action)}}
+                    {{__(ucwords($item['name']))}}
                 </x-parts.responsive-nav-link>
             @endforeach
         </div>

@@ -31,9 +31,14 @@ class ToolBar extends Component
             return null;
         }
 
+
+        $items = array();
+        foreach ($actions as $action) {
+            $items[] = $this->getNavItemSettings($route, $action);
+        }
+
         return view('components.navigation-toolbar', [
-            "parent_route" => $route,
-            "actions" => $actions,
+            "items" => $items,
         ]);
     }
 
@@ -42,11 +47,38 @@ class ToolBar extends Component
         switch ($route) {
             case ('albums'):
             case('posts'):
-            return ['new', 'import'];
+                return ['new', 'import'];
             case('album'):
             case('post'):
-            return ['edit', 'delete'];
+                // get element
+                $item = $this->getModelWithId();
+                return [['edit', $item], ['delete', $item]];
         }
         return null;
+    }
+
+    private function getModelWithId()
+    {
+        $item = request()->route()->parameters();
+        reset($item);
+        $itemname = key($item);
+        $itemId = reset($item)->id;
+        return [$itemname, $itemId];
+    }
+
+    private function getNavItemSettings($parent_route, $action)
+    {
+//        dd($action);
+        if (is_array($action)) {
+            $itemName = $action[0];
+            $actionitem = $action[1];
+            $href = route($parent_route . '.' . $itemName,
+                [$actionitem[0] => $actionitem[1]]);
+        } else {
+            $itemName = $action;
+            $href = route($parent_route . '.' . $action);
+        }
+        $active = request()->routeIs($href);
+        return ["name" => $itemName, "href" => $href, "active" => $active];
     }
 }
