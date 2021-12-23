@@ -17,7 +17,6 @@ class AlbumController extends Controller
 
     public function index()
     {
-        $this->albumManager->discoverAlbums();
         return view('albums.index', [
             'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
@@ -36,10 +35,27 @@ class AlbumController extends Controller
         return $this->index();
     }
 
-    public function import()
+    public function import($msg = null)
     {
-        return $this->index();
+        return view('albums.import', ['msg' => $msg]);
     }
+
+    public function importing($cmd)
+    {
+        $msg = "unknown command $cmd";
+        switch ($cmd) {
+            case ('importUnlocked'):
+                $this->albumManager->discoverAlbums();
+                $msg = "success";
+                break;
+            case ('reloadAll'):
+                $this->albumManager->reloadAlbums();
+                $msg = "sucess";
+                break;
+        }
+        return $this->import($msg);
+    }
+
 
     public function edit(Album $album)
     {

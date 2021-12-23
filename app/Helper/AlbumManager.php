@@ -2,10 +2,8 @@
 
 namespace App\Helper;
 
-use App\Helper\FileManager;
 use App\Models\Album;
 use App\Models\Image;
-use DirectoryIterator;
 
 
 class AlbumManager extends ImageManager
@@ -21,9 +19,15 @@ class AlbumManager extends ImageManager
 
     public function discoverAlbums()
     {
-        $this->fileManager->destroyAllLockFilesInSubdirectories(public_path('/images/albums'));
         $this->createAlbums($this->getUnlockedAlbumsFilesAndLockThem());
-        (new LanguageManager())->simplifyLocationJsons();
+//        (new LanguageManager())->simplifyLocationJsons();
+    }
+
+    public function reloadAlbums()
+    {
+        $this->fileManager->destroyAllLockFilesInSubdirectories(public_path('/images/albums'));
+        Album::truncate();
+        $this->discoverAlbums();
     }
 
     private function createAlbums($albumsArray)
