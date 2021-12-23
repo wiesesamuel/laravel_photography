@@ -48,7 +48,7 @@ class ImageManager
                 'Height' => $height,
                 'Width' => $width,
 
-                'horizontal' => $metadata["Orientation"] <= 1 ?? 1,
+                'horizontal' => ($metadata["Orientation"] ?? 999) <= 1,
 
             ]
         );
