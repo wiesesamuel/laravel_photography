@@ -20,7 +20,7 @@ class AlbumController extends Controller
 
     public function index()
     {
-        (new AlbumImageHelper)->importAlbums(public_path('images/albums'));
+        $msg = $this->albumManager->importAlbums(env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums')));
         return view('albums.index', [
             'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
@@ -49,7 +49,7 @@ class AlbumController extends Controller
         $msg = "unknown command $cmd";
         switch ($cmd) {
             case ('importUnlocked'):
-                $msg = $this->albumManager->importAlbums(public_path('/images/albums'));
+                $msg = $this->albumManager->importAlbums(env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums')));
                 break;
             case ('reloadAll'):
                 $msg = $this->albumManager->importAlbums(public_path('/images/albums'));

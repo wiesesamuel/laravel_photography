@@ -17,42 +17,66 @@ class Image extends Model
         return $this->morphedByMany(Album::class, 'imageable');
     }
 
-    public function url() {
-//        dd($this->thumbnail_path);
-        return $this->thumbnail_path ?? $this->url();
-    }
-
     protected static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->generateThumbnail();
+            $model->generateThumbnail(env("ALBUM_PUBLIC_GALLERY", public_path('images/albums/')));
         });
     }
 
-    public function generateThumbnail()
+    public function generateThumbnail($albumRootDir = null)
     {
-        $path_parts = pathinfo($this->absolute_path);
-        $dir = $path_parts['dirname'];
-        $file = $path_parts['basename'];
 
-        $thumbnail_dir = $dir . '/thumbnail/';
-        $thumbnail_destination = $thumbnail_dir . $file;
-//        dd($thumbnail_destination);
+        // path info from original file
+        $path_parts = pathinfo($this->absolute_path);
+        $absolute_dir_path_original_image = $path_parts['dirname'];
+        $image_name = $path_parts['basename'];
+
+        // set file destination
+        if ($albumRootDir != null) {
+            // get dir name from image
+            $album_dir_name = pathinfo($absolute_dir_path_original_image)['basename'];
+            $album_dir = $albumRootDir . '' . $album_dir_name;
+            // adjust destination to save file
+            $thumbnail_dir = $album_dir . '/thumbnail/';
+        } else {
+            $thumbnail_dir = $absolute_dir_path_original_image . '/thumbnail/';
+        }
+        $thumbnail_destination = $thumbnail_dir . $image_name;
+
+
+        // prepare file saving
         if (!file_exists($thumbnail_destination)) {
+            // make album dir - if needed
+            if (isset($album_dir) && !file_exists($album_dir) && !is_dir($album_dir)) {
+                mkdir($album_dir, 0777);
+            }
+
+            // make thumbnail dir
             if (!file_exists($thumbnail_dir) && !is_dir($thumbnail_dir)) {
-//                dd($dir . '/thumbnail');
                 mkdir($thumbnail_dir, 0777);
             }
-            $this->downSizeImage($this->absolute_path, $thumbnail_destination);
+
+            $img = $this->downSizeImage($this->absolute_path);
+            $img->save($thumbnail_destination);
         }
 
-        $this->thumbnail_path=$thumbnail_destination;
-//        dd($this);
-//        $me = Image::where('id', $this->id)->update(['thumbnail_path' => $thumbnail_destination]);
-//        dd($this->id);
-//        $me->save();
+
+        // save thumbnail in database
+        $url = str_replace(public_path(), '', $thumbnail_destination);
+        if ($this->id == null) {
+            $this->thumbnail_path = $thumbnail_destination;
+            $this->url = $url;
+        } else {
+            $me = Image::where('id', $this->id)->update([
+                'thumbnail_path' => $thumbnail_destination,
+                'url' => $url
+            ]);
+            $me->save();
+        }
     }
+
 
     public function addWatermark()
     {
@@ -61,7 +85,7 @@ class Image extends Model
         $img->save($this->absolute_path);
     }
 
-    private function downSizeImage($source, $destination)
+    private function downSizeImage($source)
     {
         if (is_file($source)) {
             $img = ImageBuilder::make($source);
@@ -78,8 +102,8 @@ class Image extends Model
             $newWidth = $img->width() * $ratio;
             $img->resize($newWidth, $newHeight);
 
-            // save image
-            $img->save($destination);
+            return $img;
         }
+        return null;
     }
 }

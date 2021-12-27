@@ -42,7 +42,7 @@
     <img
 
         {{$attributes->merge(['class' =>"rounded object-cover"])}}
-        src="{{$image->url()}}"
+        src="{{$image->url}}"
         title="{{$image->title}}"
         alt="{{isset($image->description) ?? ''}}"
         @if (isset($attributes['onclick']))
