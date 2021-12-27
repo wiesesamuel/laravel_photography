@@ -2,13 +2,13 @@
 
 namespace App\Helper;
 
-class LanguageManager
+class LanguageHelper
 {
     protected $fileManager;
 
     public function __construct()
     {
-        $this->fileManager = new FileManager();
+        $this->fileManager = new FileHelper();
     }
 
     public function simplifyLocationJsons()

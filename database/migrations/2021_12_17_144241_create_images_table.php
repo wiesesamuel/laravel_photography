@@ -17,6 +17,11 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->string("title")->nullable();
             $table->string("url");
+
+            $table->string("absolute_path");
+            $table->string("file_name");
+            $table->string("thumbnail_path")->nullable();
+
             $table->text("description")->nullable();
 
             $table->string("Artist")->nullable();

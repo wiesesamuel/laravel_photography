@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\AlbumManager;
+use App\Helper\AlbumHelper;
+use App\Helper\AlbumImageHelper;
 use App\Models\Album;
+use App\Models\Image;
+use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
@@ -12,11 +15,12 @@ class AlbumController extends Controller
 
     public function __construct()
     {
-        $this->albumManager = new AlbumManager();
+        $this->albumManager = new AlbumHelper();
     }
 
     public function index()
     {
+        (new AlbumImageHelper)->importAlbums(public_path('images/albums'));
         return view('albums.index', [
             'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
@@ -70,5 +74,25 @@ class AlbumController extends Controller
             'album' => $album
         ]);
     }
+//
+//    public function upload(Request $request)
+//
+//    {
+//        $this->validate($request, [
+//            'title' => 'required',
+//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//        ]);
+//
+//        $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
+//        $request->image->move(public_path('images'), $input['image']);
+//
+//        $input['title'] = $request->title;
+//        Image::create($input);
+//
+//        return back()
+//            ->with('success', 'Image Uploaded successfully.');
+//
+//    }
+
 
 }

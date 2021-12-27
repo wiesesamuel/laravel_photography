@@ -6,21 +6,21 @@ use App\Models\Album;
 use App\Models\Image;
 
 
-class AlbumManager extends ImageManager
+class AlbumHelper extends ImageHelper
 {
 
     protected $fileManager;
 
     public function __construct()
     {
-        $this->fileManager = new FileManager();;
+        $this->fileManager = new FileHelper();;
     }
 
 
     public function discoverAlbums()
     {
         $this->createAlbums($this->getUnlockedAlbumsFilesAndLockThem());
-//        (new LanguageManager())->simplifyLocationJsons();
+//        (new LanguageHelper())->simplifyLocationJsons();
     }
 
     public function reloadAlbums()
@@ -55,7 +55,7 @@ class AlbumManager extends ImageManager
     {
         $albums = array();
         foreach ($this->fileManager->getSubdirectoriesFromDirectory(public_path('/images/albums')) as $albumName => $albumPath) {
-            $albumImages = $this->fileManager->getImagesFromDirectory($albumPath);
+            $albumImages = $this->fileManager->getImagePaths($albumPath);
             if (!empty($albumImages) && !$this->fileManager->lockFileExists($albumPath)) {
                 $albums[$albumName] = $this->fileManager->getFilesFromDirectory($albumPath);
                 $this->fileManager->createLockFile($albumPath);

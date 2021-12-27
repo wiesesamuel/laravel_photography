@@ -8,21 +8,21 @@ use App\Models\Album;
 use App\Models\Image;
 use DirectoryIterator;
 
-class FileManager
+class FileHelper
 {
 
-    public function getImagesFromDirectory($path)
+    public function getImagePaths($dir)
     {
         $imageExtensions = [
             "jpg", "jpeg", "jpe", "jif", "jfif", "jfi", 'gif', 'png', 'raw',
             "JPG", "JPEG", "JPE", "JIF", "JFIF", "JFI", 'GIF', 'PNG', 'RAW',
         ];
-        return $this->getFilesFromDirectory($path, $imageExtensions);
+        return $this->getFilesFromDirectory($dir, $imageExtensions);
     }
 
-    public function getFilesFromDirectory($path, $extensions = null)
+    public function getFilesFromDirectory($dir, $extensions = null)
     {
-        $iterator = new DirectoryIterator($path);
+        $iterator = new DirectoryIterator($dir);
         $files = array();
         foreach ($iterator as $fileinfo) {
             if ($fileinfo->isFile() && !$fileinfo->isDot()) {
