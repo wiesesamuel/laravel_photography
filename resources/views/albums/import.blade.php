@@ -5,7 +5,7 @@
             <div class="xl:w-10/12 xl:mx-auto px-4">
 
                 <div class="xl:w-3/4 mb-4">
-                    <h1 class="text-3xl text-medium mb-4">{{$msg ? 'Meldung: ' . $msg : ''}}</h1>
+                    <h1 class="text-3xl text-medium mb-4">{{$msg ? 'Meldung: ' . (is_array($msg) ? implode('<br>', $msg) : $msg) : ''}}</h1>
                 </div>
 
                 <div class="md:w-2/3 md:px-4">

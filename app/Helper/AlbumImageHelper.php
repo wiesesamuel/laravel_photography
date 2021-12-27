@@ -30,6 +30,7 @@ class AlbumImageHelper
 
             $images = $this->createImages($dir);
             $album = $this->createAlbum($dir, $images);
+            $this->linkImagesToAlbum($images, $album);
 
             return "Album $album->title was successfully re/imported with " . count($images) . " Images";
         }
@@ -70,24 +71,24 @@ class AlbumImageHelper
 
     private function createAlbum($dir, $images)
     {
-        $album = Album::updateOrCreate(
+        return Album::updateOrCreate(
             ['absolute_path' => $dir],
             [
                 'dir_name' => basename($dir),
                 'image_id' => $images[0]->id
             ]
         );
+    }
 
+    private function linkImagesToAlbum($images, $album) {
         $imageIds = array_map(
-            function ($model) {
-                return $model->id;
+            function ($image) {
+                return $image->id;
             },
             $images
         );
 
         $album->images()->sync($imageIds);
-
-        return $album;
     }
 
     private function createImages($dir)
@@ -116,7 +117,7 @@ class AlbumImageHelper
 //              'Artist' => $metadata['Artist'] ?? null,
 
                 'title' => $metadata['FileName'] ?? null,
-                'url' => str_replace(public_path(), '', $imagePath),
+//                'url' => str_replace(public_path(), '', $imagePath),
 
                 'DateTime' => $metadata['DateTimeOriginal'] ?? null,
                 'CCDWidth' => $metadata['CCDWidth'] ?? null, // mm
