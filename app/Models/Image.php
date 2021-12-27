@@ -17,6 +17,14 @@ class Image extends Model
         return $this->morphedByMany(Album::class, 'imageable');
     }
 
+    public function height() {
+        return $this->Height;
+    }
+
+    public function width() {
+        return $this->Width;
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -46,7 +54,7 @@ class Image extends Model
         $thumbnail_destination = $thumbnail_dir . $image_name;
 
 
-        // prepare file saving
+        // prepare file structure
         if (!file_exists($thumbnail_destination)) {
             // make album dir - if needed
             if (isset($album_dir) && !file_exists($album_dir) && !is_dir($album_dir)) {
@@ -58,8 +66,12 @@ class Image extends Model
                 mkdir($thumbnail_dir, 0777);
             }
 
-            $img = $this->downSizeImage($this->absolute_path);
-            $img->save($thumbnail_destination);
+            $res = $this->downSizeImage($this->absolute_path);
+            dd($res);
+            $res[0]->save($thumbnail_destination);
+        } else {
+            $img = ImageBuilder::make($thumbnail_destination);
+            $res = [null, $img->height(), $img->width()];
         }
 
 
@@ -68,10 +80,15 @@ class Image extends Model
         if ($this->id == null) {
             $this->thumbnail_path = $thumbnail_destination;
             $this->url = $url;
+            $this->Height = $res[1];
+            $this->Width = $res[2];
+            $res[1] == 0 ? dd($this) : '';
         } else {
             $me = Image::where('id', $this->id)->update([
                 'thumbnail_path' => $thumbnail_destination,
-                'url' => $url
+                'url' => $url,
+                'height' => $res[1],
+                'width' => $res[2],
             ]);
             $me->save();
         }
@@ -102,7 +119,7 @@ class Image extends Model
             $newWidth = $img->width() * $ratio;
             $img->resize($newWidth, $newHeight);
 
-            return $img;
+            return [$img, $newHeight, $newWidth];
         }
         return null;
     }
