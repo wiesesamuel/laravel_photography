@@ -15,7 +15,7 @@ class AlbumController extends Controller
 
     public function __construct()
     {
-        $this->albumManager = new AlbumHelper();
+        $this->albumManager = new AlbumImageHelper();
     }
 
     public function index()
@@ -49,12 +49,10 @@ class AlbumController extends Controller
         $msg = "unknown command $cmd";
         switch ($cmd) {
             case ('importUnlocked'):
-                $this->albumManager->discoverAlbums();
-                $msg = "success";
+                $msg = $this->albumManager->importAlbums(public_path('/images/albums'));
                 break;
             case ('reloadAll'):
-                $this->albumManager->reloadAlbums();
-                $msg = "sucess";
+                $msg = $this->albumManager->importAlbums(public_path('/images/albums'));
                 break;
         }
         return $this->import($msg);

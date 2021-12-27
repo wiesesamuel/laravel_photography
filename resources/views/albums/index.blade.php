@@ -14,7 +14,7 @@
                     >
                         <x-albums.image
                             :image="$album->coverImage"
-                            onclick="document.location='/albums/{{$album->id}}'; return false;"
+                            onclick="document.location='{{route('album', $album)}}'; return false;"
                         />
                     </x-albums.grid.dense-grid-element>
                 @endforeach

@@ -18,6 +18,7 @@ class Image extends Model
     }
 
     public function url() {
+//        dd($this->thumbnail_path);
         return $this->thumbnail_path ?? $this->url();
     }
 
@@ -46,7 +47,11 @@ class Image extends Model
             $this->downSizeImage($this->absolute_path, $thumbnail_destination);
         }
 
-        Image::where('id', $this->id)->update(['thumbnail_path' => $thumbnail_destination]);
+        $this->thumbnail_path=$thumbnail_destination;
+//        dd($this);
+//        $me = Image::where('id', $this->id)->update(['thumbnail_path' => $thumbnail_destination]);
+//        dd($this->id);
+//        $me->save();
     }
 
     public function addWatermark()
