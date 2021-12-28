@@ -31,6 +31,7 @@ class AlbumImageHelper
             $images = $this->createImages($dir);
             $album = $this->createAlbum($dir, $images);
             $this->linkImagesToAlbum($images, $album);
+            $this->makeAlbumConfig($album);
 
             return "Album $album->title was successfully re/imported with " . count($images) . " Images";
         }
@@ -68,6 +69,8 @@ class AlbumImageHelper
         return (bool)Image::where('absolute_path', '=', $path);
 
     }
+
+
 
     private function createAlbum($dir, $images)
     {
@@ -136,5 +139,8 @@ class AlbumImageHelper
             return [];
         }
     }
+
+
+
 
 }

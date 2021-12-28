@@ -23,6 +23,7 @@ class CreateImagesTable extends Migration
             $table->string("thumbnail_path")->nullable();
 
             $table->text("description")->nullable();
+            $table->string("orientation")->nullable();
 
             $table->string("Artist")->nullable();
             $table->string("DateTime")->nullable();
