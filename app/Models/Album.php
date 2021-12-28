@@ -9,7 +9,7 @@ class Album extends Model
 {
     use HasFactory;
 
-    protected $with = ['images', 'coverImage', 'tags'];
+    protected $with = ['images', 'coverImage', 'tags', 'category'];
 
     protected $guarded = ['id'];
 
@@ -17,6 +17,11 @@ class Album extends Model
     public function images()
     {
         return $this->morphToMany(Image::class, 'imageable');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function coverImage()
@@ -31,6 +36,53 @@ class Album extends Model
 
     public function name(){
         return $this->title;
+    }
+
+
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $search = $filters['search'];
+            $query
+                ->where(function ($query) use ($search) {
+                    $query
+                        ->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+        }
+
+        if ($filters['category'] ?? false) {
+            $category = $filters['category'];
+            $query
+                ->whereExists(function ($query) use ($category) {
+                    $query->from('categories')
+                        ->whereColumn('categories.id', 'posts.category_id')
+                        ->where('categories.slug', $category);
+                });
+        }
+
+        if ($filters['model'] ?? false) {
+            $author = $filters['author'];
+            $query
+                ->whereExists(function ($query) use ($author) {
+                    $query->from('users')
+                        ->whereColumn('users.id', 'posts.user_id')
+                        ->where(function ($query) use ($author) {
+                            $query
+                                ->Where('users.name', 'like', '%' . $author . '%');
+                        });
+                });
+        }
+
+        if ($filters['tag'] ?? false) {
+            $tag = $filters['tag'];
+            $query->whereHas('tags', function ($query) use ($tag) {
+                $query
+                    ->where('tags.slug', $tag);
+            });
+        }
+
     }
 
 }

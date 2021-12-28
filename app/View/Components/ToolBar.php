@@ -48,14 +48,9 @@ class ToolBar extends Component
         switch ($route) {
             case ('albums'):
                 return ['import'];
-            case('posts'):
-                return ['new', 'import'];
             case('album'):
                 $item = $this->getModelWithId();
                 return [['delete', $item]];
-            case('post'):
-                $item = $this->getModelWithId();
-                return [['edit', $item], ['delete', $item]];
         }
         return null;
     }

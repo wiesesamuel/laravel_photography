@@ -16,10 +16,6 @@
                                       class="text-white">
                         {{ __('Portfolio') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')"
-                                      class="text-white">
-                        {{ __('Blog') }}
-                    </x-parts.nav-link>
                     <x-parts.nav-link :href="route('profile')" :active="request()->routeIs('profile')"
                                       class="text-white">
                         {{ __('Profile') }}
@@ -111,9 +107,6 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-auth.responsive-nav-link :href="route('albums')" :active="request()->routeIs('albums', 'album')">
                 {{ __('Portfolio') }}
-            </x-auth.responsive-nav-link>
-            <x-auth.responsive-nav-link :href="route('posts')" :active="request()->routeIs('posts', 'post')">
-                {{ __('Blog') }}
             </x-auth.responsive-nav-link>
             <x-auth.responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
                 {{ __('Profile') }}

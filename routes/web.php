@@ -3,7 +3,6 @@
 use App\Enum\TaskState;
 use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\PostController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('posts');
+    return redirect()->route('albums');
 })->name('home');
+
+
 
 Route::get('/prices', function () {
     return view('contact.pricing');
@@ -57,22 +58,6 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name("album");
 Route::get('/albums/edit/{album}', [AlbumController::class, 'edit'])->middleware('role:' . UserRole::Moderator)->name("album.edit");
 Route::get('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.delete");
 //Route::delete('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.deleting");
-
-Route::get('/posts', [PostController::class, 'index'])->name("posts");
-Route::get('/posts/new', [PostController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("posts.new");
-Route::get('/posts/import', [PostController::class, 'import'])->middleware('role:' . UserRole::Moderator)->name("posts.import");
-Route::get('/posts/{post}', [PostController::class, 'show'])->name("post");
-Route::get('/posts/edit/{post}', [PostController::class, 'edit'])->middleware('role:' . UserRole::Moderator)->name("post.edit");
-Route::get('/posts/delete/{post}', [PostController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("post.delete");
-
-
-Route::get('/admin/post', [PostController::class, 'create'])
-    ->middleware('role:' . UserRole::Moderator)
-    ->name("admin.post.create");
-
-Route::post('/admin/post/create', [PostController::class, 'store'])
-    ->middleware('role:' . UserRole::Moderator)
-    ->name("admin.post.creating");
 
 
 Route::get('/dashboard', function () {

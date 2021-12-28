@@ -8,14 +8,6 @@ use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
-    public function index()
-    {
-        return view('posts.index',
-            [
-                'posts' => Post::latest('posts.created_at')->filter(request(['search', 'category', 'author', 'tag']))->paginate(9)->withQueryString(),
-            ]);
-    }
-
     public function show(Post $post)
     {
         return view('posts.show', [
@@ -53,10 +45,17 @@ class PostController extends Controller
 
     }
 
-
     public function new()
     {
         return $this->index();
+    }
+
+    public function index()
+    {
+        return view('posts.index',
+            [
+                'posts' => Post::latest('posts.created_at')->filter(request(['search', 'category', 'author', 'tag']))->paginate(9)->withQueryString(),
+            ]);
     }
 
     public function import()
