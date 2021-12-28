@@ -61,6 +61,18 @@ class AlbumConfigHelper
 
     }
 
+    public function deleteConfigs($albums) {
+        foreach ($albums as $album) {
+            $this->deleteConfig($album);
+        }
+    }
+
+    public function deleteConfig($album) {
+        if ($this->configExists($album)) {
+            unlink($album->absolute_path . '/config.json');
+        }
+    }
+
     /**
      * @param $album
      * @return array
