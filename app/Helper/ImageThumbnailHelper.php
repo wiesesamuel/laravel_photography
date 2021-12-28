@@ -17,13 +17,15 @@ class ImageThumbnailHelper
         $this->preferedPixelLength = 1200;
     }
 
-    public function resetViaAlbums($albums) {
+    public function resetViaAlbums($albums)
+    {
         foreach ($albums as $album) {
             $this->resetViaAlbum($album);
         }
     }
 
-    public function resetViaAlbum($album) {
+    public function resetViaAlbum($album)
+    {
         $this->resetThumbnails($album->images);
     }
 
@@ -112,12 +114,13 @@ class ImageThumbnailHelper
             }
 
             $res = $this->downSizeImage($image->absolute_path);
-            $res[0]->save($thumbnail_destination);
+            $img = ($res[0]);
+            $img->save($thumbnail_destination);
+
         } else {
             $img = ImageBuilder::make($thumbnail_destination);
             $res = [null, $img->height(), $img->width()];
         }
-
 
         // save thumbnail in database
         $url = str_replace(public_path(), '', $thumbnail_destination);
@@ -134,6 +137,7 @@ class ImageThumbnailHelper
     {
         if (is_file($source)) {
             $img = ImageBuilder::make($source);
+            $img->orientate();
 
             // get image orientation
             $imageIsHozizontal = $img->width() > $img->height();
