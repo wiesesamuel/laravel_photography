@@ -57,10 +57,10 @@ class AlbumController extends Controller
 
         switch ($parent) {
             case ('import'):
-            case ('reset'):
                 switch ($action) {
                     case('all'):
-                        $albums = $this->albumManager->import();
+                        $this->albumManager->import();
+                        $albums = Album::all();
                         $this->albumConfigManager->importConfigs($albums);
                         $this->imageThumbnailManager->importViaAlbums($albums);
                         break;
@@ -75,21 +75,27 @@ class AlbumController extends Controller
                         break;
                 }
                 break;
-                // ToDo reset
-                switch ('asdf') {
+            case ('reset'):
+                switch ('$action') {
                     case('all'):
-                        $albums = $this->albumManager->import();
+                        Album::truncate();
+                        $this->albumManager->import();
+                        $albums = Album::all();
+                        $this->albumConfigManager->makeAlbumConfig($albums);
                         $this->albumConfigManager->importConfigs($albums);
-                        $this->imageThumbnailManager->importViaAlbums($albums);
+                        $this->imageThumbnailManager->resetViaAlbums($albums);
                         break;
                     case('album'):
+                        Album::truncate();
                         $this->albumManager->import();
                         break;
                     case('config'):
-                        $this->albumConfigManager->importConfigs(Album::all());
+                        $albums = Album::all();
+                        $this->albumConfigManager->makeAlbumConfig($albums);
+                        $this->albumConfigManager->importConfigs($albums);
                         break;
                     case ('thumbnail'):
-                        $this->imageThumbnailManager->importViaAlbums(Album::all());
+                        $this->imageThumbnailManager->resetViaAlbums(Album::all());
                         break;
                 }
                 break;

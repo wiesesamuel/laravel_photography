@@ -7,7 +7,7 @@ use App\Models\Image;
 use Intervention\Image\ImageManagerStatic as ImageBuilder;
 
 /**
- *
+ * Handles File Structured Album and Images, no config
  */
 class AlbumImageHelper
 {
@@ -21,62 +21,26 @@ class AlbumImageHelper
         $this->albumOriginalDir = env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
     }
 
-    /**
-     * @return array
-     */
     public function import()
     {
-        return $this->importAlbums($this->albumOriginalDir);
+        $this->importAlbumsViaDir($this->albumOriginalDir);
     }
 
-    /**
-     * @param $dir
-     * @return string|void Message
-     */
-    public function importAlbum($dir)
+    public function importAlbumsViaDir($dir)
     {
-        // check if dir exists and is not empty
-        if (is_dir($dir) && !((count(scandir($dir)) == 2))) {
+        $dirs = $this->fileManager->getSubdirectoriesFromDirectory($dir);
+        foreach ($dirs as $dir) {
+            $this->importAlbumViaDir($dir);
+        }
+    }
 
+    public function importAlbumViaDir($dir)
+    {
+        if (is_dir($dir) && !((count(scandir($dir)) == 2))) {
             $images = $this->getImages($dir);
             $album = $this->getAlbum($dir, $images);
             $this->linkImagesToAlbum($images, $album);
-
-            return $album;
         }
-
-        return null;
-    }
-
-    /**
-     * @param $dir
-     * @return array Messages
-     */
-    public function importAlbums($dir)
-    {
-        $albums = array();
-
-        // check if dir exists and is not empty
-        if (is_dir($dir) && !((count(scandir($dir)) == 2))) {
-            $dirs = $this->fileManager->getSubdirectoriesFromDirectory($dir);
-
-            foreach ($dirs as $dir) {
-                $albums[] = $this->importAlbum($dir);
-            }
-        }
-
-        return $albums;
-    }
-
-    private function getAlbum($dir, $images)
-    {
-        return Album::updateOrCreate(
-            ['absolute_path' => $dir],
-            [
-                'dir_name' => basename($dir),
-                'image_id' => $images[0]->id
-            ]
-        );
     }
 
     private function linkImagesToAlbum($images, $album)
@@ -87,8 +51,18 @@ class AlbumImageHelper
             },
             $images
         );
-
         $album->images()->sync($imageIds);
+    }
+
+    private function getAlbum($dir, $images)
+    {
+        return Album::updateOrCreate(
+            ['absolute_path' => $dir],
+            [
+                'dir_name' => basename($dir),
+                'image_id' => $images[0]->id // cover image
+            ]
+        );
     }
 
     private function getImages($dir)

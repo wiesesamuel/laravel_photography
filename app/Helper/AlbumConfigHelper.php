@@ -8,6 +8,9 @@ use App\Models\Album;
 use App\Models\Image;
 use Throwable;
 
+/**
+ * Handles Album related Config files and adds them in the database
+ */
 class AlbumConfigHelper
 {
     protected $fileManager;
@@ -38,8 +41,7 @@ class AlbumConfigHelper
             $data = $this->readValidConfigOrFail($album) ?? $this->makeAlbumConfig($album);
         }
 
-        $cover_image = 0;
-        $images = array();
+        $cover_image = 1;
         foreach ($album->images as $image) {
             foreach ($data["images"] as $imageData) {
                 $res = Image::where('id', $image->id)->where('file_name', $image->file_name);
@@ -47,7 +49,6 @@ class AlbumConfigHelper
                     if ($image->file_name == $data['cover_image']) {
                         $cover_image = $image->id;}
                     $res->update($imageData);
-                    $images[] = $res;
                 }
 
             }
@@ -97,6 +98,7 @@ class AlbumConfigHelper
         try {
             $data = json_decode(file_get_contents($album->absolute_path . '/config.json'), true);
         } catch (Throwable $e) {
+            dd("asdf");
             $data = null;
         }
         return $data;

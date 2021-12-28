@@ -15,7 +15,16 @@ class ImageThumbnailHelper
     {
         $this->rootDir = env("ALBUM_PUBLIC_GALLERY", public_path('images/albums/'));
         $this->preferedPixelLength = 1200;
+    }
 
+    public function resetViaAlbums($albums) {
+        foreach ($albums as $album) {
+            $this->resetViaAlbum($album);
+        }
+    }
+
+    public function resetViaAlbum($album) {
+        $this->resetThumbnails($album->images);
     }
 
     public function importViaAlbums($albums)
@@ -59,7 +68,7 @@ class ImageThumbnailHelper
     /**
      * @param $images
      */
-    public function resetThumbanils($images)
+    public function resetThumbnails($images)
     {
         foreach ($images as $image) {
             $this->resetThumbnail($image);
