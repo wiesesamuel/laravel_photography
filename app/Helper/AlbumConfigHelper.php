@@ -98,7 +98,6 @@ class AlbumConfigHelper
         try {
             $data = json_decode(file_get_contents($album->absolute_path . '/config.json'), true);
         } catch (Throwable $e) {
-            dd("asdf");
             $data = null;
         }
         return $data;
