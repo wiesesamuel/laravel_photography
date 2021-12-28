@@ -16,7 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string("title")->nullable();
-            $table->string("url");
+            $table->string("url")->default('/public/images/wiese.png');
 
             $table->string("absolute_path");
             $table->string("file_name");

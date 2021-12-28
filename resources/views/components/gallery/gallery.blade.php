@@ -11,7 +11,6 @@
     }
     .galleryDiv {
         margin: 2px;
-        background-color: violet;
         position: relative;
     }
     .galleryI{
@@ -28,8 +27,8 @@
 <section id="gallerySection">
     @foreach($images as $img)
         @if($img->height() == 0) @dd($img) @endif
-    <div class="galleryDiv" style="width:{{$img->width()*200/$img->height()}}px;flex-grow:{{$img->width()*200/$img->height()}}">
-        <i class="galleryI" style="padding-bottom:{{$img->height()/$img->width()*100}}%"></i>
+    <div class="galleryDiv" style="width:{{($img->width()*200/$img->height())*1,5}}px;flex-grow:{{($img->width()*200/$img->height())*3}}">
+        <i class="galleryI" style="padding-bottom:{{($img->height()/$img->width()*100)}}%"></i>
         <img class="galleryImg" src="{{$img->url}}" alt="">
     </div>
     @endforeach

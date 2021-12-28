@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumHelper;
 use App\Helper\AlbumImageHelper;
+use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
 use App\Models\Image;
 use Illuminate\Http\Request;
@@ -12,10 +14,14 @@ class AlbumController extends Controller
 {
 
     protected $albumManager;
+    protected $albumConfigManager;
+    protected $imageThumbnailManager;
 
     public function __construct()
     {
         $this->albumManager = new AlbumImageHelper();
+        $this->albumConfigManager = new AlbumConfigHelper();
+        $this->imageThumbnailManager = new ImageThumbnailHelper();
     }
 
     public function index()
@@ -45,18 +51,51 @@ class AlbumController extends Controller
 
     public function importing($cmd)
     {
-        $msg = "unknown command $cmd";
-        switch ($cmd) {
-            case ('importUnlocked'):
-                $msg = $this->albumManager->importAlbums(env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums')));
+        $cmds = explode('.', $cmd);
+        $parent = $cmds[0];
+        $action = $cmds[1];
+
+        switch ($parent) {
+            case ('import'):
+            case ('reset'):
+                switch ($action) {
+                    case('all'):
+                        $albums = $this->albumManager->import();
+                        $this->albumConfigManager->importConfigs($albums);
+                        $this->imageThumbnailManager->importViaAlbums($albums);
+                        break;
+                    case('album'):
+                        $this->albumManager->import();
+                        break;
+                    case('config'):
+                        $this->albumConfigManager->importConfigs(Album::all());
+                        break;
+                    case ('thumbnail'):
+                        $this->imageThumbnailManager->importViaAlbums(Album::all());
+                        break;
+                }
                 break;
-            case ('reloadAll'):
-                $msg = $this->albumManager->importAlbums(env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums')));
+                // ToDo reset
+                switch ('asdf') {
+                    case('all'):
+                        $albums = $this->albumManager->import();
+                        $this->albumConfigManager->importConfigs($albums);
+                        $this->imageThumbnailManager->importViaAlbums($albums);
+                        break;
+                    case('album'):
+                        $this->albumManager->import();
+                        break;
+                    case('config'):
+                        $this->albumConfigManager->importConfigs(Album::all());
+                        break;
+                    case ('thumbnail'):
+                        $this->imageThumbnailManager->importViaAlbums(Album::all());
+                        break;
+                }
                 break;
         }
-        return $this->import($msg);
+        return $this->import();
     }
-
 
     public function edit(Album $album)
     {
@@ -71,25 +110,4 @@ class AlbumController extends Controller
             'album' => $album
         ]);
     }
-//
-//    public function upload(Request $request)
-//
-//    {
-//        $this->validate($request, [
-//            'title' => 'required',
-//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//        ]);
-//
-//        $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
-//        $request->image->move(public_path('images'), $input['image']);
-//
-//        $input['title'] = $request->title;
-//        Image::create($input);
-//
-//        return back()
-//            ->with('success', 'Image Uploaded successfully.');
-//
-//    }
-
-
 }

@@ -18,6 +18,18 @@ class ImageThumbnailHelper
 
     }
 
+    public function importViaAlbums($albums)
+    {
+        foreach ($albums as $album) {
+            $this->importViaAlbum($album);
+        }
+    }
+
+    public function importViaAlbum($album)
+    {
+        $this->importThumbnails($album->images);
+    }
+
     /**
      * @param $images
      */
@@ -54,18 +66,22 @@ class ImageThumbnailHelper
         }
     }
 
-    private function generateThumbnail($image, $resetThumbnail = false, $albumRootDir = null)
+    private function generateThumbnail($image, $resetThumbnail = false)
     {
+
         // path info from original file
         $path_parts = pathinfo($image->absolute_path);
         $absolute_dir_path_original_image = $path_parts['dirname'];
         $image_name = $path_parts['basename'];
 
+        // save location
+        $thumbnailDestinationDir = $this->rootDir;
+
         // set file destination
-        if ($albumRootDir != null) {
+        if ($thumbnailDestinationDir != null) {
             // get dir name from image
             $album_dir_name = pathinfo($absolute_dir_path_original_image)['basename'];
-            $album_dir = $albumRootDir . '' . $album_dir_name;
+            $album_dir = $thumbnailDestinationDir . '' . $album_dir_name;
             // adjust destination to save file
             $thumbnail_dir = $album_dir . '/thumbnail/';
         } else {
@@ -96,21 +112,13 @@ class ImageThumbnailHelper
 
         // save thumbnail in database
         $url = str_replace(public_path(), '', $thumbnail_destination);
-        if (false && $this->id == null) {
-            $this->thumbnail_path = $thumbnail_destination;
-            $this->url = $url;
-            $this->Height = $res[1];
-            $this->Width = $res[2];
-            $res[1] == 0 ? dd($this) : '';
-        } else {
-            $me = Image::where('id', $image->id)->update([
-                'thumbnail_path' => $thumbnail_destination,
-                'url' => $url,
-                'height' => $res[1],
-                'width' => $res[2],
-            ]);
-            $me->save();
-        }
+        Image::where('id', $image->id)->update([
+            'thumbnail_path' => $thumbnail_destination,
+            'url' => $url,
+            'height' => $res[1],
+            'width' => $res[2],
+        ]);
+
     }
 
     private function downSizeImage($source)

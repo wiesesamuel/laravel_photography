@@ -12,11 +12,17 @@ use Intervention\Image\ImageManagerStatic as ImageBuilder;
 class AlbumImageHelper
 {
     protected $fileManager;
+    protected $rootDir;
 
     public function __construct()
     {
         $this->fileManager = new FileHelper();
         ImageBuilder::configure(array('driver' => 'gd'));
+        $this->rootDir = env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
+    }
+
+    public function import() {
+        return $this->importAlbums($this->rootDir);
     }
 
     /**
@@ -28,15 +34,14 @@ class AlbumImageHelper
         // check if dir exists and is not empty
         if (is_dir($dir) && !((count(scandir($dir)) == 2))) {
 
-            $images = $this->createImages($dir);
-            $album = $this->createAlbum($dir, $images);
+            $images = $this->getImages($dir);
+            $album = $this->getAlbum($dir, $images);
             $this->linkImagesToAlbum($images, $album);
-            $this->makeAlbumConfig($album);
 
-            return "Album $album->title was successfully re/imported with " . count($images) . " Images";
+            return $album;
         }
 
-        return "Album $dir does not exist or is empty";
+        return null;
     }
 
     /**
@@ -45,18 +50,18 @@ class AlbumImageHelper
      */
     public function importAlbums($dir)
     {
-        $msg = array();
+        $albums = array();
 
         // check if dir exists and is not empty
         if (is_dir($dir) && !((count(scandir($dir)) == 2))) {
             $dirs = $this->fileManager->getSubdirectoriesFromDirectory($dir);
 
             foreach ($dirs as $dir) {
-                $msg[] = $this->importAlbum($dir);
+                $albums[] = $this->importAlbum($dir);
             }
         }
 
-        return $msg;
+        return $albums;
     }
 
     private function albumExists($dir)
@@ -72,7 +77,7 @@ class AlbumImageHelper
 
 
 
-    private function createAlbum($dir, $images)
+    private function getAlbum($dir, $images)
     {
         return Album::updateOrCreate(
             ['absolute_path' => $dir],
@@ -94,7 +99,7 @@ class AlbumImageHelper
         $album->images()->sync($imageIds);
     }
 
-    private function createImages($dir)
+    private function getImages($dir)
     {
         $images = array();
         foreach ($this->fileManager->getImagePaths($dir) as $name => $path) {

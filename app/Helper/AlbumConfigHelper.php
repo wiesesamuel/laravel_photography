@@ -38,17 +38,26 @@ class AlbumConfigHelper
             $data = $this->readValidConfigOrFail($album) ?? $this->makeAlbumConfig($album);
         }
 
-        Album::where('id', $album->id)->update([
-            "title" => $data['title'],
-            "description" => $data['description'],
-            "orientation" => $data['orientation'],
-        ])->save();
-
+        $cover_image = 0;
+        $images = array();
         foreach ($album->images as $image) {
             foreach ($data["images"] as $imageData) {
-                Image::where('id', $image->id)->where('file_name', $image->file_name)->update($imageData)->save();
+                $res = Image::where('id', $image->id)->where('file_name', $image->file_name);
+                if ($res != null) {
+                    if ($image->file_name == $data['cover_image']) {
+                        $cover_image = $image->id;}
+                    $res->update($imageData);
+                    $images[] = $res;
+                }
+
             }
         }
+
+        Album::where('id', $album->id)->update([
+            "title" => $data['title'],
+            "image_id" => $cover_image,
+        ]);
+
     }
 
     /**
@@ -62,7 +71,7 @@ class AlbumConfigHelper
             $data = [
                 "title" => $image->file_name,
                 "description" => "",
-                "orientation" => $image->horizontal,
+                "orientation" => (string)$image->horizontal,
             ];
             $images[$image->file_name] = $data;
         }
@@ -86,7 +95,7 @@ class AlbumConfigHelper
     private function readValidConfigOrFail($album)
     {
         try {
-            $data = json_decode(file_get_contents($album->absolute_path . '/config.json'));
+            $data = json_decode(file_get_contents($album->absolute_path . '/config.json'), true);
         } catch (Throwable $e) {
             $data = null;
         }

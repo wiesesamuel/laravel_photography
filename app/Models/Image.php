@@ -24,14 +24,4 @@ class Image extends Model
     public function width() {
         return $this->Width;
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->generateThumbnail();
-        });
-    }
-
-
 }

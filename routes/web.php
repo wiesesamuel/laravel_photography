@@ -35,6 +35,9 @@ Route::get('/we', function () {
 Route::get('/contact', function () {
     return view('contact.contact-form-simple');
 })->name('contact');
+Route::get('/flickr', function () {
+    return view('components.gallery.flickr');
+})->name('flcir');
 
 Route::get('/tasks', function () {
 
