@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helper\AlbumConfigHelper;
-use App\Helper\AlbumHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
-use App\Models\Image;
-use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
