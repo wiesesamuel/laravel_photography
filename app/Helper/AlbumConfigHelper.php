@@ -72,7 +72,7 @@ class AlbumConfigHelper
             $data = [
                 "title" => $image->file_name,
                 "description" => "",
-                "orientation" => (string)$image->horizontal,
+                "orientation" => $this->getOrientatedImage($image->absolute_path),
             ];
             $images[$image->file_name] = $data;
         }
@@ -102,6 +102,25 @@ class AlbumConfigHelper
         }
         return $data;
     }
+
+    private function getOrientatedImage($original)
+    {
+        $exif = exif_read_data($original);
+        if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+                case 8:
+                case 6:
+                    // +-90
+                    return "vertical";
+                case 3:
+                    // 180
+                    return "horizontal";
+
+            }
+        }
+        return "horizontal";
+    }
+
 
 
 }
