@@ -76,13 +76,12 @@ class AlbumController extends Controller
                 }
                 break;
             case ('reset'):
-                switch ('$action') {
+                switch ($action) {
                     case('all'):
                         Album::truncate();
                         $this->albumManager->import();
                         $albums = Album::all();
-                        $this->albumConfigManager->deleteConfigs($albums);
-                        $this->albumConfigManager->makeAlbumConfig($albums);
+                        $this->albumConfigManager->makeAlbumConfigs($albums);
                         $this->albumConfigManager->importConfigs($albums);
                         $this->imageThumbnailManager->resetViaAlbums($albums);
                         break;
@@ -92,8 +91,7 @@ class AlbumController extends Controller
                         break;
                     case('config'):
                         $albums = Album::all();
-                        $this->albumConfigManager->deleteConfigs($albums);
-                        $this->albumConfigManager->makeAlbumConfig($albums);
+                        $this->albumConfigManager->makeAlbumConfigs($albums);
                         $this->albumConfigManager->importConfigs($albums);
                         break;
                     case ('thumbnail'):

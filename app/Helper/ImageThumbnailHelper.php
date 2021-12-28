@@ -105,10 +105,10 @@ class ImageThumbnailHelper
         // prepare file structure
         if (!file_exists($thumbnail_destination) || $resetThumbnail) {
 
-            // delete thumbnail
-            if ($resetThumbnail && file_exists($thumbnail_destination)) {
-                unlink($thumbnail_destination);
-            }
+//            // delete thumbnail
+//            if ($resetThumbnail && file_exists($thumbnail_destination)) {
+//                unlink($thumbnail_destination);
+//            }
 
             // make album dir - if needed
             if (isset($album_dir) && !file_exists($album_dir) && !is_dir($album_dir)) {

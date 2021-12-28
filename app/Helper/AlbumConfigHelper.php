@@ -73,6 +73,12 @@ class AlbumConfigHelper
         }
     }
 
+    public function makeAlbumConfigs($albums) {
+        foreach ($albums as $album) {
+            $this->makeAlbumConfig($album);
+        }
+    }
+
     /**
      * @param $album
      * @return array
