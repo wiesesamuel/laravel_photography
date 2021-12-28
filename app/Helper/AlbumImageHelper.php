@@ -12,17 +12,21 @@ use Intervention\Image\ImageManagerStatic as ImageBuilder;
 class AlbumImageHelper
 {
     protected $fileManager;
-    protected $rootDir;
+    protected $albumOriginalDir;
 
     public function __construct()
     {
         $this->fileManager = new FileHelper();
         ImageBuilder::configure(array('driver' => 'gd'));
-        $this->rootDir = env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
+        $this->albumOriginalDir = env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
     }
 
-    public function import() {
-        return $this->importAlbums($this->rootDir);
+    /**
+     * @return array
+     */
+    public function import()
+    {
+        return $this->importAlbums($this->albumOriginalDir);
     }
 
     /**
@@ -64,19 +68,6 @@ class AlbumImageHelper
         return $albums;
     }
 
-    private function albumExists($dir)
-    {
-        return (bool)Album::where('absolute_path', '=', $dir);
-    }
-
-    private function imageExists($path)
-    {
-        return (bool)Image::where('absolute_path', '=', $path);
-
-    }
-
-
-
     private function getAlbum($dir, $images)
     {
         return Album::updateOrCreate(
@@ -88,7 +79,8 @@ class AlbumImageHelper
         );
     }
 
-    private function linkImagesToAlbum($images, $album) {
+    private function linkImagesToAlbum($images, $album)
+    {
         $imageIds = array_map(
             function ($image) {
                 return $image->id;
@@ -144,8 +136,6 @@ class AlbumImageHelper
             return [];
         }
     }
-
-
 
 
 }
