@@ -19,7 +19,7 @@ class CreateAlbumsTable extends Migration
             $table->string('absolute_path');
             $table->string('dir_name');
             $table->text('description')->nullable();
-            $table->foreignId('image_id');
+            $table->foreignId('image_id')->default(1);
             $table->timestamps();
         });
     }

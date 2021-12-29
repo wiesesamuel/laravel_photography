@@ -6,6 +6,16 @@ use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
+use App\Models\Image;
+use App\Services\AlbumChain\AlbumChainItem;
+use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
+use App\Services\AlbumChain\Pipeline\DiscoverAlbumFiles;
+use App\Services\AlbumChain\Pipeline\GetAlbumConfig;
+use App\Services\AlbumChain\Pipeline\GetAlbumItems;
+use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
+use App\Services\AlbumChain\Pipeline\MetaDataCollector;
+use App\Services\AlbumChain\Pipeline\ThumbnailFileHandler;
+use Illuminate\Pipeline\Pipeline;
 
 class AlbumController extends Controller
 {
@@ -23,6 +33,18 @@ class AlbumController extends Controller
 
     public function index()
     {
+        $item = new AlbumChainItem();
+        $res = app(Pipeline::class)->send($item)->through(
+            [
+                DiscoverAlbumFiles::class,
+                ConfigFileHandler::class,
+                MetaDataCollector::class,
+                ThumbnailFileHandler::class,
+                AlbumModelHandler::class,
+            ]
+        )->thenReturn();
+        dd(Image::all());
+
         return view('albums.index', [
             'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
@@ -56,6 +78,8 @@ class AlbumController extends Controller
             case ('import'):
                 switch ($action) {
                     case('all'):
+
+
                         $this->albumManager->import();
                         $albums = Album::all();
                         $this->albumConfigManager->importConfigs($albums);
