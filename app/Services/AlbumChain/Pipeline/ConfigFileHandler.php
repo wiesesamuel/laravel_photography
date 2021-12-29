@@ -63,6 +63,7 @@ class ConfigFileHandler
     {
         $albumConfigs = array();
         foreach ($request->albumFileStructures as $album_path => $album_files) {
+            if (!empty($album_files)) {
 
             $config_path = !$request->reset ? $this->getConfigPath($album_files) : null;
 
@@ -72,6 +73,7 @@ class ConfigFileHandler
                 $config = $this->readValidConfigOrFail($config_path) ?? $this->writeAlbumConfig($album_path, $album_files);
             }
             $albumConfigs[$album_path] = $config;
+            }
         }
         return $albumConfigs;
     }
@@ -100,8 +102,6 @@ class ConfigFileHandler
                 $images[$imagePath] = $data;
             }
         }
-try {
-
 
     $data = [
         "title" => basename($albumPath),
@@ -109,11 +109,6 @@ try {
         "cover_image" => basename($albumFiles[0]) ?? '',
         "images" => $images,
     ];
-}
-        catch
-        (\Throwable $e) {
-            dd($albumPath);
-        }
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
     }
