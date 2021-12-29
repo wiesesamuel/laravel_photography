@@ -112,7 +112,7 @@ try {
 }
         catch
         (\Throwable $e) {
-            dd($albumFiles);
+            dd($albumPath);
         }
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
