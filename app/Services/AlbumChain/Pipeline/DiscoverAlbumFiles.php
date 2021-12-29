@@ -21,20 +21,23 @@ class DiscoverAlbumFiles
         if (!file_exists($request->searchDir)) {
             return $next($request);
         }
-
-        // search is for album collection
-        $albumFileStructures = $this->fromEachSubdirectoryGetFiles($request->searchDir);
-        if (empty($albumFileStructures)) {
-            // its actually an album directory
-            $albumFileStructures = [$request->searchDir => $this->getFilesFromDirectory($request->searchDir)];
-        }
-
-        $request->albumFileStructures = $albumFileStructures;
+        $request->albumFileStructures = $this->getAlbumStructure($request->searchDir);
         $request->fileScanComplete = true;
         return $next($request);
     }
 
-    private function fromEachSubdirectoryGetFiles($path)
+    public function getAlbumStructure($dir): array
+    {
+        // search is for album collection
+        $albumFileStructures = $this->fromEachSubdirectoryGetFiles($dir);
+        if (empty($albumFileStructures)) {
+            // its actually an album directory
+            $albumFileStructures = [$dir => $this->getFilesFromDirectory($dir)];
+        }
+        return $albumFileStructures;
+    }
+
+    private function fromEachSubdirectoryGetFiles($path): array
     {
         $iterator = new DirectoryIterator($path);
         $directories = array();
@@ -47,8 +50,7 @@ class DiscoverAlbumFiles
         return $directories;
     }
 
-
-    private function getFilesFromDirectory($dir)
+    private function getFilesFromDirectory($dir): array
     {
         $iterator = new DirectoryIterator($dir);
         $files = array();

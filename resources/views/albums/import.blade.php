@@ -10,7 +10,7 @@
 
             <x-slot name="action0">
                 <div>
-                    <div><h3><strong>All in One</strong>: Album importieren -> Config importieren oder ggfs generiern -> Thumbnail importieren oder ggfs generieren</h3></div>
+                    <div><h3><strong>All in One</strong>:Alle Alben werden inkl config Dateien importiert bzw ggfs generiert.</h3></div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
@@ -21,22 +21,9 @@
                 </div>
             </x-slot>
 
-            <x-slot name="action1">
-                <div>
-                    <div><h3><strong>Album Images</strong>: Album importieren von '/resources/uploads/albums/.../*</h3></div>
-                    <div>
-                        <button
-                            class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
-                            <a href="{{route('albums.importing', ["cmd" => 'import.album'])}}">Album Import</a>
-                            <i class="fas fa-chevron-right ml-2 text-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </x-slot>
-
             <x-slot name="action2">
                 <div>
-                    <div><h3><strong>Album Config</strong>: Config importieren oder ggfs generiern in '/resources/uploads/albums/.../config.json'</h3></div>
+                    <div><h3><strong>Config</strong>: Config dateien anwenden</h3></div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
@@ -46,26 +33,15 @@
                     </div>
                 </div>
             </x-slot>
-
-            <x-slot name="action3">
-                <div>
-                    <div><h3><strong>Album Config</strong>: Thumbnail importieren oder ggfs generieren in '/public/images/albums/.../thumbnails/'</h3></div>
-                    <div>
-                        <button
-                            class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
-                            <a href="{{route('albums.importing', ["cmd" => 'import.thumbnail'])}}">Thumbnail Import</a>
-                            <i class="fas fa-chevron-right ml-2 text-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </x-slot>
         </x-albums.grid.config-grid-element>
+
         <x-albums.grid.config-grid-element>
             <x-slot name="header">
-                Reset von Allen
+                <strong>Reset</strong>
             </x-slot>
             <x-slot name="description">
                 von Alben aus dem '/resources/uploads/albums/' Ordner.
+                Es werden alle Configurationsdateien und Thumbnails überschrieben!
             </x-slot>
 
             <x-slot name="action0">
@@ -80,23 +56,21 @@
                     </div>
                 </div>
             </x-slot>
-
             <x-slot name="action1">
                 <div>
-                    <div><h3><strong>Album Images</strong>: Album neu importieren von '/resources/uploads/albums/.../*</h3></div>
+                    <div><h3><strong>Alben</strong>Datenbankinstanzen werden gelöscht und neu importiert. GGFS OBEN AUF IMPORT ALL IN ONE AUSFÜHREN!</h3></div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
-                            <a href="{{route('albums.importing', ["cmd" => 'reset.album'])}}">Album Reset</a>
+                            <a href="{{route('albums.importing', ["cmd" => 'reset.alben'])}}">Alben</a>
                             <i class="fas fa-chevron-right ml-2 text-sm"></i>
                         </button>
                     </div>
                 </div>
             </x-slot>
-
             <x-slot name="action2">
                 <div>
-                    <div><h3><strong>Album Config</strong>: Config neu generiern in '/resources/uploads/albums/.../config.json'</h3></div>
+                    <div><h3><strong>Config</strong>: Config neu generiern in '/resources/uploads/albums/.../config.json'</h3></div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
@@ -109,7 +83,7 @@
 
             <x-slot name="action3">
                 <div>
-                    <div><h3><strong>Album Config</strong>: Thumbnail neu generieren in '/public/images/albums/.../thumbnails/'</h3></div>
+                    <div><h3><strong>Thumbnails</strong>: Thumbnail neu generieren in '/public/images/albums/.../thumbnails/'</h3></div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">

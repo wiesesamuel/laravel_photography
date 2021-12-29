@@ -7,13 +7,14 @@ use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
 use App\Models\Image;
+use App\Models\Imageable;
 use App\Services\AlbumChain\AlbumChainItem;
 use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
 use App\Services\AlbumChain\Pipeline\DiscoverAlbumFiles;
 use App\Services\AlbumChain\Pipeline\GetAlbumConfig;
 use App\Services\AlbumChain\Pipeline\GetAlbumItems;
 use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
-use App\Services\AlbumChain\Pipeline\MetaDataCollector;
+use App\Services\AlbumChain\Pipeline\ImageMetaDataCollector;
 use App\Services\AlbumChain\Pipeline\ThumbnailFileHandler;
 use Illuminate\Pipeline\Pipeline;
 
@@ -33,18 +34,6 @@ class AlbumController extends Controller
 
     public function index()
     {
-        $item = new AlbumChainItem();
-        $res = app(Pipeline::class)->send($item)->through(
-            [
-                DiscoverAlbumFiles::class,
-                ConfigFileHandler::class,
-                MetaDataCollector::class,
-                ThumbnailFileHandler::class,
-                AlbumModelHandler::class,
-            ]
-        )->thenReturn();
-        dd(Image::all());
-
         return view('albums.index', [
             'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
         ]);
@@ -78,21 +67,25 @@ class AlbumController extends Controller
             case ('import'):
                 switch ($action) {
                     case('all'):
-
-
-                        $this->albumManager->import();
-                        $albums = Album::all();
-                        $this->albumConfigManager->importConfigs($albums);
-                        $this->imageThumbnailManager->importViaAlbums($albums);
-                        break;
-                    case('album'):
-                        $this->albumManager->import();
+                        $item = new AlbumChainItem();
+                        app(Pipeline::class)->send($item)->through(
+                            [
+                                DiscoverAlbumFiles::class,
+                                ConfigFileHandler::class,
+                                ImageMetaDataCollector::class,
+                                ThumbnailFileHandler::class,
+                                AlbumModelHandler::class,
+                            ]
+                        )->thenReturn();
                         break;
                     case('config'):
-                        $this->albumConfigManager->importConfigs(Album::all());
-                        break;
-                    case ('thumbnail'):
-                        $this->imageThumbnailManager->importViaAlbums(Album::all());
+                        app(Pipeline::class)->send(new AlbumChainItem())->through(
+                            [
+                                DiscoverAlbumFiles::class,
+                                ConfigFileHandler::class,
+                                AlbumModelHandler::class,
+                            ]
+                        )->thenReturn();
                         break;
                 }
                 break;
@@ -100,25 +93,40 @@ class AlbumController extends Controller
                 switch ($action) {
                     case('all'):
                         Album::truncate();
-                        $this->albumManager->import();
-                        $albums = Album::all();
-                        $this->albumConfigManager->makeAlbumConfigs($albums);
-                        $this->albumConfigManager->importConfigs($albums);
-                        $this->imageThumbnailManager->resetViaAlbums($albums);
+                        Image::truncate();
+                        Imageable::truncate();
+                        (new ThumbnailFileHandler())->purgeThumbnails();
+
+
                         break;
-                    case('album'):
-                        Album::truncate();
-                        $this->albumManager->import();
+                    case('alben'):
+                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+                            [
+                                DiscoverAlbumFiles::class,
+                                AlbumModelHandler::class,
+                            ]
+                        )->thenReturn();
                         break;
                     case('config'):
-                        $albums = Album::all();
-                        $this->albumConfigManager->makeAlbumConfigs($albums);
-                        $this->albumConfigManager->importConfigs($albums);
+                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+                            [
+                                DiscoverAlbumFiles::class,
+                                ConfigFileHandler::class,
+                                AlbumModelHandler::class,
+                            ]
+                        )->thenReturn();
                         break;
                     case ('thumbnail'):
-                        $this->imageThumbnailManager->resetViaAlbums(Album::all());
+                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+                            [
+                                DiscoverAlbumFiles::class,
+                                ThumbnailFileHandler::class,
+                                AlbumModelHandler::class,
+                            ]
+                        )->thenReturn();
                         break;
                 }
+
                 break;
         }
         return $this->import();

@@ -12,24 +12,31 @@ class GetAlbumItems
 {
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        $request->albumItems = $this->getItemsBasedOnFileStructure($request);
+        if (!$request->fileScanComplete) {
+            $request->albumFileStructures = (new DiscoverAlbumFiles())->getAlbumStructure($request->searchDir);
+        }
+        $request->albumItems = $this->getItemsBasedOnFileStructure($request->albumFileStructures);
+        $request->itemGenerationComplete = true;
         return $next($request);
     }
 
-    private function getItemsBasedOnFileStructure($request) {
+    public function getItemsBasedOnFileStructure($albumFileStructures) {
         $albumItems = array();
-        foreach ($request->albumFileStructures as $album_path => $album_content) {
+        foreach ($albumFileStructures as $album_path => $album_content) {
 
-            $configItem = null;
-            $imageItems = array();
-            foreach ($album_content as $type => $path) {
+            $albumItem = new AlbumItem();
+            $albumItem->setPath($album_path);
+            foreach ($album_content as $type => $file_path) {
                 if ($type == 'config') {
-                    $configItem = new ConfigItem($path);
-                } else {
-                    $imageItems[] = new ImageItem($path, null);
+                    $albumItem->setConfig(new ConfigItem($file_path));
+                } elseif (is_int($type)) {
+                    $imageItem = new ImageItem();
+                    $imageItem->setPath($file_path);
+                    $albumItem->addImageItems($imageItem);
                 }
             }
-            $albumItems[] = new AlbumItem($album_path, $configItem, $imageItems);
+
+            $albumItems[] = $albumItem;
         }
         return $albumItems;
     }

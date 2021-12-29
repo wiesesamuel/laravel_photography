@@ -9,17 +9,36 @@ class AlbumItem
     public $path;
     public $config;
     public $imageItems;
+    public $metadata;
+
+    public function __construct()
+    {
+        $this->imageItems = array();
+        $this->metadata = array();
+    }
 
     /**
-     * @param $path
-     * @param $config
-     * @param $imageItems
+     * @param mixed $metadata
      */
-    public function __construct($path, $config, $imageItems)
+    public function addMetadata($metadata): void
+    {
+        $this->metadata = array_merge($this->metadata, $metadata);
+    }
+
+    public function setPath($path): void
     {
         $this->path = $path;
-        $this->config = $config;
-        $this->imageItems = $imageItems;
     }
+
+    public function setConfig($config): void
+    {
+        $this->config = $config;
+    }
+
+    public function addImageItems($imageItems): void
+    {
+        $this->imageItems[] = $imageItems;
+    }
+
 
 }

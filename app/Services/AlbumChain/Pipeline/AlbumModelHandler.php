@@ -4,6 +4,7 @@ namespace App\Services\AlbumChain\Pipeline;
 
 use App\Models\Album;
 use App\Models\Image;
+use App\Models\Imageable;
 use App\Services\AlbumChain\AlbumChainItem;
 use Closure;
 use DirectoryIterator;
@@ -12,9 +13,29 @@ class AlbumModelHandler
 {
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        $request->albumImageModels = $this->getModelsBasedOnFileStructure($request);
-        $request->modelComplete = true;
+        if ($request->itemGenerationComplete) {
+            $this->generateModelsViaAlbumItems($request->albumItems);
+        } else {
+
+            if ($request->reset) {
+                Album::truncate();
+                Image::truncate();
+                Imageable::truncate();
+            }
+
+            $request->albumImageModels = $this->getModelsBasedOnFileStructure($request);
+            $request->modelComplete = true;
+        }
         return $next($request);
+    }
+
+    public function generateModelsViaAlbumItems(array $albumItems)
+    {
+        foreach ($albumItems as $albumItem) {
+            foreach ($albumItem->imageItems as $imageItem) {
+                //TODO
+            }
+        }
     }
 
     private function getModelsBasedOnFileStructure($request)
@@ -31,6 +52,17 @@ class AlbumModelHandler
                     "album" => [$album_dir => $albumModel],
                     "images" => $imageModels,
                 ];
+
+                $this->linkImagesToAlbum($imageModels, $albumModel);
+
+                $coverImage = 1;
+                foreach ($imageModels as $image) {
+                    if ($image->file_name == $album_data["cover_image"]) {
+                        $coverImage = $image->id;
+                        break;
+                    }
+                }
+                $albumModel->update(['image_id'=> $coverImage]);
             }
         }
         return $albumImageModels;
@@ -45,8 +77,8 @@ class AlbumModelHandler
     private function collectDataFromChainForImage($request, $album, $path)
     {
         return array_merge(
-            $request->metadataComplete ? $request->albumMetadatas[$album][$path] : [],
             $request->configComplete ? $request->albumConfig[$album]["images"][$path] : [],
+            $request->metadataComplete ? $request->albumMetadatas[$album][$path] : [],
             $request->thumbnailComplete ? $request->albumThumbnails[$album][$path] : [],
         );
     }
@@ -84,5 +116,15 @@ class AlbumModelHandler
                 ], $album_data)
 
         );
+    }
+    private function linkImagesToAlbum($images, $album)
+    {
+        $imageIds = array_map(
+            function ($image) {
+                return $image->id;
+            },
+            $images
+        );
+        $album->images()->sync($imageIds);
     }
 }

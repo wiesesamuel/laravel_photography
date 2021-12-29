@@ -9,9 +9,54 @@ class ConfigFileHandler
 {
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        $request->albumConfig = $this->getConfigBasedOnFileStructure($request);
-        $request->configComplete = true;
+        if ($request->itemGenerationComplete) {
+            $this->addConfigOnAlbumItem($request->albumItems);
+        } else {
+            $request->albumConfig = $this->getConfigBasedOnFileStructure($request);
+            $request->configComplete = true;
+        }
         return $next($request);
+    }
+
+    public function addConfigOnAlbumItem(array $albumItems)
+    {
+        foreach ($albumItems as $albumItem) {
+            // get or write config
+            if ($albumItem->config != null) {
+                $albumItem->config->content =
+                    $this->readValidConfigOrFail($albumItem->config->path) ??
+                    $this->writeAlbumConfig(
+                        $albumItem->config->path,
+                        array_map(
+                            function ($imageItem) {
+                                return $imageItem->path;
+                            },
+                            $albumItem->imageItems
+                        ));
+
+            } else {
+                $albumItem->config->content =
+                $this->writeAlbumConfig(
+                    $albumItem->config->path,
+                    array_map(
+                        function ($imageItem) {
+                            return $imageItem->path;
+                        },
+                        $albumItem->imageItems
+                    ));
+            }
+            // add data in metadata
+            foreach ($albumItem->config->content["images"] as $image_path => $metadata) {
+                foreach ($albumItem->imageItems as $imageItem) {
+                    if($imageItem == $image_path) {
+                        $imageItem->addMetadata($metadata);
+                        break;
+                    }
+                }
+                unset($metadata['images']);
+                $albumItem->addMetadata($metadata);
+            }
+        }
     }
 
     private function getConfigBasedOnFileStructure($request)
@@ -19,7 +64,7 @@ class ConfigFileHandler
         $albumConfigs = array();
         foreach ($request->albumFileStructures as $album_path => $album_files) {
 
-            $config_path = $this->getConfigPath($album_files);
+            $config_path = !$request->reset ? $this->getConfigPath($album_files) : null;
 
             if ($config_path == null) {
                 $config = $this->writeAlbumConfig($album_path, $album_files);
@@ -31,8 +76,9 @@ class ConfigFileHandler
         return $albumConfigs;
     }
 
-    private function getConfigPath($album_files)
+    private function getConfigPath(array $album_files)
     {
+
         foreach ($album_files as $type => $path) {
             if ($type == 'config') {
                 return $path;
@@ -44,14 +90,15 @@ class ConfigFileHandler
     private function writeAlbumConfig($albumPath, $albumFiles)
     {
         $images = array();
-        foreach ($albumFiles as $imagePath) {
-
-            $data = [
-                "title" => basename($imagePath),
-                "description" => "",
-                "orientation" => $this->getOrientatedImage($imagePath),
-            ];
-            $images[$imagePath] = $data;
+        foreach ($albumFiles as $key => $imagePath) {
+            if (is_int($key)) {
+                $data = [
+                    "title" => basename($imagePath),
+                    "description" => "",
+                    "orientation" => $this->getOrientatedImage($imagePath),
+                ];
+                $images[$imagePath] = $data;
+            }
         }
 
         $data = [

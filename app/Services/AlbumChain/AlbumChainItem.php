@@ -6,6 +6,7 @@ use Illuminate\Pipeline\Pipeline;
 
 class AlbumChainItem
 {
+    public $reset = false;
     public $searchDir;
 
     // contains only paths
@@ -23,7 +24,11 @@ class AlbumChainItem
     // contains metadata
     public $albumMetadatas;
 
+    // contains stuff
+    public $albumItems;
+
     public $fileScanComplete = false;
+    public $itemGenerationComplete = false;
     public $configComplete = false;
     public $thumbnailComplete = false;
     public $metadataComplete = false;
@@ -32,8 +37,9 @@ class AlbumChainItem
     /**
      * @param $dir
      */
-    public function __construct($dir = null)
+    public function __construct($reset = false, $dir = null)
     {
+        $this->reset = $reset;
         $this->searchDir = $dir ?? env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
     }
 

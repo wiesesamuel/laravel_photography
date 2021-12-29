@@ -8,17 +8,29 @@ use App\Services\AlbumChain\ConfigItem;
 use App\Services\AlbumChain\ImageItem;
 use Closure;
 
-class MetaDataCollector
+class ImageMetaDataCollector
 {
 
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        $request->albumMetadatas = $this->getMetadataBasedOnFileStructure($request);
-        $request->metadataComplete = true;
+        if ($request->itemGenerationComplete) {
+            $this->addMetadataOnAlbumItem($request->albumItems);
+        } else {
+            $request->albumMetadatas = $this->getMetadataBasedOnFileStructure($request);
+            $request->metadataComplete = true;
+        }
         return $next($request);
     }
 
-    private function getMetadataBasedOnFileStructure($request) {
+    public function addMetadataOnAlbumItem(array $albumItems) {
+        foreach ($albumItems as $albumItem) {
+            foreach ($albumItem->imageItems as $image) {
+                $image->addMetadata($this->getMetaData($image->path));
+            }
+        }
+    }
+
+    public function getMetadataBasedOnFileStructure($request) {
         $albums = array();
         foreach ($request->albumFileStructures as $album_path => $album_content) {
             $images = array();
