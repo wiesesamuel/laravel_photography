@@ -100,14 +100,20 @@ class ConfigFileHandler
                 $images[$imagePath] = $data;
             }
         }
+try {
 
-        $data = [
-            "title" => basename($albumPath),
-            "description" => "",
-            "cover_image" => basename($albumFiles[0]) ?? '',
-            "images" => $images,
-        ];
 
+    $data = [
+        "title" => basename($albumPath),
+        "description" => "",
+        "cover_image" => basename($albumFiles[0]) ?? '',
+        "images" => $images,
+    ];
+}
+        catch
+        (\Throwable $e) {
+            dd($albumFiles);
+        }
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
     }
