@@ -104,7 +104,7 @@ class ConfigFileHandler
         $data = [
             "title" => basename($albumPath),
             "description" => "",
-            "cover_image" => basename($albumFiles[0]),
+            "cover_image" => basename($albumFiles[0]) ?? '',
             "images" => $images,
         ];
 
