@@ -70,7 +70,7 @@ class AlbumModelHandler
 
     private function collectDataFromChainForAlbum($request, $path)
     {
-        return $request->configComplete ? $request->albumConfig[$path] : [];
+        return $request->configComplete ? ($request->albumConfig[$path] ?? []) : [];
     }
 
 
