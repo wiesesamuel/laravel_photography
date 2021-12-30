@@ -42,6 +42,9 @@ class DiscoverAlbumFiles
 
     private function fromEachSubdirectoryGetFiles($path): array
     {
+        if (!file_exists($path)) {
+            return [];
+        }
         $iterator = new DirectoryIterator($path);
         $directories = array();
         foreach ($iterator as $fileinfo) {
@@ -58,6 +61,9 @@ class DiscoverAlbumFiles
 
     private function getFilesFromDirectory($dir): array
     {
+        if (!file_exists($dir)) {
+            return [];
+        }
         $iterator = new DirectoryIterator($dir);
         $files = array();
         foreach ($iterator as $fileinfo) {
