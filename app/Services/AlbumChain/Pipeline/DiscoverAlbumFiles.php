@@ -5,7 +5,6 @@ namespace App\Services\AlbumChain\Pipeline;
 use App\Services\AlbumChain\AlbumChainItem;
 use Closure;
 use DirectoryIterator;
-use Illuminate\Pipeline\Pipeline;
 
 class DiscoverAlbumFiles
 {
@@ -32,7 +31,11 @@ class DiscoverAlbumFiles
         $albumFileStructures = $this->fromEachSubdirectoryGetFiles($dir);
         if (empty($albumFileStructures)) {
             // its actually an album directory
-            $albumFileStructures = [$dir => $this->getFilesFromDirectory($dir)];
+            $files = $this->getFilesFromDirectory($dir);
+            if (!empty($files)) {
+                // and its not empty
+                $albumFileStructures = [$dir => $files];
+            }
         }
         return $albumFileStructures;
     }
@@ -43,7 +46,10 @@ class DiscoverAlbumFiles
         $directories = array();
         foreach ($iterator as $fileinfo) {
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
-                $directories[$fileinfo->getPathname()] = $this->getFilesFromDirectory($fileinfo->getPathname());
+                $files = $this->getFilesFromDirectory($fileinfo->getPathname());
+                if (!empty($files)) {
+                    $directories[$fileinfo->getPathname()] = $files;
+                }
             }
         }
         ksort($directories);
