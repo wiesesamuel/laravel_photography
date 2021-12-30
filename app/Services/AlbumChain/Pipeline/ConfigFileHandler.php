@@ -91,7 +91,7 @@ class ConfigFileHandler
         $data = [
             "title" => basename($albumPath),
             "description" => "",
-            "cover_image" => basename($albumFiles[0]) ?? '',
+            "cover_image" => basename($albumFiles[0] ?? '') ?? '',
             "images" => $images,
         ];
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
