@@ -4,8 +4,6 @@
 namespace App\Helper;
 
 
-use App\Models\Album;
-use App\Models\Image;
 use DirectoryIterator;
 
 class FileHelper

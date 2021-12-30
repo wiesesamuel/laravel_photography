@@ -1,0 +1,26 @@
+{
+    "1": {
+        "title" : "Schnupper Fotoshooting",
+        "subtitle": "prüfe meine Qualitäten",
+        "price": "25€",
+        "pricesFor": "3 Bilder",
+        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
+        "button": "Anfragen"
+    },
+    "3": {
+        "title" : "Schnupper Fotoshooting",
+        "subtitle": "prüfe meine Qualitäten",
+        "price": "25€",
+        "pricesFor": "3 Bilder",
+        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
+        "button": "Anfragen"
+    },
+    "2": {
+        "title" : "Schnupper Fotoshooting",
+        "subtitle": "prüfe meine Qualitäten",
+        "price": "25€",
+        "pricesFor": "3 Bilder",
+        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
+        "button": "Anfragen"
+    }
+}

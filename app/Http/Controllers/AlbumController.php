@@ -6,12 +6,9 @@ use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
-use App\Models\Image;
-use App\Models\Imageable;
 use App\Services\AlbumChain\AlbumChainItem;
 use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
 use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
-use App\Services\AlbumChain\Pipeline\DiscoverAlbumFiles;
 use App\Services\AlbumChain\Pipeline\GetAlbumConfig;
 use App\Services\AlbumChain\Pipeline\GetAlbumItems;
 use App\Services\AlbumChain\Pipeline\ImageMetaDataCollector;
@@ -67,56 +64,56 @@ class AlbumController extends Controller
                             ]
                         )->thenReturn();
                         break;
-                    case('config'):
-                        app(Pipeline::class)->send(new AlbumChainItem())->through(
-                            [
-                                DiscoverAlbumFiles::class,
-                                ConfigFileHandler::class,
-                                AlbumModelHandler::class,
-                            ]
-                        )->thenReturn();
-                        break;
+//                    case('config'):
+//                        app(Pipeline::class)->send(new AlbumChainItem())->through(
+//                            [
+//                                GetAlbumItems::class,
+//                                ConfigFileHandler::class,
+//                                AlbumModelHandler::class,
+//                            ]
+//                        )->thenReturn();
+//                        break;
                 }
                 break;
-            case ('reset'):
-                switch ($action) {
-                    case('all'):
-                        Album::truncate();
-                        Image::truncate();
-                        Imageable::truncate();
-                        (new ThumbnailFileHandler())->purgeThumbnails();
-
-
-                        break;
-                    case('alben'):
-                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-                            [
-                                DiscoverAlbumFiles::class,
-                                AlbumModelHandler::class,
-                            ]
-                        )->thenReturn();
-                        break;
-                    case('config'):
-                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-                            [
-                                DiscoverAlbumFiles::class,
-                                ConfigFileHandler::class,
-                                AlbumModelHandler::class,
-                            ]
-                        )->thenReturn();
-                        break;
-                    case ('thumbnail'):
-                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-                            [
-                                DiscoverAlbumFiles::class,
-                                ThumbnailFileHandler::class,
-                                AlbumModelHandler::class,
-                            ]
-                        )->thenReturn();
-                        break;
-                }
-
-                break;
+//            case ('reset'):
+//                switch ($action) {
+//                    case('all'):
+//                        Album::truncate();
+//                        Image::truncate();
+//                        Imageable::truncate();
+//                        (new ThumbnailFileHandler())->purgeThumbnails();
+//
+//
+//                        break;
+//                    case('alben'):
+//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+//                            [
+//                                DiscoverAlbumFiles::class,
+//                                AlbumModelHandler::class,
+//                            ]
+//                        )->thenReturn();
+//                        break;
+//                    case('config'):
+//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+//                            [
+//                                DiscoverAlbumFiles::class,
+//                                ConfigFileHandler::class,
+//                                AlbumModelHandler::class,
+//                            ]
+//                        )->thenReturn();
+//                        break;
+//                    case ('thumbnail'):
+//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
+//                            [
+//                                DiscoverAlbumFiles::class,
+//                                ThumbnailFileHandler::class,
+//                                AlbumModelHandler::class,
+//                            ]
+//                        )->thenReturn();
+//                        break;
+//                }
+//
+//                break;
         }
         return $this->import();
     }

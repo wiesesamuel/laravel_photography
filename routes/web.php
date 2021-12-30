@@ -3,7 +3,6 @@
 use App\Enum\TaskState;
 use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
-use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,14 +38,6 @@ Route::get('/contact', function () {
 Route::get('/flickr', function () {
     return view('components.gallery.css-gallery');
 })->name('flcir');
-
-Route::get('/tasks', function () {
-
-    return view('tasks', [
-        'tasks' => Task::all(),
-        'taskStates' => TaskState::asArray()
-    ]);
-});
 
 
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
