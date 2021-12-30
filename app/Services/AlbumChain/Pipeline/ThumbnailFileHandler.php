@@ -16,7 +16,7 @@ class ThumbnailFileHandler
      */
     public function __construct()
     {
-        $this->publicAlbumDir = env("ALBUM_PUBLIC_GALLERY", public_path('images/albums/'));
+        $this->publicAlbumDir = config('album.destination');
         $this->preferedPixelLength = 1200;
     }
 

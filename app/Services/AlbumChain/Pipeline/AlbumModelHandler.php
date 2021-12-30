@@ -25,7 +25,6 @@ class AlbumModelHandler
             $request->albumImageModels = $this->getModelsBasedOnFileStructure($request);
             $request->modelComplete = true;
         }
-        $request->debug();
         return $next($request);
     }
 

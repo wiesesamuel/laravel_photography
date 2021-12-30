@@ -38,13 +38,6 @@ class AlbumChainItem
     public function __construct($reset = false, $dir = null)
     {
         $this->reset = $reset;
-        $this->searchDir = $dir ?? env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
-    }
-
-    public function debug() {
-        dd(
-            $this->searchDir,
-            $this->albumItems
-        );
+        $this->searchDir = $dir ?? config('album.source');
     }
 }
