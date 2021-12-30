@@ -21,17 +21,6 @@ use Illuminate\Pipeline\Pipeline;
 class AlbumController extends Controller
 {
 
-    protected $albumManager;
-    protected $albumConfigManager;
-    protected $imageThumbnailManager;
-
-    public function __construct()
-    {
-        $this->albumManager = new AlbumImageHelper();
-        $this->albumConfigManager = new AlbumConfigHelper();
-        $this->imageThumbnailManager = new ImageThumbnailHelper();
-    }
-
     public function index()
     {
         return view('albums.index', [
