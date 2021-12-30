@@ -2,8 +2,6 @@
 
 namespace App\Services\AlbumChain;
 
-use Illuminate\Pipeline\Pipeline;
-
 class AlbumChainItem
 {
     public $reset = false;
@@ -43,7 +41,10 @@ class AlbumChainItem
         $this->searchDir = $dir ?? env("ALBUM_UPLOAD_GALLERY", public_path('/images/albums'));
     }
 
-    public function complete() {
-
+    public function debug() {
+        dd(
+            $this->searchDir,
+            $this->albumItems
+        );
     }
 }
