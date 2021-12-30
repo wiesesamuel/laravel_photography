@@ -3,9 +3,6 @@
 namespace App\Services\AlbumChain\Pipeline;
 
 use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\AlbumItem;
-use App\Services\AlbumChain\ConfigItem;
-use App\Services\AlbumChain\ImageItem;
 use Closure;
 
 class ImageMetaDataCollector
@@ -25,23 +22,9 @@ class ImageMetaDataCollector
     public function addMetadataOnAlbumItem(array $albumItems) {
         foreach ($albumItems as $albumItem) {
             foreach ($albumItem->imageItems as $image) {
-                $image->addMetadata($this->getMetaData($image->path));
+                $image->addMetadata($this->selectMetaData($this->getMetaData($image->path)));
             }
         }
-    }
-
-    public function getMetadataBasedOnFileStructure($request) {
-        $albums = array();
-        foreach ($request->albumFileStructures as $album_path => $album_content) {
-            $images = array();
-            foreach ($album_content as $type => $path) {
-                if (is_int($type)) {
-                    $images[$path] = $this->selectMetaData($this->getMetaData($path));
-                }
-            }
-            $albums[$album_path] = $images;
-        }
-        return $albums;
     }
 
     private function getMetaData($source)
@@ -81,5 +64,19 @@ class ImageMetaDataCollector
             }
         }
         return null;
+    }
+
+    private function getMetadataBasedOnFileStructure($request) {
+        $albums = array();
+        foreach ($request->albumFileStructures as $album_path => $album_content) {
+            $images = array();
+            foreach ($album_content as $type => $path) {
+                if (is_int($type)) {
+                    $images[$path] = $this->selectMetaData($this->getMetaData($path));
+                }
+            }
+            $albums[$album_path] = $images;
+        }
+        return $albums;
     }
 }

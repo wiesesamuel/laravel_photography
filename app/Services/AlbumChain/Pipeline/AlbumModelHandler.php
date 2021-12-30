@@ -7,7 +7,6 @@ use App\Models\Image;
 use App\Models\Imageable;
 use App\Services\AlbumChain\AlbumChainItem;
 use Closure;
-use DirectoryIterator;
 
 class AlbumModelHandler
 {
@@ -33,8 +32,11 @@ class AlbumModelHandler
     {
         foreach ($albumItems as $albumItem) {
             foreach ($albumItem->imageItems as $imageItem) {
-                //TODO
+                $imageItem->applyModel();
             }
+            $albumItem->applyModel();
+            $this->linkImagesToAlbum($albumItem->getImageModels(), $albumItem->model);
+            $albumItem->updateCoverImageId();
         }
     }
 
@@ -95,14 +97,14 @@ class AlbumModelHandler
         return $images;
     }
 
-    private function getImage($path, $album_data)
+    private function getImage($path, $image_data)
     {
         return Image::updateOrCreate(
             ['absolute_path' => $path],
             array_merge(
                 [
                     'file_name' => basename($path)
-                ], $album_data)
+                ], $image_data)
         );
     }
 

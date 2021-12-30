@@ -2,11 +2,7 @@
 
 namespace App\Services\AlbumChain\Pipeline;
 
-use App\Models\Image;
 use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\AlbumItem;
-use App\Services\AlbumChain\ConfigItem;
-use App\Services\AlbumChain\ImageItem;
 use Closure;
 use Intervention\Image\ImageManagerStatic as ImageBuilder;
 
@@ -39,7 +35,7 @@ class ThumbnailFileHandler
     {
         foreach ($albumItems as $albumItem) {
             foreach ($albumItem->imageItems as $imageItem) {
-                $imageItem->addMetadata($this->generateThumbnail($albumItem->path, $imageItem->path, ));
+                $imageItem->addMetadata($this->generateThumbnail($albumItem->path, $imageItem->path, $imageItem->getOrientation() ));
             }
         }
     }

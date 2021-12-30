@@ -3,6 +3,7 @@
 namespace App\Services\AlbumChain\Pipeline;
 
 use App\Services\AlbumChain\AlbumChainItem;
+use App\Services\AlbumChain\ConfigItem;
 use Closure;
 
 class ConfigFileHandler
@@ -27,35 +28,19 @@ class ConfigFileHandler
                     $this->readValidConfigOrFail($albumItem->config->path) ??
                     $this->writeAlbumConfig(
                         $albumItem->config->path,
-                        array_map(
-                            function ($imageItem) {
-                                return $imageItem->path;
-                            },
-                            $albumItem->imageItems
-                        ));
+                        $albumItem->getImagePaths()
+                    );
 
             } else {
+                $albumItem->config = new ConfigItem($albumItem->path);// . '/config.json');
                 $albumItem->config->content =
-                $this->writeAlbumConfig(
-                    $albumItem->config->path,
-                    array_map(
-                        function ($imageItem) {
-                            return $imageItem->path;
-                        },
-                        $albumItem->imageItems
-                    ));
+                    $this->writeAlbumConfig(
+                        $albumItem->config->path,
+                        $albumItem->getImagePaths()
+                    );
             }
-            // add data in metadata
-            foreach ($albumItem->config->content["images"] as $image_path => $metadata) {
-                foreach ($albumItem->imageItems as $imageItem) {
-                    if($imageItem == $image_path) {
-                        $imageItem->addMetadata($metadata);
-                        break;
-                    }
-                }
-                unset($metadata['images']);
-                $albumItem->addMetadata($metadata);
-            }
+
+            $albumItem->applyConfig();
         }
     }
 
@@ -65,20 +50,20 @@ class ConfigFileHandler
         foreach ($request->albumFileStructures as $album_path => $album_files) {
             if (!empty($album_files)) {
 
-            $config_path = !$request->reset ? $this->getConfigPath($album_files) : null;
+                $config_path = !$request->reset ? $this->getConfigPathFromFileStructure($album_files) : null;
 
-            if ($config_path == null) {
-                $config = $this->writeAlbumConfig($album_path, $album_files);
-            } else {
-                $config = $this->readValidConfigOrFail($config_path) ?? $this->writeAlbumConfig($album_path, $album_files);
-            }
-            $albumConfigs[$album_path] = $config;
+                if ($config_path == null) {
+                    $config = $this->writeAlbumConfig($album_path, $album_files);
+                } else {
+                    $config = $this->readValidConfigOrFail($config_path) ?? $this->writeAlbumConfig($album_path, $album_files);
+                }
+                $albumConfigs[$album_path] = $config;
             }
         }
         return $albumConfigs;
     }
 
-    private function getConfigPath(array $album_files)
+    private function getConfigPathFromFileStructure(array $album_files)
     {
 
         foreach ($album_files as $type => $path) {
@@ -103,12 +88,12 @@ class ConfigFileHandler
             }
         }
 
-    $data = [
-        "title" => basename($albumPath),
-        "description" => "",
-        "cover_image" => basename($albumFiles[0]) ?? '',
-        "images" => $images,
-    ];
+        $data = [
+            "title" => basename($albumPath),
+            "description" => "",
+            "cover_image" => basename($albumFiles[0]) ?? '',
+            "images" => $images,
+        ];
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
     }

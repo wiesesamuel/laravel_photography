@@ -16,7 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string("title")->nullable();
-            $table->string("url")->default('/public/images/wiese.png');
+            $table->string("url")->default('/images/wiese.png');
 
             $table->string("absolute_path");
             $table->string("file_name");
@@ -36,7 +36,7 @@ class CreateImagesTable extends Migration
             $table->string("ApertureNumber")->nullable();
 
             $table->float("aspectRatio")->nullable();
-            $table->boolean("horizontal")->nullable()->default(1);
+            $table->boolean("horizontal")->nullable();
 
             $table->timestamps();
         });
