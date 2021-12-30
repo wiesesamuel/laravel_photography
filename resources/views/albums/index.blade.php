@@ -10,7 +10,7 @@
                     <x-albums.grid.dense-grid-layout>
                 @foreach($albums as $album)
                     <x-albums.grid.dense-grid-element
-                        :horizontal="$album->coverImage->horizontal"
+                        :horizontal="$album->coverImage->orientation"
                     >
                         <x-albums.image
                             :image="$album->coverImage"

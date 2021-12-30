@@ -2,7 +2,7 @@
 
 <div
     class="
-@if ($horizontal)
+@if ($horizontal == 'horizontal')
     col-span-3 row-span-2
 @else
     col-span-2 row-span-3
