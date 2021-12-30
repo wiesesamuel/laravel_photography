@@ -10,8 +10,9 @@
             <x-albums.grid.dense-grid-layout>
                 @foreach($albums as $album)
                     @if ($album != null)
+                        @if($album->coverImage == null)
                         <x-albums.grid.dense-grid-element
-                            :horizontal="$album->coverImage->orientation"
+                            :horizontal="$album->coverImage==null?'horizontal':$album->coverImage->orientation"
                         >
                             <x-albums.image
                                 :image="$album->coverImage"
