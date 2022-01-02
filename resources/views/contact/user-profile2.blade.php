@@ -35,7 +35,7 @@
                         <!-- Image for mobile view-->
                         <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 "
                              style="background-color: rgb(31, 41, 55);">
-                            <img class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48"
+                            <img class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 border-t-4 border-b-4 border-yellow-700"
                                  src="{{$profile["picture-mobile"] ?? ''}}">
                         </div>
 
