@@ -1,26 +1,26 @@
 {
+    "title" : "Preisliste",
+    "description": "Hier erfährst du, welches Preisleistugsverhältnis dich bei mir erwartet. <br>",
+
     "1": {
         "title" : "Schnupper Fotoshooting",
-        "subtitle": "prüfe meine Qualitäten",
+        "subtitle": "für ein kurzes kennenlernen",
         "price": "25€",
         "pricesFor": "3 Bilder",
-        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
-        "button": "Anfragen"
-    },
-    "3": {
-        "title" : "Schnupper Fotoshooting",
-        "subtitle": "prüfe meine Qualitäten",
-        "price": "25€",
-        "pricesFor": "3 Bilder",
-        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
-        "button": "Anfragen"
+        "bulletlist": "Wähle 3 Fotos aus."
     },
     "2": {
-        "title" : "Schnupper Fotoshooting",
-        "subtitle": "prüfe meine Qualitäten",
-        "price": "25€",
-        "pricesFor": "3 Bilder",
-        "bulletlist": "Alle 5 Jahre\nGibt es\n neues\n zu erleben",
-        "button": "Anfragen"
+        "title" : "Premium Fotoshooting",
+        "subtitle": "für ein umfangreiches Ergebnis",
+        "price": "50€",
+        "pricesFor": "~25 Bilder",
+        "bulletlist": "LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommst du alle Fotos."
+    },
+    "3": {
+        "title" : "3 für 2 Fotoshooting",
+        "subtitle": "Gruppenfotoshooting",
+        "price": "100€",
+        "pricesFor": "Alle Bilder",
+        "bulletlist": "Ein Fotoshooting für 3 Personen. \n LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommt ihr alle Fotos."
     }
 }
