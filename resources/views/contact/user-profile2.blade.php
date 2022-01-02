@@ -5,7 +5,7 @@
             dd("Error in " . config_path('profile.json'), file_get_contents(config_path('profile.json')), "Visit https://jsonformatter.curiousconcept.com/ and fix your JSON");
         }
     @endphp
-    <div class="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover"
+    <div class="antialiased text-gray-900 leading-normal tracking-wider bg-cover"
          style="background-image:url({{$profile["background"] ?? ''}});">
 
         <div class="container mx-auto px-4">
