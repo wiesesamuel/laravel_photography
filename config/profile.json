@@ -2,16 +2,23 @@
     "name" : "Samuel Wiese",
     "job" : "Softwareentwickler und Fotograf",
     "location" : "Ulm - 48° 24′ N , 9° 59′ O",
-    "description" : "Hallo da draußen",
+    "description" : "Ich schieße nicht nur liebend gern Fotos sondern auch über Landstraßen. Motorrad und Fotografie sind meine Leidenschaft. Programmieren reißt mich auch, diese Webseite hab ich zB. komplett selber geschrieben - Google sei Dank. <br> <br>  Fröhlich, Umgänglich und Zwanglos beschreiben mich ganz gut. Wenn dir meine Arbeit gefällt kannst du dich gerne melden. ",
+
+
+
+    "title": "Über mich",
+    "subtitle": "",
+
     "picture": "/profile-long.jpg",
     "picture-mobile": "/profile-mobile.jpg",
     "background": "/backgrouynxd.JPG",
+
 
     "twitter": {
         "url" : ""
     },
     "facebook": {
-        "url" : ""
+        "url" : "asdf"
     },
     "instagram": {
         "url": "https://www.instagram.com/wiesesamuel/"
