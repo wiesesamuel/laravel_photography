@@ -13,7 +13,7 @@
 @include('components.navigation-bar')
 
 <x-ToolBar/>
-<section class="px-6 py-8" style="  min-height: 82vh;">
+<section class="px-6 py-8" style="  min-height: 82vh; background-color: #2d3748">
     {{$slot}}
 </section>
 </body>

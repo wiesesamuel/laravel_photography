@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="border-b border-sky-500 px-3 py-3" style="background: rgb(31, 41, 55);">
+<nav x-data="{ open: false }" class="px-3 py-3" style="background: rgb(31, 41, 55);">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -20,10 +20,10 @@
                                       class="text-white">
                         {{ __('Profile') }}
                     </x-parts.nav-link>
-                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')"
-                                      class="text-white">
-                        {{ __('Team') }}
-                    </x-parts.nav-link>
+{{--                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')"--}}
+{{--                                      class="text-white">--}}
+{{--                        {{ __('Team') }}--}}
+{{--                    </x-parts.nav-link>--}}
                     <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')"
                                       class="text-white">
                         {{ __('Price') }}
@@ -111,9 +111,9 @@
             <x-auth.responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
                 {{ __('Profile') }}
             </x-auth.responsive-nav-link>
-            <x-auth.responsive-nav-link :href="route('team')" :active="request()->routeIs('team')">
-                {{ __('Team') }}
-            </x-auth.responsive-nav-link>
+{{--            <x-auth.responsive-nav-link :href="route('team')" :active="request()->routeIs('team')">--}}
+{{--                {{ __('Team') }}--}}
+{{--            </x-auth.responsive-nav-link>--}}
             <x-auth.responsive-nav-link :href="route('prices')" :active="request()->routeIs('prices')">
                 {{ __('Price') }}
             </x-auth.responsive-nav-link>

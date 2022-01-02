@@ -29,9 +29,9 @@ Route::get('/prices', function () {
 Route::get('/me', function () {
     return view('contact.user-profile2');
 })->name('profile');
-Route::get('/we', function () {
-    return view('contact.user-profile');
-})->name('team');
+//Route::get('/we', function () {
+//    return view('contact.user-profile');
+//})->name('team');
 Route::get('/contact', function () {
     return view('contact.contact-form-simple');
 })->name('contact');

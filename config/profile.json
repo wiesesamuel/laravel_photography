@@ -1,8 +1,25 @@
 {
     "name" : "Samuel Wiese",
-    "job" : "Fotograf und Entwickler",
-    "description" : "Ich bin der Beste",
-    "instagram": "www.instagram.com/wiesesamuel/",
-    "profilePicture": "/images/profile.png",
-    "backgroundPicture": "/images/profile-background.png"
+    "job" : "Softwareentwickler und Fotograf",
+    "location" : "Ulm - 48° 24′ N , 9° 59′ O",
+    "description" : "Hallo da draußen",
+    "picture": "/profile-long.jpg",
+    "picture-mobile": "/profile-mobile.jpg",
+    "background": "/backgrouynxd.JPG",
+
+    "twitter": {
+        "url" : ""
+    },
+    "facebook": {
+        "url" : ""
+    },
+    "instagram": {
+        "url": "https://www.instagram.com/wiesesamuel/"
+    },
+    "youtube": {
+        "url": ""
+    },
+    "github": {
+        "url": ""
+    }
 }
