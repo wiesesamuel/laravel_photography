@@ -12,11 +12,8 @@ class GetAlbumItems
 {
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        if (!$request->fileScanComplete) {
-            $request->albumFileStructures = (new DiscoverAlbumFiles())->getAlbumStructure($request->searchDir);
-        }
+        $request->init();
         $request->albumItems = $this->getItemsBasedOnFileStructure($request->albumFileStructures);
-        $request->itemGenerationComplete = true;
         return $next($request);
     }
 

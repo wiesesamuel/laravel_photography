@@ -17,11 +17,10 @@ class DiscoverAlbumFiles
 
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        if (!file_exists($request->searchDir)) {
-            return $next($request);
+        if (file_exists($request->searchDir)) {
+            $request->albumFileStructures = $this->getAlbumStructure($request->searchDir);
+            $request->fileScanComplete = true;
         }
-        $request->albumFileStructures = $this->getAlbumStructure($request->searchDir);
-        $request->fileScanComplete = true;
         return $next($request);
     }
 

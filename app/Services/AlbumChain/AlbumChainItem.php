@@ -2,42 +2,31 @@
 
 namespace App\Services\AlbumChain;
 
+use App\Services\AlbumChain\Pipeline\DiscoverAlbumFiles;
+
 class AlbumChainItem
 {
+    public $fileScanComplete = false;
     public $reset = false;
     public $searchDir;
 
     // contains only paths
     public $albumFileStructures;
 
-    // contains model in array
-    public $albumImageModels;
-
-    // contains album config
-    public $albumConfig;
-
-    // contains thumbnail info
-    public $albumThumbnails;
-
-    // contains metadata
-    public $albumMetadatas;
-
     // contains stuff
     public $albumItems;
 
-    public $fileScanComplete = false;
-    public $itemGenerationComplete = false;
-    public $configComplete = false;
-    public $thumbnailComplete = false;
-    public $metadataComplete = false;
-    public $modelComplete = false;
 
-    /**
-     * @param $dir
-     */
     public function __construct($reset = false, $dir = null)
     {
         $this->reset = $reset;
         $this->searchDir = $dir ?? config('album.source');
+    }
+
+    public function init() {
+        if (!$this->fileScanComplete) {
+            $this->albumFileStructures = (new DiscoverAlbumFiles())->getAlbumStructure($this->searchDir);
+            $this->fileScanComplete = true;
+        }
     }
 }

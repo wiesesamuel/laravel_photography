@@ -10,12 +10,8 @@ class ImageMetaDataCollector
 
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        if ($request->itemGenerationComplete) {
-            $this->addMetadataOnAlbumItem($request->albumItems);
-        } else {
-            $request->albumMetadatas = $this->getMetadataBasedOnFileStructure($request);
-            $request->metadataComplete = true;
-        }
+        $request->init();
+        $this->addMetadataOnAlbumItem($request->albumItems);
         return $next($request);
     }
 
@@ -64,19 +60,5 @@ class ImageMetaDataCollector
             }
         }
         return null;
-    }
-
-    private function getMetadataBasedOnFileStructure($request) {
-        $albums = array();
-        foreach ($request->albumFileStructures as $album_path => $album_content) {
-            $images = array();
-            foreach ($album_content as $type => $path) {
-                if (is_int($type)) {
-                    $images[$path] = $this->selectMetaData($this->getMetaData($path));
-                }
-            }
-            $albums[$album_path] = $images;
-        }
-        return $albums;
     }
 }

@@ -22,12 +22,8 @@ class ThumbnailFileHandler
 
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        if ($request->itemGenerationComplete) {
-            $this->addThumbnailOnAlbumItem($request->albumItems);
-        } else {
-            $request->albumThumbnails = $this->generateThumbnailsBasedOnFileStructure($request);
-            $request->thumbnailComplete = true;
-        }
+        $request->init();
+        $this->addThumbnailOnAlbumItem($request->albumItems);
         return $next($request);
     }
 
@@ -38,23 +34,6 @@ class ThumbnailFileHandler
                 $imageItem->addMetadata($this->generateThumbnail($albumItem->path, $imageItem->path, $imageItem->getOrientation() ));
             }
         }
-    }
-
-
-    private function generateThumbnailsBasedOnFileStructure($request)
-    {
-        $albums = array();
-        foreach ($request->albumFileStructures as $album_path => $album_content) {
-            $thumbnails = array();
-            foreach ($album_content as $type => $path) {
-                if (is_int($type)) {
-                    $image_orientation = $request->configComplete ? $request->albumConfig[$album_path]["images"][$path]["orientation"] : "horizontal";
-                    $thumbnails[$path] = $this->generateThumbnail($album_path, $path, $image_orientation, $request->reset);
-                }
-            }
-            $albums[$album_path] = $thumbnails;
-        }
-        return $albums;
     }
 
     private function generateThumbnail($album_path, $image_path, $orientation, $resetThumbnail = false)

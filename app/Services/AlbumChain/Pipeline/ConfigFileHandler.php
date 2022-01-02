@@ -10,12 +10,8 @@ class ConfigFileHandler
 {
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
-        if ($request->itemGenerationComplete) {
-            $this->addConfigOnAlbumItem($request->albumItems);
-        } else {
-            $request->albumConfig = $this->getConfigBasedOnFileStructure($request);
-            $request->configComplete = true;
-        }
+        $request->init();
+        $this->addConfigOnAlbumItem($request->albumItems);
         return $next($request);
     }
 
@@ -42,36 +38,6 @@ class ConfigFileHandler
 
             $albumItem->applyConfig();
         }
-    }
-
-    private function getConfigBasedOnFileStructure($request)
-    {
-        $albumConfigs = array();
-        foreach ($request->albumFileStructures as $album_path => $album_files) {
-            if (!empty($album_files)) {
-
-                $config_path = !$request->reset ? $this->getConfigPathFromFileStructure($album_files) : null;
-
-                if ($config_path == null) {
-                    $config = $this->writeAlbumConfig($album_path, $album_files);
-                } else {
-                    $config = $this->readValidConfigOrFail($config_path) ?? $this->writeAlbumConfig($album_path, $album_files);
-                }
-                $albumConfigs[$album_path] = $config;
-            }
-        }
-        return $albumConfigs;
-    }
-
-    private function getConfigPathFromFileStructure(array $album_files)
-    {
-
-        foreach ($album_files as $type => $path) {
-            if ($type == 'config') {
-                return $path;
-            }
-        }
-        return null;
     }
 
     private function writeAlbumConfig($albumPath, $albumFiles)
