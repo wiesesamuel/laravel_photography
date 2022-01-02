@@ -27,7 +27,7 @@
                 <!--Main Col-->
                 <div id="profile"
                      class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white lg:mx-0 text-white border-t-4 border-b-4 border-solid border-yellow-800 bg-white "
-                    style="background-color: rgb(31, 41, 55);"
+                     style="background-color: rgb(31, 41, 55);"
                 >
 
 
@@ -35,8 +35,9 @@
                         <!-- Image for mobile view-->
                         <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 "
                              style="background-color: rgb(31, 41, 55);">
-                            <img class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 border-t-4 border-b-4 border-yellow-700"
-                                 src="{{$profile["picture-mobile"] ?? ''}}">
+                            <img
+                                class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 border-t-4 border-b-4 border-yellow-700"
+                                src="{{$profile["picture-mobile"] ?? ''}}">
                         </div>
 
                         <h1 class="text-3xl font-bold pt-8 lg:pt-0">{{$profile["name"] ?? ''}}</h1>
@@ -67,25 +68,27 @@
 
 
                         <div class="md:ml-10">
-                        <div
-                            class="mt-6 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
-                            @foreach($profile as $key => $value)
-                                @if (isset($value["url"]) && !empty($value["url"]))
-                                    <a class="link" href="{{$value["url"]}}" target="_blank">
-                                        <svg class="h-6 fill-current text-gray-300 hover:text-yellow-700" role="img"
-                                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>{{ucwords($key)}}</title>
-                                            <x-parts.path-icons :name="$key"/>
-                                        </svg>
+                            <div
+                                class="mt-6 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
+                                @foreach($profile as $key => $value)
+                                    @if (isset($value["url"]) && !empty($value["url"]))
+                                        <a class="link" href="{{$value["url"]}}" target="_blank">
+                                            <svg class="h-6 fill-current text-gray-300 hover:text-yellow-700" role="img"
+                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <title>{{ucwords($key)}}</title>
+                                                <x-parts.path-icons :name="$key"/>
+                                            </svg>
+                                        </a>
+                                    @endif
+                                @endforeach
+                                <div class="">
+                                    <a href="{{route('contact') . (isset($profile["msg"]) ?    ('?' . http_build_query(['msg' => $profile["msg"]]))    : ''    )}}"
+                                       class="button bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-full"
+                                    >
+                                        Schreib mir
                                     </a>
-                                @endif
-                            @endforeach
-                            <div class="">
-                                <button
-                                    class="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-full">
-                                    Get In Touch
-                                </button>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <!-- Use https://simpleicons.org/ to find the svg for your preferred product -->
 

@@ -7,20 +7,23 @@
         "subtitle": "für ein kurzes kennenlernen",
         "price": "25€",
         "pricesFor": "3 Bilder",
-        "bulletlist": "Wähle 3 Fotos aus."
+        "bulletlist": "Wähle 3 Fotos aus.",
+        "msg": "Hallo Samuel,\nich interessiere mich für dein \"Schnupper Fotoshooting\"."
     },
     "2": {
         "title" : "Premium Fotoshooting",
         "subtitle": "für ein umfangreiches Ergebnis",
         "price": "50€",
         "pricesFor": "~25 Bilder",
-        "bulletlist": "LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommst du alle Fotos."
+        "bulletlist": "LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommst du alle Fotos.",
+        "msg": "Hallo Samuel,\nich interessiere mich für dein \"Premium Fotoshooting\"."
     },
     "3": {
         "title" : "3 für 2 Fotoshooting",
         "subtitle": "Gruppenfotoshooting",
         "price": "100€",
         "pricesFor": "Alle Bilder",
-        "bulletlist": "Ein Fotoshooting für 3 Personen. \n LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommt ihr alle Fotos."
+        "bulletlist": "Ein Fotoshooting für 3 Personen. \n LED Beleuchtungen. \n Handverlesene Fotoauswahl. \n Wenn gewünscht bekommt ihr alle Fotos.",
+        "msg": "Hallo Samuel,\nich interessiere mich für dein \"3 für 2 Fotoshooting\"."
     }
 }

@@ -21,7 +21,6 @@ Route::get('/', function () {
 })->name('home');
 
 
-
 Route::get('/prices', function () {
     return view('contact.pricing');
 })->name('prices');
@@ -32,9 +31,14 @@ Route::get('/me', function () {
 //Route::get('/we', function () {
 //    return view('contact.user-profile');
 //})->name('team');
+
 Route::get('/contact', function () {
     return view('contact.contact-form-simple');
 })->name('contact');
+Route::post('/contact', function () {
+    return view('contact.contact-form-simple');
+})->middleware(['honey'])->name('contact');
+
 Route::get('/flickr', function () {
     return view('components.gallery.css-gallery');
 })->name('flcir');
@@ -56,19 +60,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-
-
-
-
 Route::get('language/{locale}', function ($locale) {
-    if (! in_array($locale, ['de', 'en'])) {
+    if (!in_array($locale, ['de', 'en'])) {
         return abort(404);
     }
     App::setLocale($locale);
 //    session()->put('locale', $locale);
     return redirect()->back();
 });
-
 
 
 require __DIR__ . '/auth.php';
