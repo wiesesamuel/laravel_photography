@@ -33,8 +33,7 @@
                 @foreach($prices as $key => $value)
                     @if (is_int($key))
                         <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 ">
-                            <div
-                                class="pricing-plan border-t-4 border-b-4 border-solid border-white bg-white text-center max-w-sm mx-auto hover:border-indigo-600 transition-colors duration-300 rounded-lg lg:rounded-l-lg">
+                            <div class="pricing-plan border-t-4 border-b-4 border-solid border-indigo-300 text-center max-w-sm mx-auto hover:border-indigo-600 transition-colors duration-300 rounded-lg lg:rounded-l-lg">
                                 <div class="p-6 md:py-8">
                                     <h4 class="font-medium leading-tight text-2xl mb-2">{{$value["title"] ?? ''}}</h4>
                                     <p class="text-gray-600">{{ ($value["subtitle"] ?? '') }}</p>
