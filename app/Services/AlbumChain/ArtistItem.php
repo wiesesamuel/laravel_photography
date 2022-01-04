@@ -23,7 +23,7 @@ class ArtistItem
     public function applyModel()
     {
         // filter empty settings
-        $inUse =array_filter($this->config, function($value) { return !is_null($value) && $value !== '';});
+        $inUse = array_filter($this->config, function($value) { return !is_null($value) && $value !== '';});
         if (empty($inUse)) {
             return null;
         }
@@ -33,8 +33,10 @@ class ArtistItem
         $updateByValue = [$updateBy => $inUse[$updateBy]];
 
         // rest is in update condition
-        array_shift($inUse);
         $updateValues = $inUse;
+        array_shift($updateValues);
+
+
 
         $this->setModel(
             Artist::updateOrCreate(

@@ -79,8 +79,8 @@ class ConfigFileHandler
     private function getArtistBasedConfig() {
         return [
           1 => [
-              "username" => 'a',
-              "instagram_url" => 'b',
+              "username" => '',
+              "instagram_url" => '',
               "youtube_url" => '',
               "website_url" => ''
           ]

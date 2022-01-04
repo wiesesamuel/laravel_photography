@@ -29,7 +29,7 @@ Route::get('/me', function () {
     return view('contact.user-profile2');
 })->name('profile');
 Route::get('/insta', function () {
-    return view('contact.insta');
+    return view('components.artist.instagram-profile');
 })->name('insta');
 //Route::get('/we', function () {
 //    return view('contact.user-profile');

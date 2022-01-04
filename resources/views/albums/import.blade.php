@@ -10,7 +10,10 @@
 
             <x-slot name="action0">
                 <div>
-                    <div><h3><strong>All in One</strong>:Alle Alben werden inkl config Dateien importiert bzw ggfs generiert.</h3></div>
+                    <div><h3><strong>All in One</strong></h3></div>
+                    <div>Scant nach Album Files</div>
+                    <div>Reimportiert Config Files. Generiert Config Files falls noch nicht vorhanden.</div>
+                    <div>Reimportiert Thumbnail Files. Generiert Thumbnail Files falls noch nicht vorhanden.</div>
                     <div>
                         <button
                             class="border-2 border-indigo-600 rounded px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300">
