@@ -52,7 +52,7 @@ class ConfigFileHandler
             "description" => "",
             "cover_image" => basename($albumFiles[0] ?? '') ?? '',
             "images" => $images,
-            "instagram" => $this->getInstagramBasedConfig()
+            "artists" => $this->getArtistBasedConfig()
         ];
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
@@ -76,9 +76,14 @@ class ConfigFileHandler
         ];
     }
 
-    private function getInstagramBasedConfig() {
+    private function getArtistBasedConfig() {
         return [
-          "url" => ["", "", ""]
+          1 => [
+              "username" => 'a',
+              "instagram_url" => 'b',
+              "youtube_url" => '',
+              "website_url" => ''
+          ]
         ];
     }
 

@@ -20,8 +20,12 @@ class AlbumModelHandler
             foreach ($albumItem->imageItems as $imageItem) {
                 $imageItem->applyModel();
             }
+            foreach ($albumItem->artistItems as $artistItems) {
+                $artistItems->applyModel();
+            }
             $albumItem->applyModel();
             $this->linkImagesToAlbum($albumItem->getImageModels(), $albumItem->model);
+            $this->linkArtistsToAlbum($albumItem->getArtistModels(), $albumItem->model);
             $albumItem->updateCoverImageId();
         }
     }
@@ -35,5 +39,15 @@ class AlbumModelHandler
             $images
         );
         $album->images()->sync($imageIds);
+    }
+    private function linkArtistsToAlbum($artists, $album)
+    {
+        $artistIds = array_map(
+            function ($artist) {
+                return $artist->id;
+            },
+            $artists
+        );
+        $album->artists()->sync($artistIds);
     }
 }

@@ -9,7 +9,7 @@ class Album extends Model
 {
     use HasFactory;
 
-    protected $with = ['images', 'coverImage', 'tags', 'category'];
+    protected $with = ['images', 'coverImage', 'tags', 'category', 'artists'];
 
     protected $guarded = ['id'];
 
@@ -32,6 +32,11 @@ class Album extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function artists()
+    {
+        return $this->morphToMany(Artist::class, 'artistable');
     }
 
     public function name(){

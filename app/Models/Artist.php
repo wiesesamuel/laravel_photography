@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Artist extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function albums()
     {
-        return $this->morphedByMany(Album::class, 'taggable');
+        return $this->morphedByMany(Album::class, 'artistable');
     }
 }

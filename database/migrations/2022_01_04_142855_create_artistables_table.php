@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImageablesTable extends Migration
+class CreateArtistablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateImageablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('imageables', function (Blueprint $table) {
+        Schema::create('artistables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('image_id');
-            $table->foreignId('imageable_id');
-            $table->string('imageable_type');
+            $table->foreignId('artist_id');
+            $table->foreignId('artistable_id');
+            $table->string('artistable_type');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateImageablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('imageables');
+        Schema::dropIfExists('artistables');
     }
 }

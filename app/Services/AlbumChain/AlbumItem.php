@@ -10,12 +10,14 @@ class AlbumItem
     public $path;
     public $config;
     public $imageItems;
+    public $artistItems;
     public $metadata;
     public $model;
 
     public function __construct()
     {
         $this->imageItems = array();
+        $this->artistItems = array();
         $this->metadata = array();
     }
 
@@ -47,6 +49,7 @@ class AlbumItem
     public function applyConfig()
     {
         if ($this->config != null && $this->config->content != null) {
+            // update informations for Images
             foreach ($this->config->content["images"] as $image_path => $metadata) {
                 foreach ($this->imageItems as $imageItem) {
                     if ($imageItem->path == $image_path) {
@@ -54,10 +57,14 @@ class AlbumItem
                         break;
                     }
                 }
-                $metadata_copy = $this->config->content;
-                unset($metadata_copy['images']);
-                $this->addMetadata($metadata_copy);
             }
+            foreach ($this->config->content["artists"] as $artist) {
+                $this->artistItems[] = new ArtistItem($artist);
+            }
+            $metadata_copy = $this->config->content;
+            unset($metadata_copy['artists']);
+            unset($metadata_copy['images']);
+            $this->addMetadata($metadata_copy);
         }
     }
 
@@ -81,6 +88,15 @@ class AlbumItem
         );
     }
 
+    public function getArtistModels()
+    {
+        return array_map(
+            function ($artistItem) {
+                return $artistItem->model;
+            },
+            $this->artistItems
+        );
+    }
     public function updateCoverImageId()
     {
         $coverImagePath = "asdf";
@@ -99,7 +115,6 @@ class AlbumItem
 
     public function applyModel()
     {
-
         $this->setModel(Album::updateOrCreate(
             ['absolute_path' => $this->path],
             array_merge(
