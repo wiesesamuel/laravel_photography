@@ -43,15 +43,8 @@ class ConfigFileHandler
     private function writeAlbumConfig($albumPath, $albumFiles)
     {
         $images = array();
-        foreach ($albumFiles as $key => $imagePath) {
-            if (is_int($key)) {
-                $data = [
-                    "title" => basename($imagePath),
-                    "description" => "",
-                    "orientation" => $this->getOrientatedImage($imagePath),
-                ];
-                $images[$imagePath] = $data;
-            }
+        foreach ($albumFiles as $imagePath) {
+            $images[$imagePath] = $this->getImageBasedConfig($imagePath);
         }
 
         $data = [
@@ -59,6 +52,7 @@ class ConfigFileHandler
             "description" => "",
             "cover_image" => basename($albumFiles[0] ?? '') ?? '',
             "images" => $images,
+            "instagram" => $this->getInstagramBasedConfig()
         ];
         file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
         return $data;
@@ -72,6 +66,22 @@ class ConfigFileHandler
             return null;
         }
     }
+
+    private function getImageBasedConfig($imagePath)
+    {
+        return [
+            "title" => basename($imagePath),
+            "description" => "",
+            "orientation" => $this->getOrientatedImage($imagePath),
+        ];
+    }
+
+    private function getInstagramBasedConfig() {
+        return [
+          "url" => ["", "", ""]
+        ];
+    }
+
 
     private function getOrientatedImage($original)
     {
@@ -89,5 +99,10 @@ class ConfigFileHandler
             }
         }
         return "horizontal";
+    }
+
+    public function purgeConfig()
+    {
+        shell_exec("rm -rf " . config('album.source') . '*/config.json 2>&1');
     }
 }

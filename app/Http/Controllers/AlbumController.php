@@ -6,6 +6,10 @@ use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
+use App\Models\Image;
+use App\Models\Imageable;
+use App\Models\Tag;
+use App\Models\Taggable;
 use App\Services\AlbumChain\AlbumChainItem;
 use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
 use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
@@ -75,45 +79,25 @@ class AlbumController extends Controller
 //                        break;
                 }
                 break;
-//            case ('reset'):
-//                switch ($action) {
-//                    case('all'):
-//                        Album::truncate();
-//                        Image::truncate();
-//                        Imageable::truncate();
-//                        (new ThumbnailFileHandler())->purgeThumbnails();
-//
-//
-//                        break;
-//                    case('alben'):
-//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-//                            [
-//                                DiscoverAlbumFiles::class,
-//                                AlbumModelHandler::class,
-//                            ]
-//                        )->thenReturn();
-//                        break;
-//                    case('config'):
-//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-//                            [
-//                                DiscoverAlbumFiles::class,
-//                                ConfigFileHandler::class,
-//                                AlbumModelHandler::class,
-//                            ]
-//                        )->thenReturn();
-//                        break;
-//                    case ('thumbnail'):
-//                        app(Pipeline::class)->send(new AlbumChainItem(true))->through(
-//                            [
-//                                DiscoverAlbumFiles::class,
-//                                ThumbnailFileHandler::class,
-//                                AlbumModelHandler::class,
-//                            ]
-//                        )->thenReturn();
-//                        break;
-//                }
-//
-//                break;
+            case ('reset'):
+                switch ($action) {
+                    case('all'):
+                        Album::truncate();
+                        Image::truncate();
+                        Imageable::truncate();
+                        Tag::truncate();
+                        Taggable::truncate();
+                        (new ThumbnailFileHandler())->purgeThumbnails();
+                        (new ConfigFileHandler())->purgeConfig();
+                        return $this->importing("import.all");
+                    case('config'):
+                        (new ConfigFileHandler())->purgeConfig();
+                        return $this->importing("import.all");
+                    case ('thumbnail'):
+                        (new ThumbnailFileHandler())->purgeThumbnails();
+                        return $this->importing("import.all");
+                }
+                break;
         }
         return $this->import();
     }
