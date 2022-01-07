@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a5f82d576470c6bceeb395eba60369b",
+    "content-hash": "f8116c9368528ab16530af8119238140",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1484,6 +1484,48 @@
                 }
             ],
             "time": "2021-01-03T20:38:00+00:00"
+        },
+        {
+            "name": "jsefton/laravel-mail-audit",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jsefton/laravel-mail-audit.git",
+                "reference": "d7888e265c6383fbf5d1852b0d81355479d12c07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jsefton/laravel-mail-audit/zipball/d7888e265c6383fbf5d1852b0d81355479d12c07",
+                "reference": "d7888e265c6383fbf5d1852b0d81355479d12c07",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MailAudit\\MailAuditServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MailAudit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Store logs in the database of all mail sent and its status for auditing",
+            "homepage": "https://jamie-sefton.co.uk",
+            "support": {
+                "issues": "https://github.com/jsefton/laravel-mail-audit/issues",
+                "source": "https://github.com/jsefton/laravel-mail-audit/tree/1.0.0"
+            },
+            "time": "2021-05-02T21:09:49+00:00"
         },
         {
             "name": "laminas/laminas-code",

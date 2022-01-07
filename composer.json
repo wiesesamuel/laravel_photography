@@ -17,11 +17,11 @@
         "intervention/image": "^2.7",
         "itsgoingd/clockwork": "^5.1",
         "jeremykenedy/laravel-users": "^4.3",
+        "jsefton/laravel-mail-audit": "^1.0",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "lukeraymonddowning/honey": "^0.3.4",
-        "mailgun/mailgun-php": "^3.5",
         "miljar/php-exif": "^0.6.5",
         "spatie/laravel-cookie-consent": "^3.1"
     },

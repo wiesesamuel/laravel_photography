@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mail;
+use App\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Mailgun\Mailgun;
 
 class ContactController
 {
@@ -16,49 +15,18 @@ class ContactController
         ]);
     }
 
+    public function profile() {
+        return view('contact.user-profile2');
+    }
+
+    public function prices() {
+        return view('contact.pricing');
+    }
+
     public function post(Request $request)
     {
-//        $validator = Validator::make($request->all(), [
-//            'contact'=>'required|email'
-//        ]);
-//        if ($validator->fails()) {
-//            $validator = Validator::make($request->all(), [
-//                'contact'=>'required|digits'
-//            ]);
-//        }
-
-        Mail::create([
-            "contact" => $request["contact"],
-            "message" => $request["message"]
-        ]);
-        $this->messageToMyself($request);
-        return $this->index("Deine Nachricht wurde zugestellt, ich melde mich bald.");
-    }
-
-    private function messageToMyself(Request $request)
-    {
-        $this->sendMail(
-            config('app.name') . " new Message via Form",
-            $request["contact"] . '<br>' . $request["message"]
-        );
-    }
-
-    public function sendMail($subject = null, $msg = null)
-    {
-        if (config('mail.enabled')) {
-            if ($subject != null || $msg != null) {
-
-                # Instantiate the client.
-                $mg = Mailgun::create(config('mail.mailers.mailgun.api-key'));
-                $domain = config('mail.mailers.mailgun.domain');
-
-                # Make the call to the client.
-                $result = $mg->messages()->send("$domain",
-                    array('from' => config('mail.from.name') . ' <postmaster@' . config('mail.mailers.mailgun.domain') . '>',
-                        'to' => config('mail.to.name') . ' <' . config('mail.to.address') . '>',
-                        'subject' => $subject ?? 'Hello ' . config('mail.to.name'),
-                        'text' => $msg ?? 'Info'));
-            }
-        }
+        $message = new Message($request["contact"], $request["message"]);
+        Mail::send($message);
+        return $this->index("Danke für deine Nachricht");
     }
 }
