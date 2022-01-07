@@ -5,12 +5,12 @@
         }
 
     </style>
-    {{$msg ?? ''}}
     <div class="contact-2 py-6">
         <div class="container px-4 mx-auto">
 
             <div class="text-center md:max-w-2xl md:mx-auto px-2 md:pb-4">
-                <h1 class="text-3xl md:text-4xl font-medium my-2 text-white">Schreib mir</h1>
+                <h1 class="text-3xl md:text-4xl font-medium my-2 text-white">
+                    {{$msg ?? 'Schreib mir'}}</h1>
                 <div class="contact-form mt-6 md:mt-12">
                     <form action="{{ route('contact') }}" method="POST">
                         @csrf
@@ -22,8 +22,8 @@
                         >{{str_replace('\n', '&#13;&#10', request('msg')) ?? ''}}</textarea>
                         </div>
 
-                        <div class="mb-4 flex">
-                            <div class="flex-grow">
+                        <div class="mb-4 flex flex-wrap">
+                            <div class="flex-grow mb-4">
                                 <input type="text" placeholder="Deine E-mail oder Telefonnummer" name="contact" id="contact"
                                        class="border-t-6 border-b-6 border-solid border-white rounded py-2 px-3 placeholder-gray-250 text-white placeholder-opacity-100 w-full input transition-colors  border-t-4 border-b-4 border-solid border-white bg-white  border-blue-700  hover:border-blue-600 focus:border-blue-600 active:border-blue-500 transtion-300"
                                        style="background-color: rgb(31, 41, 55)" required
@@ -32,7 +32,7 @@
                             </div>
 
                             <button
-                                class="bg-blue-700 hover:bg-blue-500 text-white border-2 border-solid border-blue-600 rounded py-2 px-4 flex-shrink-0 ml-4 transition-colors duration-300"
+                                class="mb-4 bg-blue-700 hover:bg-blue-500 text-white border-2 border-solid border-blue-600 rounded py-2 px-4 flex-shrink-0 ml-4 transition-colors duration-300"
                                 type="submit">
                                 <strong>
                                     Abschicken
