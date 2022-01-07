@@ -35,9 +35,18 @@ Route::get('/insta', function () {
     return view('components.artist.instagram-profile');
 })->name('insta');
 
-Route::get('/flickr', function () {
-    return view('components.gallery.css-gallery');
-})->name('flcir');
+Route::get('/qwer', function () {
+    return view('components.gallery.image-hover-gallery');
+})->name('flickr');
+Route::get('/asdf', function () {
+    return view('components.gallery.image-rhomb-gallery');
+})->name('asdfads');
+Route::get('/yxcv', function () {
+    return view('components.gallery.image-flex-gallery');
+})->name('yxcv');
+Route::get('/q', function () {
+    return view('components.gallery.image-gallery-final');
+})->name('q');
 
 Route::get('language/{locale}', function ($locale) {
     if (!in_array($locale, ['de', 'en'])) {
