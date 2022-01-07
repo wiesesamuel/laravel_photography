@@ -21,6 +21,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "lukeraymonddowning/honey": "^0.3.4",
+        "mailgun/mailgun-php": "^3.5",
         "miljar/php-exif": "^0.6.5",
         "spatie/laravel-cookie-consent": "^3.1"
     },

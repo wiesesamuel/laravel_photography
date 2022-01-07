@@ -15,6 +15,7 @@ return [
 
     'default' => env('MAIL_MAILER', 'smtp'),
 
+    'enabled' => env('MAIL_ENABLED'),
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations
@@ -51,6 +52,8 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'api-key' => env('MAILGUN_API_KEY', 'example-key'),
+            'domain' => env('MAILGUN_DOMAIN', 'example-domain'),
         ],
 
         'postmark' => [
@@ -94,6 +97,11 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    'to' => [
+        'address' => env('MAIL_TO_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_TO_NAME', 'Example'),
     ],
 
     /*

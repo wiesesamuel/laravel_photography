@@ -5,7 +5,7 @@
         }
 
     </style>
-
+    {{$msg ?? ''}}
     <div class="contact-2 py-6">
         <div class="container px-4 mx-auto">
 
@@ -24,7 +24,7 @@
 
                         <div class="mb-4 flex">
                             <div class="flex-grow">
-                                <input type="text" placeholder="Deine E-mail oder Telefonnummer"
+                                <input type="text" placeholder="Deine E-mail oder Telefonnummer" name="contact" id="contact"
                                        class="border-t-6 border-b-6 border-solid border-white rounded py-2 px-3 placeholder-gray-250 text-white placeholder-opacity-100 w-full input transition-colors  border-t-4 border-b-4 border-solid border-white bg-white  border-blue-700  hover:border-blue-600 focus:border-blue-600 active:border-blue-500 transtion-300"
                                        style="background-color: rgb(31, 41, 55)" required
 

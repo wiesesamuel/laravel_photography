@@ -3,6 +3,7 @@
 use App\Enum\TaskState;
 use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,12 +36,8 @@ Route::get('/insta', function () {
 //    return view('contact.user-profile');
 //})->name('team');
 
-Route::get('/contact', function () {
-    return view('contact.contact-form-simple');
-})->name('contact');
-Route::post('/contact', function () {
-    return view('contact.contact-form-simple');
-})->middleware(['honey'])->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'post'])->middleware(['honey'])->name('contact.post');
 
 Route::get('/flickr', function () {
     return view('components.gallery.css-gallery');
