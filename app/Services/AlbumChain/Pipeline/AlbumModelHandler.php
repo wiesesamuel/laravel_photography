@@ -44,10 +44,11 @@ class AlbumModelHandler
     {
         $artistIds = array_map(
             function ($artist) {
-                return $artist->id;
+                return $artist->id ?? null;
             },
             $artists
         );
-        $album->artists()->sync($artistIds);
+
+        !empty($artists) ? '': $album->artists()->sync($artistIds);
     }
 }

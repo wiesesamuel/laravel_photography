@@ -58,9 +58,9 @@ class AlbumItem
                     }
                 }
             }
-            foreach ($this->config->content["artists"] as $artist) {
-                $this->artistItems[] = new ArtistItem($artist);
-            }
+                foreach ($this->config->content["artists"] ?? [] as $artist) {
+                    $this->artistItems[] = new ArtistItem($artist);
+                }
             $metadata_copy = $this->config->content;
             unset($metadata_copy['artists']);
             unset($metadata_copy['images']);
@@ -97,6 +97,7 @@ class AlbumItem
             $this->artistItems
         );
     }
+
     public function updateCoverImageId()
     {
         $coverImagePath = "asdf";
