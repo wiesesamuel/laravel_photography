@@ -1,27 +1,26 @@
 <x-layout>
     @include('albums._header')
 
-    <main class="max-w-6xl mx-auto mt-6 space-y-6">
         @if ($albums->count())
-            <x-parts.header-h1>Alben</x-parts.header-h1>
+        <h3 class="text-3xl font-medium leading-tight mt-0 mb-2 text-white text-center underline">Alben</h3>
+{{--            <x-parts.header-h1>Alben</x-parts.header-h1>--}}
             @if (request('page') > 1)
                 {{$albums->links()}}
             @endif
-            <x-albums.grid.dense-grid-layout>
+    <main class="mx-auto mt-6">
+            <x-gallery.a-magnificant-gallery>
                 @foreach($albums as $album)
                     @if ($album != null)
-                        <x-albums.grid.dense-grid-element
-                            :horizontal="$album->coverImage==null?'horizontal':$album->coverImage->orientation"
-                        >
-                            <x-albums.image
-                                :image="$album->coverImage"
-                                onclick="document.location='{{route('album', $album)}}'; return false;"
-                            />
-                        </x-albums.grid.dense-grid-element>
+                        <x-gallery.a-magnificant-image
+                            :href="route('album', $album)"
+                            :width="$album->coverImage->Width"
+                            :height="$album->coverImage->Height"
+                            :url="$album->coverImage->url"
+                            :caption="$album->title"
+                        />
                     @endif
                 @endforeach
-            </x-albums.grid.dense-grid-layout>
-            {{--            <x-albums.albums-grid :albums="$albums"></x-albums.albums-grid>--}}
+            </x-gallery.a-magnificant-gallery>
             {{$albums->links()}}
         @else
             <p class="text-center">No albums yet. Please come back later.</p>
