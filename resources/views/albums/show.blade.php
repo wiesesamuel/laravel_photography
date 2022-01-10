@@ -1,26 +1,20 @@
 <x-layout>
     @include('albums._header')
-    <x-albums.image-slider
-            :images="$album->images"
-        />
-    <main class="max-w-6xl mx-auto mt-6 space-y-6">
-
-        <x-gallery.gallery
-            :images="$album->images"
-        />
-
-{{--        <x-albums.grid.dense-grid-layout>--}}
-{{--            @foreach($album->images as $image)--}}
-{{--                <x-albums.grid.dense-grid-element--}}
-{{--                    :horizontal="$image->horizontal"--}}
-{{--                >--}}
-{{--                    <x-albums.image--}}
-{{--                        :image="$image"--}}
-{{--                        onclick="document.location='/images/{{$image->id}}'; return false;"--}}
-{{--                    />--}}
-{{--                </x-albums.grid.dense-grid-element>--}}
-{{--            @endforeach--}}
-{{--        </x-albums.grid.dense-grid-layout>--}}
+    <h3 class="text-3xl font-medium leading-tight mt-0 mb-2 text-white text-center underline">{{$album->title ?? ''}}</h3>
+    <main class="mx-auto mt-6">
+        <x-gallery.a-magnificant-gallery>
+            @foreach($album->images as $image)
+                @if ($image != null)
+                    <x-gallery.a-magnificant-image
+                        {{--:href="route('album', $album)"--}}
+                        :width="$image->Width"
+                        :height="$image->Height"
+                        :url="$image->url"
+                        :caption="$image->title"
+                    />
+                @endif
+            @endforeach
+        </x-gallery.a-magnificant-gallery>
 
     </main>
 </x-layout>

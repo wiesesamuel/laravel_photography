@@ -3,11 +3,10 @@
 
         @if ($albums->count())
         <h3 class="text-3xl font-medium leading-tight mt-0 mb-2 text-white text-center underline">Alben</h3>
-{{--            <x-parts.header-h1>Alben</x-parts.header-h1>--}}
             @if (request('page') > 1)
                 {{$albums->links()}}
             @endif
-    <main class="mx-auto mt-6">
+        <main class="mx-auto mt-6">
             <x-gallery.a-magnificant-gallery>
                 @foreach($albums as $album)
                     @if ($album != null)
