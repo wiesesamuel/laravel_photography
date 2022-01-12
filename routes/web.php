@@ -35,8 +35,11 @@ Route::get('/insta', function () {
     return view('components.artist.instagram-profile');
 })->name('insta');
 
+Route::get('/wert', function () {
+    return view('components.albums.image-outline');
+})->name('flicasdfkr');
 Route::get('/qwer', function () {
-    return view('components.gallery.image-hover-gallery');
+    return view('components.gallery.lightbox');
 })->name('flickr');
 Route::get('/asdf', function () {
     return view('components.gallery.image-rhomb-gallery');
@@ -45,7 +48,7 @@ Route::get('/yxcv', function () {
     return view('components.gallery.image-flex-gallery');
 })->name('yxcv');
 Route::get('/q', function () {
-    return view('components.gallery.image-gallery-final');
+    return view('components.gallery.a-grandios-gallery');
 })->name('q');
 
 Route::get('language/{locale}', function ($locale) {
