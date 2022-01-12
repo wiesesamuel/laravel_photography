@@ -17,7 +17,9 @@ class CreateArtistsTable extends Migration
             $table->id();
             $table->string("username")->nullable();
             $table->string("instagram_url")->nullable();
+            $table->string("instagram_data")->nullable();
             $table->string("youtube_url")->nullable();
+            $table->string("youtube_data")->nullable();
             $table->string("website_url")->nullable();
             $table->timestamps();
         });
