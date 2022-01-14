@@ -54,7 +54,7 @@ class ConfigFileHandler
             "images" => $images,
             "artists" => $this->getArtistBasedConfig()
         ];
-        file_put_contents($albumPath . '/config.json', json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents($albumPath . "/config.json", json_encode($data, JSON_PRETTY_PRINT));
         return $data;
     }
 

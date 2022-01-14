@@ -16,5 +16,8 @@
             @endforeach
         </x-gallery.a-magnificant-gallery>
 
+        <x-artist.artist-collection
+            :artists="$album->artists"
+        />
     </main>
 </x-layout>

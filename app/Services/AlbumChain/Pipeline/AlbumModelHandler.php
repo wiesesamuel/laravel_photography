@@ -2,6 +2,7 @@
 
 namespace App\Services\AlbumChain\Pipeline;
 
+use App\Models\Artist;
 use App\Services\AlbumChain\AlbumChainItem;
 use Closure;
 
@@ -27,6 +28,7 @@ class AlbumModelHandler
             $this->linkImagesToAlbum($albumItem->getImageModels(), $albumItem->model);
             $this->linkArtistsToAlbum($albumItem->getArtistModels(), $albumItem->model);
             $albumItem->updateCoverImageId();
+            $albumItem->model->save();
         }
     }
 
@@ -49,6 +51,10 @@ class AlbumModelHandler
             $artists
         );
 
-        !empty($artists) ? '': $album->artists()->sync($artistIds);
+        // drop empty values
+        $artistIds = array_filter($artistIds, function($value) { return !is_null($value);});
+
+        // sync if there are artists
+        empty($artistIds) ? null : $album->artists()->sync($artistIds);
     }
 }
