@@ -12,7 +12,7 @@
             <div class="text-left pl-4 pt-3">
                 <span class="text-base text-gray-700 text-2xl mr-2">{{$profile_data["username"] ?? ''}}</span>
                 <span class="text-base font-semibold text-gray-700 mr-2">
-                    <a class="link" href="{{$profile_data["url"] ?? ''}}" target="_blank">
+                    <a class="link" href="{{$profile_data["url"] ?? $backup_url ?? ''}}" target="_blank">
                           <button
                               class="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-600 hover:border-transparent rounded"
                           >Profil ansehen</button>

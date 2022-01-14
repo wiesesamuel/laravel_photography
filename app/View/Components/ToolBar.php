@@ -70,7 +70,6 @@ class ToolBar extends Component
 
     private function getNavItemSettings($parent_route, $action)
     {
-//        dd($action);
         if (is_array($action)) {
             $itemName = $action[0];
             $actionitem = $action[1];

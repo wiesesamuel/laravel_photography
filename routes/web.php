@@ -2,6 +2,7 @@
 
 use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,32 +25,33 @@ Route::get('/albums/edit/{album}', [AlbumController::class, 'edit'])->middleware
 Route::get('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.delete");
 //Route::delete('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.deleting");
 
+Route::post('/artist/update', [ArtistController::class, 'update'])->middleware('role:' . UserRole::Moderator)->name("artist.update");
+Route::get('/artist/update', [ArtistController::class, 'update'])->middleware('role:' . UserRole::Moderator)->name("artist.update");
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 
-
-
-Route::get('/insta', function () {
-    return view('components.artist.instagram-profile');
-})->name('insta');
-
-Route::get('/wert', function () {
-    return view('components.albums.image-outline');
-})->name('flicasdfkr');
-Route::get('/qwer', function () {
-    return view('components.gallery.lightbox');
-})->name('flickr');
-Route::get('/asdf', function () {
-    return view('components.gallery.image-rhomb-gallery');
-})->name('asdfads');
-Route::get('/yxcv', function () {
-    return view('components.gallery.image-flex-gallery');
-})->name('yxcv');
-Route::get('/q', function () {
-    return view('components.gallery.a-grandios-gallery');
-})->name('q');
+//Route::get('/insta', function () {
+//    return view('components.artist.instagram-profile');
+//})->name('insta');
+//
+//Route::get('/wert', function () {
+//    return view('components.albums.image-outline');
+//})->name('flicasdfkr');
+//Route::get('/qwer', function () {
+//    return view('components.gallery.lightbox');
+//})->name('flickr');
+//Route::get('/asdf', function () {
+//    return view('components.gallery.image-rhomb-gallery');
+//})->name('asdfads');
+//Route::get('/yxcv', function () {
+//    return view('components.gallery.image-flex-gallery');
+//})->name('yxcv');
+//Route::get('/q', function () {
+//    return view('components.gallery.a-grandios-gallery');
+//})->name('q');
 
 Route::get('language/{locale}', function ($locale) {
     if (!in_array($locale, ['de', 'en'])) {
