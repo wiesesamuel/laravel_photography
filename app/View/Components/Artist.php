@@ -16,13 +16,10 @@ class Artist extends Component
 
     public function render()
     {
-        if (!empty($this->artist->instagram_data) || !$this->artist->instagram_data == null) {
-            return view('components.artist.instagram-profile', [
-                "profile_data" => json_decode($this->artist->instagram_data, true),
-                "backup_url" => $this->artist->instagram_url
-            ]);
-        }
-        return null;
+        return view('components.artist.instagram-profile', [
+            "profile_data" => (isset($this->artist->instagram_data)) ? (json_decode($this->artist->instagram_data, true) ?? '') : null,
+            "backup_url" => $this->artist->instagram_url
+        ]);
     }
 
 }
