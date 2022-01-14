@@ -74,11 +74,12 @@ class ArtistItem
         try {
             $profile_data = json_decode($matches[1])->entry_data->ProfilePage[0]->graphql->user;
         } catch (Throwable $e) {
-            return [];
+            return ["url" => $url];
         }
         $profile_data = json_decode(json_encode($profile_data), true);
 
         return json_encode([
+            "url" => $url,
             "biography" => $profile_data["biography"],
             "profile_pic" => $profile_data["profile_pic_url_hd"],
             "username" => $profile_data["username"],

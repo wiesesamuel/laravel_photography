@@ -36,11 +36,16 @@ class AlbumModelHandler
     {
         $imageIds = array_map(
             function ($image) {
-                return $image->id;
+                return $image->id ?? null;
             },
             $images
         );
-        $album->images()->sync($imageIds);
+
+        // drop empty values
+        $imageIds = array_filter($imageIds, function($value) { return !is_null($value);});
+
+        // sync or detach
+        empty($imageIds) ? $album->images()->detach() : $album->images()->sync($imageIds);
     }
     private function linkArtistsToAlbum($artists, $album)
     {
@@ -54,7 +59,7 @@ class AlbumModelHandler
         // drop empty values
         $artistIds = array_filter($artistIds, function($value) { return !is_null($value);});
 
-        // sync if there are artists
-        empty($artistIds) ? null : $album->artists()->sync($artistIds);
+        // sync or detach
+        empty($artistIds) ? $album->artists()->detach() : $album->artists()->sync($artistIds);
     }
 }
