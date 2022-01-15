@@ -75,7 +75,7 @@ class DiscoverAlbumFiles
                 }
             }
         }
-        sort($files);
+        uasort($files, 'strcasecmp');
         return $files;
     }
 }
