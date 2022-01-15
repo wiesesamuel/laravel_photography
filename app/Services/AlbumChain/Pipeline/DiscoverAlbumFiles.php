@@ -54,7 +54,7 @@ class DiscoverAlbumFiles
                 }
             }
         }
-        ksort($directories);
+        krsort($directories);
         return $directories;
     }
 
@@ -75,6 +75,7 @@ class DiscoverAlbumFiles
                 }
             }
         }
+        ksort($files);
         return $files;
     }
 }

@@ -25,7 +25,7 @@ class AlbumController extends Controller
     public function index()
     {
         return view('albums.index', [
-            'albums' => Album::latest('albums.created_at')->paginate(9)->withQueryString(),
+            'albums' => Album::latest('albums.created_at')->paginate(30)->withQueryString(),
         ]);
     }
 
