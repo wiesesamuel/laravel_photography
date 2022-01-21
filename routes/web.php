@@ -32,6 +32,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/alpine', function () {
+    return view('alpine.alpine');
+})->name('alpine');
 
 //Route::get('/insta', function () {
 //    return view('components.artist.instagram-profile');
