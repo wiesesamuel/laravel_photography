@@ -46,59 +46,16 @@ class AlbumController extends Controller
     {
         return view('albums.import', ['msg' => $msg]);
     }
-
     public function importing($cmd)
     {
         $cmds = explode('.', $cmd);
-        $parent = $cmds[0];
-        $action = $cmds[1];
+        $action = $cmds[0];
+        $target = $cmds[1];
 
-        switch ($parent) {
-            case ('import'):
-                switch ($action) {
-                    case('all'):
-                        $item = new AlbumChainItem();
-                        app(Pipeline::class)->send($item)->through(
-                            [
-                                GetAlbumItems::class,
-                                ConfigFileHandler::class,
-                                ImageMetaDataCollector::class,
-                                ThumbnailFileHandler::class,
-                                AlbumModelHandler::class,
-                            ]
-                        )->thenReturn();
-                        break;
-//                    case('config'):
-//                        app(Pipeline::class)->send(new AlbumChainItem())->through(
-//                            [
-//                                GetAlbumItems::class,
-//                                ConfigFileHandler::class,
-//                                AlbumModelHandler::class,
-//                            ]
-//                        )->thenReturn();
-//                        break;
-                }
-                break;
-            case ('reset'):
-                switch ($action) {
-                    case('all'):
-                        Album::truncate();
-                        Image::truncate();
-                        Imageable::truncate();
-                        Tag::truncate();
-                        Taggable::truncate();
-                        (new ThumbnailFileHandler())->purgeThumbnails();
-                        (new ConfigFileHandler())->purgeConfig();
-                        return $this->importing("import.all");
-                    case('config'):
-                        (new ConfigFileHandler())->purgeConfig();
-                        return $this->importing("import.all");
-                    case ('thumbnail'):
-                        (new ThumbnailFileHandler())->purgeThumbnails();
-                        return $this->importing("import.all");
-                }
-                break;
-        }
+        Artisan::call('data:handle', [
+            'action' => $action,
+            'target' => $target
+        ]);
         return $this->import();
     }
 
