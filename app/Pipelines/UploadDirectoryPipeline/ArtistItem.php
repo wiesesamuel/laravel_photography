@@ -1,12 +1,11 @@
 <?php
 
 
-namespace App\Services\AlbumChain;
+namespace App\Services\UploadDirectoryPipeline;
 
 
 use App\Helper\InstagramHelper;
 use App\Models\Artist;
-use Throwable;
 
 class ArtistItem
 {

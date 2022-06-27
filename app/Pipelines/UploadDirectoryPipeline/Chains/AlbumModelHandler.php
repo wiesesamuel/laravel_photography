@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\AlbumChain\Pipeline;
+namespace App\Services\UploadDirectoryPipeline\Pipeline;
 
-use App\Models\Artist;
-use App\Services\AlbumChain\AlbumChainItem;
+use App\Services\UploadDirectoryPipeline\AlbumChainItem;
 use Closure;
 
 class AlbumModelHandler

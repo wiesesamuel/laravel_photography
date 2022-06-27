@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AlbumChain;
+namespace App\Services\UploadDirectoryPipeline;
 
 class ConfigItem
 {

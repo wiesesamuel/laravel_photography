@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Message;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController
 {
@@ -15,12 +15,19 @@ class ContactController
         ]);
     }
 
-    public function profile() {
+    public function profile()
+    {
         return view('contact.user-profile2');
     }
 
-    public function prices() {
+    public function prices()
+    {
         return view('contact.pricing');
+    }
+
+    public function imprint()
+    {
+        return view('imprint');
     }
 
     public function post(Request $request)

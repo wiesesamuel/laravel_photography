@@ -7,7 +7,8 @@ use Throwable;
 class InstagramHelper
 {
 
-    public function getInstagramInfoOrFail($url) {
+    public static function getInstagramInfoOrFail($url)
+    {
         $html = file_get_contents($url);
         preg_match('/_sharedData = ({.*);<\/script>/', $html, $matches);
         $profile_data = json_decode($matches[1])->entry_data->ProfilePage[0]->graphql->user;
@@ -27,10 +28,10 @@ class InstagramHelper
         ]);
     }
 
-    public function getInstagramInfo($url)
+    public static function getInstagramInfo($url)
     {
         try {
-            return $this->getInstagramInfoOrFail($url);
+            return self::getInstagramInfoOrFail($url);
         } catch (Throwable $e) {
             return null;
         }

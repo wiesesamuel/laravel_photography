@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\AlbumChain;
+namespace App\Services\UploadDirectoryPipeline;
 
-use App\Services\AlbumChain\Pipeline\DiscoverAlbumFiles;
+use App\Services\UploadDirectoryPipeline\Pipeline\DiscoverAlbumFiles;
 
 class AlbumChainItem
 {

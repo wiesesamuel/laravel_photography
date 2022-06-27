@@ -3,15 +3,19 @@
 namespace App\Services;
 
 use App\Helper\InstagramHelper;
+use App\Jobs\CalculateDataJob;
+use App\Jobs\CollectArtistInstagramData;
 use App\Models\Artist;
 use Throwable;
 
-class ArtistUpdateService
+class UpdateArtistData
 {
     public function updateAll()
     {
         $artists = Artist::orderBy('updated_at', 'DESC')->get();
-        $this->updateInstagram($artists);
+        foreach ($artists as $artist) {
+            CollectArtistInstagramData::dispatch($artist);
+        }
     }
 
     public function updateInstagram($artists)

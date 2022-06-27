@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\AlbumChain\Pipeline;
+namespace App\Services\UploadDirectoryPipeline\Pipeline;
 
-use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\AlbumItem;
-use App\Services\AlbumChain\ConfigItem;
-use App\Services\AlbumChain\ImageItem;
+use App\Services\UploadDirectoryPipeline\AlbumChainItem;
+use App\Services\UploadDirectoryPipeline\AlbumItem;
+use App\Services\UploadDirectoryPipeline\ConfigItem;
+use App\Services\UploadDirectoryPipeline\ImageItem;
 use Closure;
 
 class GetAlbumItems

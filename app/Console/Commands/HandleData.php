@@ -7,12 +7,7 @@ use App\Models\Image;
 use App\Models\Imageable;
 use App\Models\Tag;
 use App\Models\Taggable;
-use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
-use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
-use App\Services\AlbumChain\Pipeline\GetAlbumItems;
-use App\Services\AlbumChain\Pipeline\ImageMetaDataCollector;
-use App\Services\AlbumChain\Pipeline\ThumbnailFileHandler;
+use App\Services\UpdateArtistData;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 
@@ -61,7 +56,7 @@ class HandleData extends Command
         $action = strtolower($this->argument('action'));
         $target = strtolower($this->argument('target'));
 
-        if ($this->performeAction($action, $target)) {
+        if ($this->performAction($action, $target)) {
             $this->info('success!');
         } else {
             $this->newLine();
@@ -78,7 +73,7 @@ class HandleData extends Command
      * @param string $action
      * @param string $target
      */
-    public function performeAction(string $action, string $target): bool
+    public function performAction(string $action, string $target): bool
     {
         switch ($action) {
             case ('import'):
@@ -88,6 +83,9 @@ class HandleData extends Command
                         return true;
                     case('config'):
                         $this->importConfigByAlbumDirectories();
+                        return true;
+                    case('artist'):
+                        (new UpdateArtistData())->updateAll();
                         return true;
                 }
             case ('reset'):

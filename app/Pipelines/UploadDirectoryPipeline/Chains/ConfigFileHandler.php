@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\AlbumChain\Pipeline;
+namespace App\Services\UploadDirectoryPipeline\Pipeline;
 
-use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\ConfigItem;
+use App\Services\UploadDirectoryPipeline\AlbumChainItem;
+use App\Services\UploadDirectoryPipeline\ConfigItem;
 use Closure;
 
 class ConfigFileHandler

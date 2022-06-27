@@ -48,6 +48,12 @@ return [
     */
 
     'channels' => [
+        'job' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/job.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

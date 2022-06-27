@@ -6,18 +6,7 @@ use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
-use App\Models\Image;
-use App\Models\Imageable;
-use App\Models\Tag;
-use App\Models\Taggable;
-use App\Services\AlbumChain\AlbumChainItem;
-use App\Services\AlbumChain\Pipeline\AlbumModelHandler;
-use App\Services\AlbumChain\Pipeline\ConfigFileHandler;
-use App\Services\AlbumChain\Pipeline\GetAlbumConfig;
-use App\Services\AlbumChain\Pipeline\GetAlbumItems;
-use App\Services\AlbumChain\Pipeline\ImageMetaDataCollector;
-use App\Services\AlbumChain\Pipeline\ThumbnailFileHandler;
-use Illuminate\Pipeline\Pipeline;
+use App\Services\UploadDirectoryPipeline\Pipeline\GetAlbumConfig;
 
 class AlbumController extends Controller
 {

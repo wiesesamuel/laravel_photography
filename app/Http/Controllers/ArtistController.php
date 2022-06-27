@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
-use App\Services\ArtistUpdateService;
+use App\Services\UpdateArtistData;
 
 class ArtistController extends Controller
 {
     public function update() {
-        (new ArtistUpdateService())->updateAll();
+        (new UpdateArtistData())->updateAll();
         return redirect()->back();
     }
 
