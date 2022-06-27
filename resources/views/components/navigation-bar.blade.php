@@ -18,19 +18,19 @@
                     </x-parts.nav-link>
                     <x-parts.nav-link :href="route('profile')" :active="request()->routeIs('profile')"
                                       class="text-white">
-                        {{ __('Profile') }}
+                        {{ __('Profil') }}
                     </x-parts.nav-link>
-{{--                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')"--}}
-{{--                                      class="text-white">--}}
-{{--                        {{ __('Team') }}--}}
-{{--                    </x-parts.nav-link>--}}
-                    <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')"
-                                      class="text-white">
-                        {{ __('Price') }}
-                    </x-parts.nav-link>
+                    {{--                    <x-parts.nav-link :href="route('team')" :active="request()->routeIs('team')"--}}
+                    {{--                                      class="text-white">--}}
+                    {{--                        {{ __('Team') }}--}}
+                    {{--                    </x-parts.nav-link>--}}
+                    {{--                    <x-parts.nav-link :href="route('prices')" :active="request()->routeIs('prices')"--}}
+                    {{--                                      class="text-white">--}}
+                    {{--                        {{ __('Price') }}--}}
+                    {{--                    </x-parts.nav-link>--}}
                     <x-parts.nav-link :href="route('contact')" :active="request()->routeIs('contact')"
                                       class="text-white">
-                        {{ __('Contact') }}
+                        {{ __('Kontakt') }}
                     </x-parts.nav-link>
 
                     @auth
@@ -81,7 +81,9 @@
 
                     @if (false && Route::has('register'))
                         <a href="{{ route('register') }}"
-                           class="ml-4 text-lg text-white underline">Register</a>
+                           class="ml-4 text-lg text-white underline">
+                            Registrieren
+                        </a>
                     @endif
                 @endauth
             </div>

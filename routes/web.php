@@ -13,7 +13,12 @@ Route::get('/', function () {
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'post'])->middleware(['honey'])->name('contact.post');
 Route::get('/profile', [ContactController::class, 'profile'])->name('profile');
-Route::get('/prices', [ContactController::class, 'prices'])->name('prices');
+Route::get('/imprint', [ContactController::class, 'imprint'])->name('imprint');
+
+//Route::get('/prices', [ContactController::class, 'prices'])->name('prices');
+Route::get('/prices', function () {
+    return redirect()->route('contact');
+})->name('prices');
 
 Route::get('/albums', [AlbumController::class, 'index'])->name("albums");
 Route::get('/albums/new', [AlbumController::class, 'new'])->middleware('role:' . UserRole::Moderator)->name("albums.new");
