@@ -2,12 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\UpdateArtistData;
+use App\Models\Artist;
+use App\Services\ArtistHandleData;
 
 class ArtistController extends Controller
 {
-    public function update() {
-        (new UpdateArtistData())->updateAll();
+
+    /**
+     * @var ArtistHandleData
+     */
+    private $artistHandleData;
+
+    /**
+     * ArtistController constructor.
+     */
+    public function __construct()
+    {
+        $this->artistHandleData = new ArtistHandleData();
+    }
+
+
+    public function createOrUpdateArtist(array $parameters)
+    {
+        // TODO check from here step by step (artist table is null, null...)
+        var_dump($parameters);
+        $artist = $this->updateOrCreateModel(Artist::class, $parameters, ['username', 'instagram_url', 'youtube_url', 'website_url']);
+        $this->artistHandleData->update($artist);
+    }
+
+    public function update()
+    {
+        $this->artistHandleData->updateAll();
         return redirect()->back();
     }
 

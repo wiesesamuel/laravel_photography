@@ -13,7 +13,7 @@ use App\Pipelines\UploadDirectoryPipeline\Chains\ConfigFileHandler;
 use App\Pipelines\UploadDirectoryPipeline\Chains\GetAlbumItems;
 use App\Pipelines\UploadDirectoryPipeline\Chains\ImageMetaDataCollector;
 use App\Pipelines\UploadDirectoryPipeline\Chains\ThumbnailFileHandler;
-use App\Services\UpdateArtistData;
+use App\Services\ArtistHandleData;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 
@@ -85,7 +85,7 @@ class HandleData extends Command
                         $this->importConfigByAlbumDirectories();
                         return true;
                     case('artist'):
-                        (new UpdateArtistData())->updateAll();
+                        (new ArtistHandleData())->updateAll();
                         return true;
                 }
             case ('reset'):

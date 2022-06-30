@@ -54,6 +54,11 @@ return [
             'path' => storage_path('framework/cache/data'),
         ],
 
+        'fileArtists' => [
+            'driver' => 'file',
+            'path' => resource_path('uploads/artists'),
+        ],
+
         'memcached' => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),

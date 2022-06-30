@@ -15,4 +15,9 @@ class Artist extends Model
     {
         return $this->morphedByMany(Album::class, 'artistable');
     }
+
+    public static function getTableName()
+    {
+        return (new self())->getTable();
+    }
 }
