@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline\Pipeline;
+namespace App\Pipelines\UploadDirectoryPipeline\Chains;
 
-use App\Services\UploadDirectoryPipeline\AlbumChainItem;
+use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
 use Closure;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as ImageBuilder;
 
 class ThumbnailFileHandler
@@ -16,7 +17,7 @@ class ThumbnailFileHandler
      */
     public function __construct()
     {
-        $this->publicAlbumDir = config('album.destination');
+        $this->publicAlbumDir = config('files.gallery.destination_absolute_path');
         $this->preferedPixelLength = 1200;
     }
 
@@ -90,6 +91,12 @@ class ThumbnailFileHandler
 
     public function purgeThumbnails()
     {
-        shell_exec("rm -rf " . $this->publicAlbumDir . '*/thumbnail/ 2>&1');
+        $files = File::allFiles(config('files.gallery.destination_absolute_path'));
+
+        foreach ($files as $file) {
+            if (in_array($file->getExtension(), config('files.gallery.image_extensions'))) {
+                File::delete($file->getRealPath());
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ use App\Helper\AlbumConfigHelper;
 use App\Helper\AlbumImageHelper;
 use App\Helper\ImageThumbnailHelper;
 use App\Models\Album;
-use App\Services\UploadDirectoryPipeline\Pipeline\GetAlbumConfig;
+use App\Pipelines\UploadDirectoryPipeline\Chains\GetAlbumConfig;
 
 class AlbumController extends Controller
 {

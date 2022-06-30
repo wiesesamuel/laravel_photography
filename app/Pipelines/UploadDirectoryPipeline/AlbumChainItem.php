@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline;
+namespace App\Pipelines\UploadDirectoryPipeline;
 
-use App\Services\UploadDirectoryPipeline\Pipeline\DiscoverAlbumFiles;
+use App\Pipelines\UploadDirectoryPipeline\Chains\DiscoverAlbumFiles;
 
 class AlbumChainItem
 {
@@ -20,7 +20,7 @@ class AlbumChainItem
     public function __construct($reset = false, $dir = null)
     {
         $this->reset = $reset;
-        $this->searchDir = $dir ?? config('album.source');
+        $this->searchDir = $dir ?? config('files.gallery.source_absolute_path');
     }
 
     public function init() {

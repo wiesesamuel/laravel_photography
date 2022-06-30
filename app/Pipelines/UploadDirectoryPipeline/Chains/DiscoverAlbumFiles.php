@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline\Pipeline;
+namespace App\Pipelines\UploadDirectoryPipeline\Chains;
 
-use App\Services\UploadDirectoryPipeline\AlbumChainItem;
+use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
 use Closure;
 use DirectoryIterator;
 
 class DiscoverAlbumFiles
 {
-    private $imageExtensions = [
-        "jpg", "jpeg", "jpe", "jif", "jfif", "jfi", 'gif', 'png', 'raw',
-        "JPG", "JPEG", "JPE", "JIF", "JFIF", "JFI", 'GIF', 'PNG', 'RAW',
-    ];
-
     private $configName = "config.json";
 
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
@@ -68,7 +63,7 @@ class DiscoverAlbumFiles
         foreach ($iterator as $fileinfo) {
             if ($fileinfo->isFile() && !$fileinfo->isDot()) {
 
-                if (in_array($fileinfo->getExtension(), $this->imageExtensions)) {
+                if (in_array($fileinfo->getExtension(), config('files.gallery.image_extensions'))) {
                     $files[] = $fileinfo->getPathname();
                 } elseif ($fileinfo->getFilename() == $this->configName) {
                     $files["config"] = $fileinfo->getPathname();

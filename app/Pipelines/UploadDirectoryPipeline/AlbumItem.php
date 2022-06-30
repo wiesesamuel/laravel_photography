@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline;
+namespace App\Pipelines\UploadDirectoryPipeline;
 
 use App\Models\Album;
 use App\Models\Image;
@@ -50,16 +50,17 @@ class AlbumItem
     {
         if ($this->config != null && $this->config->content != null) {
             // update informations for Images
-            foreach ($this->config->content["images"] as $image_path => $metadata) {
+            foreach ($this->config->content["images"] as $image_file_name => $metadata) {
                 foreach ($this->imageItems as $imageItem) {
-                    if ($imageItem->path == $image_path) {
+                    $absolute_file_path = config('files.gallery.source_base_path') . '/' . $metadata['relative_path'];
+                    if ($imageItem->path == $absolute_file_path) {
                         $imageItem->addMetadata($metadata);
                         break;
                     }
                 }
             }
-                foreach ($this->config->content["artists"] ?? [] as $artist) {
-                    $this->artistItems[] = new ArtistItem($artist);
+            foreach ($this->config->content["artists"] ?? [] as $artist) {
+                $this->artistItems[] = new ArtistItem($artist);
                 }
             $metadata_copy = $this->config->content;
             unset($metadata_copy['artists']);

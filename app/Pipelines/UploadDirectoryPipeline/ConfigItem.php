@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline;
+namespace App\Pipelines\UploadDirectoryPipeline;
 
 class ConfigItem
 {

@@ -7,6 +7,12 @@ use App\Models\Image;
 use App\Models\Imageable;
 use App\Models\Tag;
 use App\Models\Taggable;
+use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
+use App\Pipelines\UploadDirectoryPipeline\Chains\AlbumModelHandler;
+use App\Pipelines\UploadDirectoryPipeline\Chains\ConfigFileHandler;
+use App\Pipelines\UploadDirectoryPipeline\Chains\GetAlbumItems;
+use App\Pipelines\UploadDirectoryPipeline\Chains\ImageMetaDataCollector;
+use App\Pipelines\UploadDirectoryPipeline\Chains\ThumbnailFileHandler;
 use App\Services\UpdateArtistData;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
@@ -26,13 +32,6 @@ class HandleData extends Command
         {--Q|queue : Whether the job should be queued}';
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Import Data: Config, Album, Artist';
-
-    /**
      * Create a new command instance.
      *
      * @return void
@@ -40,6 +39,7 @@ class HandleData extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->description = $this->signature;
     }
 
     /**

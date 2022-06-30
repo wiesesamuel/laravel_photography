@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline\Pipeline;
+namespace App\Pipelines\UploadDirectoryPipeline\Chains;
 
-use App\Services\UploadDirectoryPipeline\AlbumChainItem;
-use App\Services\UploadDirectoryPipeline\ConfigItem;
+use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
+use App\Pipelines\UploadDirectoryPipeline\ConfigItem;
 use Closure;
+use Illuminate\Support\Facades\File;
+use Throwable;
 
 class ConfigFileHandler
 {
@@ -44,7 +46,7 @@ class ConfigFileHandler
     {
         $images = array();
         foreach ($albumFiles as $imagePath) {
-            $images[$imagePath] = $this->getImageBasedConfig($imagePath);
+            $images[basename($imagePath)] = $this->getImageBasedConfig($imagePath);
         }
 
         $data = [
@@ -69,10 +71,14 @@ class ConfigFileHandler
 
     private function getImageBasedConfig($imagePath)
     {
+        $relativePath = str_replace(config('files.gallery.source_base_path'), '', $imagePath);
+        $relativePath = $relativePath[0] == '/' ? substr($relativePath, 1) : $relativePath;
+
         return [
             "title" => basename($imagePath),
             "description" => "",
             "orientation" => $this->getOrientatedImage($imagePath),
+            "relative_path" => $relativePath
         ];
     }
 
@@ -108,6 +114,12 @@ class ConfigFileHandler
 
     public function purgeConfig()
     {
-        shell_exec("rm -rf " . config('album.source') . '*/config.json 2>&1');
+        $files = File::allFiles(config('files.gallery.source_absolute_path'));
+
+        foreach ($files as $file) {
+            if ($file->getFilename() == 'config.json') {
+                File::delete($file->getRealPath());
+            }
+        }
     }
 }

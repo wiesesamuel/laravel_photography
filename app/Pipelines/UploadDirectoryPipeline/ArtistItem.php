@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\UploadDirectoryPipeline;
+namespace App\Pipelines\UploadDirectoryPipeline;
 
 
 use App\Helper\InstagramHelper;

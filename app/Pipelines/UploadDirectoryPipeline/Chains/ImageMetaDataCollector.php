@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\UploadDirectoryPipeline\Pipeline;
+namespace App\Pipelines\UploadDirectoryPipeline\Chains;
 
-use App\Services\UploadDirectoryPipeline\AlbumChainItem;
+use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
 use Closure;
 
 class ImageMetaDataCollector
