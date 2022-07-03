@@ -4,6 +4,7 @@ use App\Enum\UserRole;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ShareController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,6 +37,8 @@ Route::get('/artist/update', [ArtistController::class, 'update'])->middleware('r
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/download/{pw}', [ShareController::class, 'download'])->name("share.download");
 
 Route::get('/alpine', function () {
     return view('alpine.alpine');
