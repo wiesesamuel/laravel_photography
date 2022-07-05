@@ -25,7 +25,7 @@ class WebDataService
 
     public function __construct()
     {
-        $this->artistHandleData = new ArtistHandleData();
+        $this->artistHandleData = new ArtistDataService();
     }
 
     public function performActionOnTarget(string $action, string $target): bool

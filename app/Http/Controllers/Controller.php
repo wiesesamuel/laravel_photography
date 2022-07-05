@@ -15,15 +15,24 @@ class Controller extends BaseController
     protected function updateOrCreateModel(
         $model,
         array $param,
-        array $privilegedParameters = ['id', 'slug']
+        array $privilegedParameters = ['id', 'slug'],
+        array $ignoredParameters = []
     )
     {
+
         $db_entity = null;
 
         // privileged parameter
         $modelColumns = Schema::getColumnListing($model::getTableName());
         $privilegedColumns = array_intersect($privilegedParameters, $modelColumns);
         $privilegedColumns = array_flip($privilegedColumns);
+
+        // remove ignored parameters
+        if (false === empty($ignoredParameters)) {
+            $ignoredParameters = array_flip($ignoredParameters);
+            $privilegedColumns = array_diff_key($privilegedColumns, $ignoredParameters);
+            $param = array_diff_key($param, $ignoredParameters);
+        }
 
         // search statement for privileged parameter
         $whereStatement = array();
@@ -45,7 +54,7 @@ class Controller extends BaseController
             $updateStatement = array();
             foreach ($param as $key => $value) {
                 if (false === isset($privilegedColumns[$key]) && in_array($key, $modelColumns)) {
-                    $updateStatement[] = [$key, $value];
+                    $updateStatement[$key] = $value;
                 }
             }
 

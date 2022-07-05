@@ -56,7 +56,7 @@ return [
 
         'fileArtists' => [
             'driver' => 'file',
-            'path' => resource_path('uploads/artists'),
+            'path' => resource_path('webdata/artists'),
         ],
 
         'memcached' => [

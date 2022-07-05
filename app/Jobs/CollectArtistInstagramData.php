@@ -30,14 +30,14 @@ class CollectArtistInstagramData implements ShouldQueue
     /**
      * @var InstagramHelper
      */
-    public $instgramHelper;
+    public $instagramHelper;
 
     public $callbackFunction;
 
     public function __construct(Artist $artist, string $callbackFunction = null)
     {
         $this->artist = $artist;
-        $this->instgramHelper = new InstagramHelper();
+        $this->instagramHelper = new InstagramHelper();
         $this->callbackFunction = $callbackFunction;
     }
 
@@ -53,7 +53,7 @@ class CollectArtistInstagramData implements ShouldQueue
 
         try {
             Log::channel('job')->info("TRY Job Queue for artist " . $this->artist->id);
-            $result = $this->instgramHelper->getInstagramInfoOrFail($this->artist->instagram_url);
+            $result = $this->instagramHelper->getInstagramInfoOrFail($this->artist->instagram_url);
             $this->artist->instagram_data = $result;
             $this->artist->save();
             self::$nextTimeSlot = null;

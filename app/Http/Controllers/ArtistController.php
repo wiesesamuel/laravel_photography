@@ -3,36 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
-use App\Services\ArtistHandleData;
+use App\Services\ArtistDataService;
 
 class ArtistController extends Controller
 {
 
     /**
-     * @var ArtistHandleData
+     * @var ArtistDataService
      */
-    private $artistHandleData;
+    private $artistDataService;
 
     /**
      * ArtistController constructor.
      */
     public function __construct()
     {
-        $this->artistHandleData = new ArtistHandleData();
+        $this->artistDataService = new ArtistDataService();
     }
 
-
-    public function createOrUpdateArtist(array $parameters)
+    public function createOrUpdateArtistAndCollectArtistData(array $parameters)
     {
-        // TODO check from here step by step (artist table is null, null...)
-        var_dump($parameters);
-        $artist = $this->updateOrCreateModel(Artist::class, $parameters, ['username', 'instagram_url', 'youtube_url', 'website_url']);
-        $this->artistHandleData->update($artist);
+        $artist = $this->updateOrCreateArtist($parameters);
+        $this->artistDataService->update($artist);
     }
 
     public function update()
     {
-        $this->artistHandleData->updateAll();
+        $this->artistDataService->updateAll();
         return redirect()->back();
     }
 
@@ -49,4 +46,15 @@ class ArtistController extends Controller
 //            'artists' => $album
 //        ]);
 //    }
+
+
+    public static function updateOrCreateArtist(array $parameters)
+    {
+        return (new Controller)->updateOrCreateModel(
+            Artist::class,
+            $parameters,
+            $privilegedParameters = ['username', 'instagram_url', 'youtube_url', 'website_url'],
+            $ignoredParameters = ['id']
+        );
+    }
 }

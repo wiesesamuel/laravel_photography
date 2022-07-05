@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ArtistDataService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +20,14 @@ class Artist extends Model
     public static function getTableName()
     {
         return (new self())->getTable();
+    }
+
+    public function save(array $options = [])
+    {
+        $success = parent::save($options);
+        if ($success) {
+            ArtistDataService::writeCache($this);
+        }
+        return $success;
     }
 }

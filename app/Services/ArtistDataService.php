@@ -2,24 +2,14 @@
 
 namespace App\Services;
 
-use App\Jobs\CollectArtistInstagramData;
+use App\Helper\InstagramHelper;
+use App\Http\Controllers\ArtistController;
 use App\Models\Artist;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class ArtistHandleData
+class ArtistDataService
 {
-    private $cacheCallback;
-
-    /**
-     * ArtistHandleData constructor.
-     * @param $fileCache
-     */
-    public function __construct($fileCache = false)
-    {
-        if ($fileCache) {
-            $this->cacheCallback = ArtistHandleData::class . self::writeCache(null);
-        }
-    }
 
     public static function writeCache(Artist $artist)
     {
@@ -43,14 +33,27 @@ class ArtistHandleData
     {
         $cache = self::getCache($artist);
         if ($cache) {
-            var_dump($cache);
+            // update artist with cache data
+            $artist = ArtistController::updateOrCreateArtist($cache);
+
+            if ($artist->updated_at <= Carbon::now()->subDays(7)->toDateTimeString()) {
+                // trigger update
+                $cache = false;
+            }
         }
 
         if (false === $cache) {
+            $result = (new InstagramHelper())->getInstagramInfoOrFail($artist->instagram_url);
+            $artist->instagram_data = $result;
+            $artist->save();
+            self::writeCache($artist);
+
+            /*
             CollectArtistInstagramData::dispatch(
                 $artist,
                 $this->cacheCallback
             );
+            */
         }
     }
 }
