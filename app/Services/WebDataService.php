@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+
+namespace App\Services;
+
 
 use App\Models\Album;
+use App\Models\Artist;
 use App\Models\Image;
 use App\Models\Imageable;
 use App\Models\Tag;
@@ -13,67 +16,19 @@ use App\Pipelines\UploadDirectoryPipeline\Chains\ConfigFileHandler;
 use App\Pipelines\UploadDirectoryPipeline\Chains\GetAlbumItems;
 use App\Pipelines\UploadDirectoryPipeline\Chains\ImageMetaDataCollector;
 use App\Pipelines\UploadDirectoryPipeline\Chains\ThumbnailFileHandler;
-use App\Services\ArtistHandleData;
-use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 
-class HandleData extends Command
+class WebDataService
 {
-    protected $acceptedModels;
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature =
-        'data:handle
-        {action : import, reset or purge}
-        {target : import=[all, config], reset=[soft or hard], purge=[config, thumbnail]}
-        {--Q|queue : Whether the job should be queued}';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
+    private $artistHandleData;
+
     public function __construct()
     {
-        parent::__construct();
-        $this->description = $this->signature;
+        $this->artistHandleData = new ArtistHandleData();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
-    {
-        $this->info('starting...');
-        $queueName = $this->option('queue');
-        $options = $this->options();
-
-        $action = strtolower($this->argument('action'));
-        $target = strtolower($this->argument('target'));
-
-        if ($this->performAction($action, $target)) {
-            $this->info('success!');
-        } else {
-            $this->newLine();
-            $this->error('invalid arguments, take a look at the signautre:');
-            $this->info($this->signature);
-            $this->newLine();
-        }
-
-        $this->info('finished!');
-        return 0;
-    }
-
-    /**
-     * @param string $action
-     * @param string $target
-     */
-    public function performAction(string $action, string $target): bool
+    public function performActionOnTarget(string $action, string $target): bool
     {
         switch ($action) {
             case ('import'):
@@ -85,18 +40,20 @@ class HandleData extends Command
                         $this->importConfigByAlbumDirectories();
                         return true;
                     case('artist'):
-                        (new ArtistHandleData())->updateAll();
+                        $this->artistHandleData->updateAll();
                         return true;
                 }
+                break;
             case ('reset'):
                 switch ($target) {
                     case('soft'):
-                        $this->resetAllByAlbumDirectories();
+                        $this->softReset();
                         return true;
                     case('hard'):
                         $this->hardReset();
                         return true;
                 }
+                break;
             case ('purge'):
                 switch ($target) {
                     case('config'):
@@ -106,6 +63,7 @@ class HandleData extends Command
                         $this->purgeThumbnailsFiles();
                         return true;
                 }
+                break;
         }
         return false;
     }
@@ -135,14 +93,22 @@ class HandleData extends Command
         )->thenReturn();
     }
 
-    private function resetAllByAlbumDirectories()
+    private function softReset()
     {
         Album::truncate();
         Image::truncate();
         Imageable::truncate();
         Tag::truncate();
         Taggable::truncate();
+        Artist::truncate();
         $this->importAllByAlbumDirectories();
+    }
+
+    private function hardReset()
+    {
+        $this->purgeConfigFiles();
+        $this->purgeThumbnailsFiles();
+        $this->softReset();
     }
 
     private function purgeConfigFiles()
@@ -154,12 +120,5 @@ class HandleData extends Command
     {
         (new ThumbnailFileHandler())->purgeThumbnails();
     }
-
-    private function hardReset() {
-        $this->purgeConfigFiles();
-        $this->purgeThumbnailsFiles();
-        $this->resetAllByAlbumDirectories();
-    }
-
 
 }

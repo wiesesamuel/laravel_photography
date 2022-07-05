@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ShareController;
+use App\Services\WebDataService;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +40,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/download/{pw}', [ShareController::class, 'download'])->name("share.download");
+
+Route::get('/artisan/webdata/{action}/{target}', [WebDataService::class, 'performActionOnTarget'])->name("artisan.webdata");
+
 
 Route::get('/alpine', function () {
     return view('alpine.alpine');

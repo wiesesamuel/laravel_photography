@@ -60,7 +60,7 @@ class Controller extends BaseController
             $createStatement = array();
             foreach ($param as $key => $value) {
                 if (isset($value) && in_array($key, $modelColumns)) {
-                    $createStatement[] = [$key, $value];
+                    $createStatement[$key] = $value;
                 }
             }
             if (false === empty($createStatement)) {

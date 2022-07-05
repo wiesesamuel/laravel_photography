@@ -23,12 +23,12 @@ class ArtistHandleData
 
     public static function writeCache(Artist $artist)
     {
-        Cache::store('fileArtists')->forever('Artist_' . $artist->id, $artist->getAttributes());
+        Cache::store('fileArtists')->forever('Artist_' . $artist->username, $artist->getAttributes());
     }
 
     public static function getCache(Artist $artist)
     {
-        return Cache::store('fileArtists')->get('Artist_' . $artist->id, false);
+        return Cache::store('fileArtists')->get('Artist_' . $artist->username, false);
     }
 
     public function updateAll()
@@ -41,9 +41,16 @@ class ArtistHandleData
 
     public function update(Artist $artist)
     {
-        CollectArtistInstagramData::dispatch(
-            $artist,
-            $this->cacheCallback
-        );
+        $cache = self::getCache($artist);
+        if ($cache) {
+            var_dump($cache);
+        }
+
+        if (false === $cache) {
+            CollectArtistInstagramData::dispatch(
+                $artist,
+                $this->cacheCallback
+            );
+        }
     }
 }
