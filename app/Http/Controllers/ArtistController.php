@@ -21,32 +21,26 @@ class ArtistController extends Controller
         $this->artistDataService = new ArtistDataService();
     }
 
-    public function createOrUpdateArtistAndCollectArtistData(array $parameters)
+    public function index()
     {
-        $artist = $this->updateOrCreateArtist($parameters);
-        $this->artistDataService->update($artist);
+        return view('artists.index', [
+            'artists' => Artist::all(),
+        ]);
     }
+
+    public function show(Artist $artist)
+    {
+        return view('artists.show', [
+            'artist' => $artist
+        ]);
+    }
+
 
     public function update()
     {
         $this->artistDataService->updateAll();
         return redirect()->back();
     }
-
-//    public function index()
-//    {
-//        return view('artists.index', [
-//            'albums' => Artist::all(),
-//        ]);
-//    }
-//
-//    public function show(Artist $album)
-//    {
-//        return view('artists.show', [
-//            'artists' => $album
-//        ]);
-//    }
-
 
     public static function updateOrCreateArtist(array $parameters)
     {

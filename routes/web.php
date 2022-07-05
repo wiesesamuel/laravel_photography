@@ -32,6 +32,10 @@ Route::get('/albums/edit/{album}', [AlbumController::class, 'edit'])->middleware
 Route::get('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.delete");
 //Route::delete('/albums/delete/{album}', [AlbumController::class, 'delete'])->middleware('role:' . UserRole::Moderator)->name("album.deleting");
 
+Route::get('/artists', [ArtistController::class, 'index'])->name("artists");
+Route::get('/artists/{artist:username}', [ArtistController::class, 'show'])->name("artists.show");
+
+
 Route::post('/artist/update', [ArtistController::class, 'update'])->middleware('role:' . UserRole::Moderator)->name("artist.update");
 Route::get('/artist/update', [ArtistController::class, 'update'])->middleware('role:' . UserRole::Moderator)->name("artist.update");
 

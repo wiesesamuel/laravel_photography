@@ -34,7 +34,7 @@ class WebDataService
             case ('import'):
                 switch ($target) {
                     case('all'):
-                        $this->importAllByAlbumDirectories();
+                        $this->importAllWebData();
                         return true;
                     case('config'):
                         $this->importConfigByAlbumDirectories();
@@ -68,7 +68,7 @@ class WebDataService
         return false;
     }
 
-    private function importAllByAlbumDirectories()
+    private function importAllWebData()
     {
         $item = new AlbumChainItem();
         app(Pipeline::class)->send($item)->through(
@@ -80,6 +80,8 @@ class WebDataService
                 AlbumModelHandler::class,
             ]
         )->thenReturn();
+
+        $this->artistHandleData->updateAll();
     }
 
     private function importConfigByAlbumDirectories()
@@ -101,7 +103,7 @@ class WebDataService
         Tag::truncate();
         Taggable::truncate();
         Artist::truncate();
-        $this->importAllByAlbumDirectories();
+        $this->importAllWebData();
     }
 
     private function hardReset()

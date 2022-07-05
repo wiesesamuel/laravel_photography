@@ -23,7 +23,7 @@ class ArtistDataService
 
     public function updateAll()
     {
-        $artists = Artist::orderBy('updated_at', 'DESC')->get();
+        $artists = Artist::all();
         foreach ($artists as $artist) {
             $this->update($artist);
         }
@@ -33,9 +33,11 @@ class ArtistDataService
     {
         $cache = self::getCache($artist);
         if ($cache) {
+
             // update artist with cache data
             $artist = ArtistController::updateOrCreateArtist($cache);
 
+            var_dump($artist->updated_at);
             if ($artist->updated_at <= Carbon::now()->subDays(7)->toDateTimeString()) {
                 // trigger update
                 $cache = false;
@@ -45,9 +47,7 @@ class ArtistDataService
         if (false === $cache) {
             $result = (new InstagramHelper())->getInstagramInfoOrFail($artist->instagram_url);
             $artist->instagram_data = $result;
-            $artist->save();
-            self::writeCache($artist);
-
+            $artist->saveAndCache();
             /*
             CollectArtistInstagramData::dispatch(
                 $artist,

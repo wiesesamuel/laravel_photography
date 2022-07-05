@@ -22,7 +22,7 @@ class Artist extends Model
         return (new self())->getTable();
     }
 
-    public function save(array $options = [])
+    public function saveAndCache(array $options = [])
     {
         $success = parent::save($options);
         if ($success) {

@@ -60,7 +60,8 @@ class Controller extends BaseController
 
             // update non privileged parameters
             if (false === empty($updateStatement)) {
-                $db_entity = $model::where($whereStatement)->limit(1)->update($updateStatement);
+                $success = $model::where($whereStatement)->limit(1)->update($updateStatement);
+                $db_entity = $success ? $db_entity : null;
             }
         }
 

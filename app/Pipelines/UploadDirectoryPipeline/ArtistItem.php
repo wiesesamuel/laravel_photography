@@ -30,7 +30,7 @@ class ArtistItem
             return null;
         }
 
-        (new ArtistController())->createOrUpdateArtistAndCollectArtistData($inUse);
+        ArtistController::updateOrCreateArtist($inUse);
     }
 
     /**
