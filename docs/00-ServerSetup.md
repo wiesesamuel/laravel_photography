@@ -44,7 +44,7 @@ sudo apt install mysql-server php8.0-mysql
 sudo mysql
 
 CREATE DATABASE wiesesamuel;   
-CREATE USER 'wiesesamuel'@'localhost' IDENTIFIED BY '984350926345076234857623';   
+CREATE USER 'wiesesamuel'@'localhost' IDENTIFIED BY 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   
 GRANT ALL PRIVILEGES ON wiesesamuel.* TO 'wiesesamuel'@'localhost';   
 FLUSH PRIVILEGES;
 
