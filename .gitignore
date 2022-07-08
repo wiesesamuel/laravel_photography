@@ -16,6 +16,14 @@ yarn-error.log
 
 /public/images/albums/
 !/public/images/albums/.gitkeep
+
 /resources/webdata/
 !/resources/webdata/.gitkeep
+
+!/resources/webdata/artists/*.yaml
+!/resources/webdata/artists/.gitkeep
+
+/storage/database/cache/artists/
+!/storage/database/cache/artists/.gitkeep
+
 
