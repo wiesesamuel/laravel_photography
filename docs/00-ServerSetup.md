@@ -25,8 +25,7 @@ cp .env.example .env
 nano .env
 
 sudo apt install php8.0-cli php8.0-common php8.0-imap php8.0-redis php8.0-snmp php8.0-xml php8.0-mbstring php8.0-zip
-php8.0-curl php8.0-gd  
-composer install --optimize-autoloader --no-dev
+php8.0-curl php8.0-gd composer install --optimize-autoloader --no-dev
 
 # docker vs non docker
 
