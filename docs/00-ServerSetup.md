@@ -13,18 +13,26 @@ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 alias composer='/usr/local/bin/composer'  
 rm composer-setup.php
 
-nano /etc/nginx/sites-available/default  
-https://laravel.com/docs/8.x/deployment#nginx  
-service nginx reload
+# website
 
-git clone https://samuelwiese@bitbucket.org/samuelwiese/laravel-webseite.git /var/www/html/wiesesamuel/
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/bb cat ~/.ssh/bb.pub
+https://bitbucket.org/account/settings/ssh-keys/
+eval `ssh-agent -s` && ssh-add ~/.ssh/*
+git clone git@bitbucket.org:samuelwiese/laravel-webseite.git /var/www/html/wiesesamuel/
 
 cd /var/www/html/wiesesamuel/   
 cp .env.example .env  
 nano .env
 
 sudo apt install php8.0-cli php8.0-common php8.0-imap php8.0-redis php8.0-snmp php8.0-xml php8.0-mbstring php8.0-zip
-php8.0-curl php8.0-gd composer install --optimize-autoloader --no-dev
+php8.0-curl php8.0-gd  
+composer install --optimize-autoloader --no-dev
+
+# nginx
+
+nano /etc/nginx/sites-available/default  
+https://laravel.com/docs/8.x/deployment#nginx  
+service nginx reload
 
 # docker vs non docker
 
