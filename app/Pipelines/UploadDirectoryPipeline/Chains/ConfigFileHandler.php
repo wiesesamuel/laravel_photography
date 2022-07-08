@@ -5,11 +5,20 @@ namespace App\Pipelines\UploadDirectoryPipeline\Chains;
 use App\Pipelines\UploadDirectoryPipeline\AlbumChainItem;
 use App\Pipelines\UploadDirectoryPipeline\ConfigItem;
 use Closure;
+use Faker\Factory;
 use Illuminate\Support\Facades\File;
 use Throwable;
 
 class ConfigFileHandler
 {
+    private $faker;
+
+    public function __construct()
+    {
+        $this->faker = Factory::create();
+    }
+
+
     public function handle(AlbumChainItem $request, Closure $next): AlbumChainItem
     {
         $request->init();
@@ -50,7 +59,8 @@ class ConfigFileHandler
         }
 
         $data = [
-            "title" => basename($albumPath),
+            "slug" => $this->faker->unique->isbn10,
+            "title" => "",//basename($albumPath),
             "description" => "",
             "cover_image" => basename($albumFiles[0] ?? '') ?? '',
 //            "artists" => $this->getArtistBasedConfig(),
@@ -76,7 +86,8 @@ class ConfigFileHandler
         $relativePath = $relativePath[0] == '/' ? substr($relativePath, 1) : $relativePath;
 
         return [
-            "title" => basename($imagePath),
+            "title" => "",
+            "slug" => $this->faker->unique->isbn13(),
             "description" => "",
             "orientation" => $this->getOrientatedImage($imagePath),
             "relative_path" => $relativePath

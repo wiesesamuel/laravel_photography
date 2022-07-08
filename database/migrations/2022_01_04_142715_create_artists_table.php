@@ -15,7 +15,7 @@ class CreateArtistsTable extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
-            $table->string("username")->nullable();
+            $table->string("username")->unique();
             $table->string("instagram_url")->nullable();
             $table->json("instagram_data")->nullable();
             $table->string("youtube_url")->nullable();
