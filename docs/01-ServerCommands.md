@@ -1,10 +1,3 @@
-# Setup
-
-* git clone
-* `composer install`
-* `./vendor/bin/sail up -d`
-* `./vendor/bin/sail php artisan migrate -seed`
-
 # Composer 1 to Composer 2
 
 * `sudo apt remove composer`

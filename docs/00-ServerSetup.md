@@ -76,3 +76,5 @@ php artisan migrate
   cd /var/www/html/wiesesamuel/   
   sudo chgrp -R www-data storage bootstrap/cache   
   sudo chmod -R ug+rwx storage bootstrap/cache
+
+* file not found /var/log/nginx
