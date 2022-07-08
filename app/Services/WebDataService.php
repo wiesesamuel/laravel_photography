@@ -21,11 +21,11 @@ use Illuminate\Pipeline\Pipeline;
 class WebDataService
 {
 
-    private $artistHandleData;
+    private $artistDataService;
 
     public function __construct()
     {
-        $this->artistHandleData = new ArtistDataService();
+        $this->artistDataService = new ArtistDataService();
     }
 
     public function performActionOnTarget(string $action, string $target): bool
@@ -40,7 +40,18 @@ class WebDataService
                         $this->importConfigByAlbumDirectories();
                         return true;
                     case('artist'):
-                        $this->artistHandleData->updateAll();
+                        $this->artistDataService->seedByLocalFilesAndUpdateByCache();
+                        return true;
+                }
+                break;
+            case ('update'):
+                switch ($target) {
+                    case('artists'):
+                    case('artists:soft'):
+                        $this->artistDataService->softUpdateAll();
+                        return true;
+                    case('artists:hard'):
+                        $this->artistDataService->hardUpdateAll();
                         return true;
                 }
                 break;
@@ -70,6 +81,8 @@ class WebDataService
 
     private function importAllWebData()
     {
+        $this->artistDataService->seedByLocalFilesAndUpdateByCache();
+
         $item = new AlbumChainItem();
         app(Pipeline::class)->send($item)->through(
             [
@@ -80,8 +93,6 @@ class WebDataService
                 AlbumModelHandler::class,
             ]
         )->thenReturn();
-
-        $this->artistHandleData->updateAll();
     }
 
     private function importConfigByAlbumDirectories()
@@ -103,6 +114,7 @@ class WebDataService
         Tag::truncate();
         Taggable::truncate();
         Artist::truncate();
+
         $this->importAllWebData();
     }
 

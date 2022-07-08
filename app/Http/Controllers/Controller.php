@@ -12,6 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    // TODO move to CustomModel
     protected function updateOrCreateModel(
         $model,
         array $param,
@@ -19,6 +20,9 @@ class Controller extends BaseController
         array $ignoredParameters = []
     )
     {
+        if ($param == null || empty($param)) {
+            return null;
+        }
 
         $db_entity = null;
 
@@ -37,7 +41,7 @@ class Controller extends BaseController
         // search statement for privileged parameter
         $whereStatement = array();
         foreach ($privilegedColumns as $key => $value) {
-            if (isset($param[$key]) && $param[$key] && in_array($key, $modelColumns)) {
+            if (isset($param[$key]) && $param[$key] != null && in_array($key, $modelColumns)) {
                 $whereStatement[] = [$key, '=', $param[$key]];
             }
         }

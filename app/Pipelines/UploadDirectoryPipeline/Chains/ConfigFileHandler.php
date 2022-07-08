@@ -53,8 +53,9 @@ class ConfigFileHandler
             "title" => basename($albumPath),
             "description" => "",
             "cover_image" => basename($albumFiles[0] ?? '') ?? '',
+//            "artists" => $this->getArtistBasedConfig(),
+            "artists" => "",
             "images" => $images,
-            "artists" => $this->getArtistBasedConfig()
         ];
         file_put_contents($albumPath . "/config.json", json_encode($data, JSON_PRETTY_PRINT));
         return $data;
@@ -81,18 +82,6 @@ class ConfigFileHandler
             "relative_path" => $relativePath
         ];
     }
-
-    private function getArtistBasedConfig() {
-        return [
-          1 => [
-              "username" => '',
-              "instagram_url" => '',
-              "youtube_url" => '',
-              "website_url" => ''
-          ]
-        ];
-    }
-
 
     private function getOrientatedImage($original)
     {

@@ -59,9 +59,11 @@ class AlbumItem
                     }
                 }
             }
-            foreach ($this->config->content["artists"] ?? [] as $artist) {
+            // artist parser
+            $artists = $this->getArrayFromStringByComma($this->config->content["artists"] ?? '');
+            foreach ($artists as $artist) {
                 $this->artistItems[] = new ArtistItem($artist);
-                }
+            }
             $metadata_copy = $this->config->content;
             unset($metadata_copy['artists']);
             unset($metadata_copy['images']);
@@ -126,4 +128,14 @@ class AlbumItem
         ));
     }
 
+
+    private function getArrayFromStringByComma($input)
+    {
+        if ($input) {
+            $output = explode(',', $input ?? '');
+            $output = array_map('trim', $output);
+            $output = array_filter($output);
+        }
+        return $output ?? [];
+    }
 }

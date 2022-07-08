@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-exif": "*",
+        "ext-json": "*",
         "bensampo/laravel-enum": "^4.1",
         "calcinai/php-imagick": "^0.1.2",
         "fakerphp/faker": "^1.9.1",
@@ -24,8 +26,7 @@
         "lukeraymonddowning/honey": "^0.3.4",
         "miljar/php-exif": "^0.6.5",
         "spatie/laravel-cookie-consent": "^3.1",
-        "ext-exif": "*",
-        "ext-json": "*"
+        "symfony/yaml": "^6.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

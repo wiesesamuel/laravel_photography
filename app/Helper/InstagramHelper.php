@@ -17,7 +17,7 @@ class InstagramHelper
         return json_encode([
             "url" => $url,
             "biography" => $profile_data["biography"],
-            "profile_pic" => $profile_data["profile_pic_url_hd"],
+            "profile_pic" => self::instaPictureDownloader($profile_data["profile_pic_url_hd"]),
             "username" => $profile_data["username"],
             "full_name" => $profile_data["full_name"],
             "category_name" => $profile_data["category_name"],
@@ -35,6 +35,23 @@ class InstagramHelper
         } catch (Throwable $e) {
             return null;
         }
+    }
+
+    //TODO test if it works.
+    private static function instaPictureDownloader($url)
+    {
+        // Getting the name
+        $name = pathinfo(parse_url($url)['path'], PATHINFO_FILENAME);
+
+        // Getting the extension
+        $ext = pathinfo(parse_url($url)['path'], PATHINFO_EXTENSION);
+
+        $path = config('files.artists.insta_profile_pics_relative_path');
+        $destination = $path . $name . '.' . $ext;
+
+        copy($url, $destination);
+
+        return $destination;
     }
 
 }

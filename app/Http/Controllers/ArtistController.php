@@ -38,7 +38,7 @@ class ArtistController extends Controller
 
     public function update()
     {
-        $this->artistDataService->updateAll();
+        $this->artistDataService->softUpdateAll();
         return redirect()->back();
     }
 

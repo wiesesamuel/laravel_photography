@@ -23,14 +23,14 @@ class ArtistItem
     public function applyModel()
     {
         // filter empty settings
-        $inUse = array_filter($this->config, function ($value) {
-            return !is_null($value) && $value !== '';
-        });
-        if (empty($inUse)) {
-            return null;
-        }
+//        $inUse = array_filter($this->config, function ($value) {
+//            return !is_null($value) && $value !== '';
+//        });
+//        if (empty($inUse)) {
+//            return null;
+//        }
 
-        ArtistController::updateOrCreateArtist($inUse);
+        $this->model = ArtistController::updateOrCreateArtist(['username' => $this->config]);
     }
 
     /**
