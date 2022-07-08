@@ -28,23 +28,27 @@ sudo apt install php8.0-cli php8.0-common php8.0-imap php8.0-redis php8.0-snmp p
 php8.0-curl php8.0-gd  
 composer install --optimize-autoloader --no-dev
 
-# nginx
+# docker vs non docker
+
+## non docker
+
+### nginx
 
 nano /etc/nginx/sites-available/default  
 https://laravel.com/docs/8.x/deployment#nginx  
 service nginx reload
 
-# docker vs non docker
-
-## non docker
+### mysql
 
 sudo apt install mysql-server php8.0-mysql   
 sudo mysql
 
-CREATE DATABASE wiesesamuel_de;   
-CREATE USER 'wiesesamuel'@'localhost' IDENTIFIED BY 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   
-GRANT ALL PRIVILEGES ON wiesesamuel_de.* TO 'wiesesamuel'@'localhost';   
+CREATE DATABASE wiesesamuel;   
+CREATE USER 'wiesesamuel'@'localhost' IDENTIFIED BY '984350926345076234857623';   
+GRANT ALL PRIVILEGES ON wiesesamuel.* TO 'wiesesamuel'@'localhost';   
 FLUSH PRIVILEGES;
+
+### https
 
 sudo apt-get install certbot python3-certbot-nginx   
 nginx -t && nginx -s reload   
@@ -53,6 +57,10 @@ sudo certbot --nginx -d wiesesamuel.de -d www.wiesesamuel.de
 ## docker
 
 install docker, docker-compose, run docker-compose.yml
+
+# Start Server
+
+ln -s /var/www/html/wiesesamuel ~/web ln -s /var/www/html/wiesesamuel/resources/webdata/albums ~/albums cd web
 
 php artisan config:cache   
 php artisan view:cache
