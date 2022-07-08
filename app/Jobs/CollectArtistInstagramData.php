@@ -23,10 +23,12 @@ class CollectArtistInstagramData implements ShouldQueue
     private static $nextTimeSlot;
     public $releaseTimeShift = 30;
     public $tries = 25;
+
     /**
      * @var Artist
      */
     public $artist;
+
     /**
      * @var InstagramHelper
      */
@@ -55,16 +57,8 @@ class CollectArtistInstagramData implements ShouldQueue
             Log::channel('job')->info("TRY Job Queue for artist " . $this->artist->id);
             $result = $this->instagramHelper->getInstagramInfoOrFail($this->artist->instagram_url);
             $this->artist->instagram_data = $result;
-            $this->artist->save();
+            $this->artist->saveAndCache();
             self::$nextTimeSlot = null;
-
-            if (isset($this->callbackFunction)) {
-                try {
-                    call_user_func($this->callbackFunction, $this->artist);
-                } catch (Exception $e) {
-                    Log::channel('job')->info("CALLBACK FAILED in Job Queue for artist " . $this->artist->id);
-                }
-            }
 
         } catch (Exception $e) {
             Log::channel('job')->info("FAILED Job for artist " . $this->artist->id);

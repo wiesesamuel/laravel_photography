@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Helper\InstagramHelper;
 use App\Http\Controllers\ArtistController;
+use App\Jobs\CollectArtistInstagramData;
 use App\Models\Artist;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -61,15 +61,14 @@ class ArtistDataService
      */
     public function hardUpdate(?Artist $artist): void
     {
+        /*
         $result = (new InstagramHelper())->getInstagramInfoOrFail($artist->instagram_url);
         $artist->instagram_data = $result;
         $artist->saveAndCache();
-        /*
-        CollectArtistInstagramData::dispatch(
-            $artist,
-            $this->cacheCallback
-        );
         */
+        CollectArtistInstagramData::dispatch(
+            $artist
+        );
     }
 
     public function seedByLocalFilesAndUpdateByCache()
