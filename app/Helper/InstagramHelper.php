@@ -2,16 +2,25 @@
 
 namespace App\Helper;
 
-use Throwable;
-
 class InstagramHelper
 {
 
-    public static function getInstagramInfoOrFail($url)
+    public static function getInstagramInfoOrFalse($url)
     {
         $html = file_get_contents($url);
         preg_match('/_sharedData = ({.*);<\/script>/', $html, $matches);
-        $profile_data = json_decode($matches[1])->entry_data->ProfilePage[0]->graphql->user;
+
+
+        $var = $matches[1];
+        $json_decode = json_decode($var);
+        $entry_data = $json_decode->entry_data;
+
+        if (false === isset($entry_data->ProfilePage[0])) {
+            return false;
+        }
+
+        $var1 = $entry_data->ProfilePage[0];
+        $profile_data = $var1->graphql->user;
         $profile_data = json_decode(json_encode($profile_data), true);
 
         return json_encode([
@@ -26,15 +35,6 @@ class InstagramHelper
             "follower" => $profile_data["edge_followed_by"]["count"],
             "abos" => $profile_data["edge_follow"]["count"]
         ]);
-    }
-
-    public static function getInstagramInfo($url)
-    {
-        try {
-            return self::getInstagramInfoOrFail($url);
-        } catch (Throwable $e) {
-            return null;
-        }
     }
 
     //TODO test if it works.
