@@ -1,3 +1,10 @@
+php artisan config:cache   
+php artisan view:cache
+
+php artisan up   
+php artisan key:generate   
+php artisan migrate
+
 # Composer 1 to Composer 2
 
 * `sudo apt remove composer`

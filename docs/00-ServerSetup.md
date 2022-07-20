@@ -57,23 +57,20 @@ sudo certbot --nginx -d wiesesamuel.de -d www.wiesesamuel.de
 
 install docker, docker-compose, run docker-compose.yml
 
-# Start Server
+# links
 
-ln -s /var/www/html/wiesesamuel ~/web ln -s /var/www/html/wiesesamuel/resources/webdata/albums ~/albums cd web
+ln -s /var/www/html/wiesesamuel ~/web   
+ln -s /var/www/html/wiesesamuel/resources/webdata/albums ~/albums cd web
 
-php artisan config:cache   
-php artisan view:cache
-
-php artisan up   
-php artisan key:generate   
-php artisan migrate
+# rights
 
 * blank page [source](https://stackoverflow.com/questions/30639174/how-to-set-up-file-permissions-for-laravel)
-  sudo chown -R $USER:www-data /var/www/html/wiesesamuel   
-  sudo find /var/www/html/wiesesamuel/ -type f -exec chmod 664 {} \;   
-  sudo find /var/www/html/wiesesamuel/ -type d -exec chmod 775 {} \;   
-  cd /var/www/html/wiesesamuel/   
-  sudo chgrp -R www-data storage bootstrap/cache   
-  sudo chmod -R ug+rwx storage bootstrap/cache
+  
+      sudo chown -R $USER:www-data /var/www/html/wiesesamuel   
+      sudo find /var/www/html/wiesesamuel/ -type f -exec chmod 664 {} \;   
+      sudo find /var/www/html/wiesesamuel/ -type d -exec chmod 775 {} \;   
+      cd /var/www/html/wiesesamuel/   
+      sudo chgrp -R www-data storage bootstrap/cache   
+      sudo chmod -R ug+rwx storage bootstrap/cache
 
 * file not found /var/log/nginx
