@@ -111,13 +111,13 @@
                 {{ __('Portfolio') }}
             </x-auth.responsive-nav-link>
             <x-auth.responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
-                {{ __('Profile') }}
+                {{ __('Profil') }}
             </x-auth.responsive-nav-link>
-{{--            <x-auth.responsive-nav-link :href="route('team')" :active="request()->routeIs('team')">--}}
-{{--                {{ __('Team') }}--}}
-{{--            </x-auth.responsive-nav-link>--}}
-            <x-auth.responsive-nav-link :href="route('prices')" :active="request()->routeIs('prices')">
-                {{ __('Price') }}
+            {{--            <x-auth.responsive-nav-link :href="route('team')" :active="request()->routeIs('team')">--}}
+            {{--                {{ __('Team') }}--}}
+            {{--            </x-auth.responsive-nav-link>--}}
+            <x-auth.responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                {{ __('Kontakt') }}
             </x-auth.responsive-nav-link>
 
 
