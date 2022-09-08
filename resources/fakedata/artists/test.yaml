@@ -1,0 +1,6 @@
+---
+artists:
+  - username: 'test'
+    instagram_url: 'https://www.instagram.com/test/'
+    youtube_url: ''
+    website_url: ''
